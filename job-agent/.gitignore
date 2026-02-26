@@ -1,0 +1,8 @@
+.env
+venv/
+__pycache__/
+*.pyc
+output/tailored_resumes/
+output/cover_letters/
+output/applications.csv
+*.log

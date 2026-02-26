@@ -1,0 +1,70 @@
+{
+  "name": "Rohit Santosh Ranvir",
+  "email": "rohitranveer358@gmail.com",
+  "phone": "+919158000676",
+  "locations": [
+    "Hyderabad",
+    "Bangalore",
+    "Pune",
+    "Mumbai",
+    "Remote"
+  ],
+  "primary_location": "Hyderabad, India",
+  "linkedin": "https://www.linkedin.com/in/rohit-ranveer/",
+  "github": "https://github.com/rohitranvir",
+  "skills": [
+    "Python",
+    "SQL",
+    "Power BI",
+    "MS Excel",
+    "EDA",
+    "Machine Learning",
+    "ETL Pipelines",
+    "NLP",
+    "Streamlit",
+    "DAX",
+    "REST APIs",
+    "GitHub Actions",
+    "Pandas",
+    "NumPy",
+    "Scikit-learn",
+    "Matplotlib",
+    "Seaborn",
+    "Plotly",
+    "SQLite",
+    "MySQL"
+  ],
+  "experience_years": 0,
+  "experience_level": "Fresher",
+  "target_roles": [
+    "Data Analyst",
+    "Junior Data Analyst",
+    "Data Analyst Intern",
+    "Business Analyst Intern",
+    "SQL Analyst",
+    "Power BI Analyst"
+  ],
+  "job_types": [
+    "Full Time",
+    "Internship"
+  ],
+  "work_mode": [
+    "Remote",
+    "Hybrid",
+    "On-site"
+  ],
+  "target_salary_min": 180000,
+  "avoid_companies": [],
+  "max_daily_applications": 50,
+  "match_score_threshold": 50,
+  "relocation_willing": true,
+  "preferred_platforms": [
+    "LinkedIn",
+    "Naukri",
+    "Indeed",
+    "Internshala",
+    "Glassdoor"
+  ],
+  "cover_letter_tone": "professional",
+  "resume_format": "ATS-friendly"
+}
