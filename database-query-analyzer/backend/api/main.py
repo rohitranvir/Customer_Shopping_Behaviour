@@ -1,10 +1,13 @@
 from fastapi import FastAPI
+from backend.api.router import router as analyze_router
 
 app = FastAPI(
     title="Database Query Performance Analyzer API",
     description="Backend API for real-time monitoring, ML predictions, and query optimization.",
     version="0.1.0"
 )
+
+app.include_router(analyze_router, prefix="/api/v1")
 
 @app.get("/")
 def read_root():
