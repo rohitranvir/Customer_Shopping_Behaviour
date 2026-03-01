@@ -135,13 +135,26 @@ def fill_and_submit(
     if not PLAYWRIGHT_AVAILABLE:
         return {"status": "error", "details": "Playwright not installed"}
 
+    # ── Use the user's real Chrome profile (with saved logins) ──
+    import os as _os
+    CHROME_USER_DATA = _os.environ.get(
+        "CHROME_USER_DATA_DIR",
+        _os.path.join(_os.environ.get("LOCALAPPDATA", ""), "Google", "Chrome", "User Data")
+    )
+    CHROME_PROFILE = _os.environ.get("CHROME_PROFILE", "Default")
+
     result = {"status": "error", "details": ""}
 
     try:
         with sync_playwright() as p:
-            browser = p.chromium.launch(headless=headless, slow_mo=50) # Strict visible slow_mo
-            context = browser.new_context(
-                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+            # launch_persistent_context opens your REAL Chrome with all saved sessions
+            context = p.chromium.launch_persistent_context(
+                user_data_dir=CHROME_USER_DATA,
+                channel="chrome",           # Use installed Chrome (not bundled Chromium)
+                headless=False,             # Always visible — YOUR browser opens
+                slow_mo=50,
+                args=["--profile-directory=" + CHROME_PROFILE],
+                no_viewport=True,
             )
             page = context.new_page()
             
@@ -162,7 +175,7 @@ def fill_and_submit(
                 page.reload()
                 page.wait_for_load_state('networkidle', timeout=15000)
                 if _detect_captcha(page):
-                    browser.close()
+                    context.close()
                     return {"status": "captcha", "details": f"Blocked by CAPTCHA"}
 
             # ── Check for popups/modals and close them ──
@@ -255,7 +268,7 @@ def fill_and_submit(
 
             # ── Final CAPTCHA check ──
             if _detect_captcha(page):
-                browser.close()
+                context.close()
                 return {"status": "captcha", "details": "CAPTCHA appeared after filling form"}
 
             # ── Submit ──
@@ -299,8 +312,8 @@ def fill_and_submit(
                     "details": "Form filled — auto_submit is disabled."
                 }
 
-            # Browser context closure happens automatically here, guaranteeing logging occurs FIRST in `agent.py` before Python shuts the context down fully.
-            browser.close()
+            # Context closure happens automatically — logging in agent.py occurs FIRST.
+            context.close()
 
     except PlaywrightTimeout:
         result = {"status": "error", "details": f"Timeout loading {url}"}
