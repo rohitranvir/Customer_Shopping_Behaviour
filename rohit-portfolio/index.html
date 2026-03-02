@@ -1,0 +1,2807 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohit Ranvir — Data Science & ML</title>
+    <meta name="description" content="Personal portfolio of Rohit Ranvir, Data Science & Machine Learning Graduate.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ─── RESET & VARIABLES ─────────────────────────────────────── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --bg: #0a0a0f;
+            --surface: #111119;
+            --surface2: #161621;
+            --border: #1e1e2e;
+            --gold: #e8b866;
+            --teal: #4ecdc4;
+            --text: #e8e8f0;
+            --muted: #888899;
+            --font-head: 'Playfair Display', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'DM Mono', monospace;
+            --r: 12px;
+            --transition: .3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            cursor: none
+        }
+
+        body.grain::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: .4
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        img {
+            max-width: 100%
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            font-family: var(--font-body)
+        }
+
+        input,
+        textarea,
+        select {
+            font-family: var(--font-body)
+        }
+
+        section {
+            padding: 100px 0
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px
+        }
+
+        /* ─── CURSOR ────────────────────────────────────────────────── */
+        #cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: transform .1s
+        }
+
+        #cursor-ring {
+            position: fixed;
+            width: 36px;
+            height: 36px;
+            border: 1.5px solid var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99998;
+            transform: translate(-50%, -50%);
+            transition: left .12s ease, top .12s ease, opacity .3s;
+            opacity: .6
+        }
+
+        /* ─── SCROLLBAR ─────────────────────────────────────────────── */
+        ::-webkit-scrollbar {
+            width: 6px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg)
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 3px
+        }
+
+        /* ─── NAV ───────────────────────────────────────────────────── */
+        #nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 15, .7);
+            border-bottom: 1px solid transparent;
+            transition: border-color .3s
+        }
+
+        #nav.scrolled {
+            border-color: var(--border)
+        }
+
+        #nav .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .nav-logo {
+            font-family: var(--font-head);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold)
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none
+        }
+
+        .nav-links a {
+            font-size: .9rem;
+            font-weight: 500;
+            color: var(--muted);
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            transition: color .3s
+        }
+
+        .nav-links a:hover {
+            color: var(--text)
+        }
+
+        .nav-cta {
+            padding: 10px 24px;
+            background: var(--gold);
+            color: #000;
+            font-weight: 600;
+            font-size: .85rem;
+            border-radius: 6px;
+            letter-spacing: .05em;
+            transition: opacity .3s
+        }
+
+        .nav-cta:hover {
+            opacity: .85
+        }
+
+        .nav-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.4rem
+        }
+
+        /* ─── HERO ──────────────────────────────────────────────────── */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(232, 184, 102, .07) 0%, transparent 70%);
+            pointer-events: none
+        }
+
+        #hero::after {
+            content: '';
+            position: absolute;
+            bottom: -10%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(78, 205, 196, .05) 0%, transparent 70%);
+            pointer-events: none
+        }
+
+        .hero-eyebrow {
+            font-family: var(--font-mono);
+            font-size: .8rem;
+            color: var(--teal);
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeUp .6s .2s forwards
+        }
+
+        .hero-name {
+            font-family: var(--font-head);
+            font-size: clamp(3rem, 7vw, 6.5rem);
+            line-height: 1.05;
+            font-weight: 900;
+            margin-bottom: 16px;
+            opacity: 0;
+            animation: fadeUp .6s .4s forwards
+        }
+
+        .hero-name .gold {
+            color: var(--gold)
+        }
+
+        .hero-title {
+            font-size: 1.1rem;
+            color: var(--muted);
+            font-weight: 400;
+            margin-bottom: 12px;
+            opacity: 0;
+            animation: fadeUp .6s .55s forwards
+        }
+
+        .hero-bio {
+            font-size: 1rem;
+            color: var(--muted);
+            max-width: 520px;
+            line-height: 1.7;
+            margin-bottom: 36px;
+            opacity: 0;
+            animation: fadeUp .6s .65s forwards
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 44px;
+            opacity: 0;
+            animation: fadeUp .6s .75s forwards
+        }
+
+        .stat-num {
+            font-family: var(--font-head);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--gold);
+            display: block
+        }
+
+        .stat-label {
+            font-size: .8rem;
+            color: var(--muted);
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: .1em
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+            opacity: 0;
+            animation: fadeUp .6s .85s forwards
+        }
+
+        .btn-primary {
+            padding: 14px 32px;
+            background: var(--gold);
+            color: #000;
+            font-weight: 600;
+            border-radius: 8px;
+            font-size: .95rem;
+            transition: transform .2s, box-shadow .2s
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(232, 184, 102, .3)
+        }
+
+        .btn-ghost {
+            padding: 14px 32px;
+            border: 1.5px solid var(--border);
+            color: var(--text);
+            font-weight: 500;
+            border-radius: 8px;
+            font-size: .95rem;
+            transition: border-color .3s, color .3s
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--gold);
+            color: var(--gold)
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: .5;
+            animation: fadeUp .6s 1.2s forwards
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: scrollAnim 2s infinite
+        }
+
+        @keyframes scrollAnim {
+            0% {
+                transform: scaleY(0);
+                transform-origin: top
+            }
+
+            50% {
+                transform: scaleY(1);
+                transform-origin: top
+            }
+
+            51% {
+                transform: scaleY(1);
+                transform-origin: bottom
+            }
+
+            100% {
+                transform: scaleY(0);
+                transform-origin: bottom
+            }
+        }
+
+        /* ─── SECTION HEADERS ───────────────────────────────────────── */
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: .75rem;
+            color: var(--teal);
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block
+        }
+
+        .section-title {
+            font-family: var(--font-head);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 16px
+        }
+
+        .section-title span {
+            color: var(--gold)
+        }
+
+        .section-line {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, var(--gold), var(--teal));
+            border-radius: 2px;
+            margin-bottom: 48px
+        }
+
+        /* ─── ABOUT ─────────────────────────────────────────────────── */
+        #about {
+            background: linear-gradient(to bottom, var(--bg), #0d0d16, var(--bg))
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: start
+        }
+
+        .about-text p {
+            color: var(--muted);
+            line-height: 1.9;
+            margin-bottom: 20px;
+            font-size: 1rem
+        }
+
+        .about-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        .about-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 20px;
+            transition: border-color .3s
+        }
+
+        .about-card:hover {
+            border-color: var(--gold)
+        }
+
+        .about-card-icon {
+            font-size: 1.3rem;
+            margin-bottom: 8px
+        }
+
+        .about-card-label {
+            font-family: var(--font-mono);
+            font-size: .7rem;
+            color: var(--teal);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-bottom: 4px
+        }
+
+        .about-card-value {
+            font-size: .9rem;
+            color: var(--text);
+            word-break: break-all
+        }
+
+        /* ─── SKILLS ────────────────────────────────────────────────── */
+        #skills {
+            background: var(--bg)
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px
+        }
+
+        .skill-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 28px;
+            transition: transform .3s, border-color .3s
+        }
+
+        .skill-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--card-color, var(--gold))
+        }
+
+        .skill-card-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px
+        }
+
+        .skill-icon {
+            font-size: 1.6rem
+        }
+
+        .skill-cat {
+            font-family: var(--font-head);
+            font-size: 1.1rem;
+            font-weight: 600
+        }
+
+        .skill-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px
+        }
+
+        .skill-pill {
+            background: rgba(232, 184, 102, .08);
+            border: 1px solid rgba(232, 184, 102, .2);
+            color: var(--gold);
+            font-family: var(--font-mono);
+            font-size: .73rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: .05em
+        }
+
+        /* ─── PROJECTS ──────────────────────────────────────────────── */
+        #projects {
+            background: linear-gradient(to bottom, var(--bg), #0d0d16)
+        }
+
+        .featured-project {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .featured-project::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--gold), var(--teal))
+        }
+
+        .project-badge {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: .7rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px
+        }
+
+        .badge-gold {
+            background: rgba(232, 184, 102, .15);
+            color: var(--gold);
+            border: 1px solid rgba(232, 184, 102, .3)
+        }
+
+        .badge-teal {
+            background: rgba(78, 205, 196, .12);
+            color: var(--teal);
+            border: 1px solid rgba(78, 205, 196, .25)
+        }
+
+        .project-title {
+            font-family: var(--font-head);
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 12px
+        }
+
+        .project-desc {
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 16px;
+            font-size: .95rem
+        }
+
+        .project-features {
+            list-style: none;
+            margin-bottom: 20px
+        }
+
+        .project-features li {
+            color: var(--muted);
+            font-size: .9rem;
+            padding: 4px 0;
+            display: flex;
+            gap: 8px
+        }
+
+        .project-features li::before {
+            content: '→';
+            color: var(--teal);
+            flex-shrink: 0
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px
+        }
+
+        .tech-tag {
+            background: rgba(78, 205, 196, .08);
+            border: 1px solid rgba(78, 205, 196, .2);
+            color: var(--teal);
+            font-family: var(--font-mono);
+            font-size: .72rem;
+            padding: 4px 12px;
+            border-radius: 4px
+        }
+
+        .project-links {
+            display: flex;
+            gap: 12px
+        }
+
+        .project-link {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: .85rem;
+            font-weight: 500;
+            transition: all .3s;
+            display: flex;
+            align-items: center;
+            gap: 6px
+        }
+
+        .link-github {
+            border: 1px solid var(--border);
+            color: var(--text)
+        }
+
+        .link-github:hover {
+            border-color: var(--gold);
+            color: var(--gold)
+        }
+
+        .link-demo {
+            background: var(--gold);
+            color: #000;
+            font-weight: 600
+        }
+
+        .link-demo:hover {
+            opacity: .85
+        }
+
+        .project-code-panel {
+            background: #0d0d14;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            overflow: auto;
+            position: relative
+        }
+
+        .code-panel-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px
+        }
+
+        .code-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%
+        }
+
+        .code-panel-title {
+            font-family: var(--font-mono);
+            font-size: .75rem;
+            color: var(--muted);
+            margin-left: auto
+        }
+
+        .code-panel-body {
+            font-family: var(--font-mono);
+            font-size: .78rem;
+            color: #a0a0c0;
+            line-height: 1.7;
+            white-space: pre-wrap
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px
+        }
+
+        .project-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 28px;
+            transition: transform .3s, border-color .3s
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--gold)
+        }
+
+        /* ─── RESEARCH ──────────────────────────────────────────────── */
+        #research {
+            background: var(--bg)
+        }
+
+        .research-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px
+        }
+
+        .research-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 32px;
+            transition: border-color .3s;
+            position: relative;
+            padding-left: 48px
+        }
+
+        .research-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--gold), var(--teal));
+            border-radius: 3px 0 0 3px
+        }
+
+        .research-card:hover {
+            border-color: var(--gold)
+        }
+
+        .research-type {
+            font-family: var(--font-mono);
+            font-size: .7rem;
+            color: var(--teal);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-bottom: 8px
+        }
+
+        .research-title {
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 6px
+        }
+
+        .research-meta {
+            font-size: .85rem;
+            color: var(--muted);
+            margin-bottom: 10px
+        }
+
+        .research-desc {
+            color: var(--muted);
+            font-size: .9rem;
+            line-height: 1.7
+        }
+
+        .research-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gold);
+            font-size: .85rem;
+            margin-top: 12px;
+            transition: gap .2s
+        }
+
+        .research-link:hover {
+            gap: 10px
+        }
+
+        /* ─── EXPERIENCE ────────────────────────────────────────────── */
+        #experience {
+            background: linear-gradient(to bottom, var(--bg), #0d0d16)
+        }
+
+        .exp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px
+        }
+
+        .exp-timeline {
+            position: relative;
+            padding-left: 32px
+        }
+
+        .exp-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--gold), var(--teal), transparent)
+        }
+
+        .exp-item {
+            position: relative;
+            padding-bottom: 36px
+        }
+
+        .exp-item::before {
+            content: '';
+            position: absolute;
+            left: -37px;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 10px rgba(232, 184, 102, .5)
+        }
+
+        .exp-date {
+            font-family: var(--font-mono);
+            font-size: .75rem;
+            color: var(--teal);
+            letter-spacing: .1em;
+            margin-bottom: 6px
+        }
+
+        .exp-role {
+            font-family: var(--font-head);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px
+        }
+
+        .exp-company {
+            font-size: .9rem;
+            color: var(--muted);
+            margin-bottom: 10px
+        }
+
+        .exp-desc {
+            font-size: .9rem;
+            color: var(--muted);
+            line-height: 1.7
+        }
+
+        .edu-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 32px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .edu-card::after {
+            content: '🎓';
+            position: absolute;
+            right: 24px;
+            top: 24px;
+            font-size: 2rem;
+            opacity: .2
+        }
+
+        .edu-label {
+            font-family: var(--font-mono);
+            font-size: .7rem;
+            color: var(--teal);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-bottom: 12px
+        }
+
+        .edu-degree {
+            font-family: var(--font-head);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 6px
+        }
+
+        .edu-institution {
+            color: var(--muted);
+            margin-bottom: 4px
+        }
+
+        .edu-year {
+            font-family: var(--font-mono);
+            font-size: .85rem;
+            color: var(--gold)
+        }
+
+        /* ─── CONTACT ───────────────────────────────────────────────── */
+        #contact {
+            background: var(--bg)
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px
+        }
+
+        .contact-info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 32px
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            transition: border-color .3s
+        }
+
+        .contact-item:hover {
+            border-color: var(--gold)
+        }
+
+        .contact-item-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0
+        }
+
+        .contact-item-label {
+            font-family: var(--font-mono);
+            font-size: .7rem;
+            color: var(--teal);
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin-bottom: 2px
+        }
+
+        .contact-item-val {
+            font-size: .9rem;
+            color: var(--text)
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px
+        }
+
+        .form-label {
+            font-family: var(--font-mono);
+            font-size: .75rem;
+            color: var(--muted);
+            letter-spacing: .1em;
+            text-transform: uppercase
+        }
+
+        .form-input,
+        .form-textarea {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-size: .95rem;
+            transition: border-color .3s;
+            outline: none
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            border-color: var(--gold)
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px
+        }
+
+        /* ─── FOOTER ────────────────────────────────────────────────── */
+        #footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 40px 0;
+            text-align: center
+        }
+
+        .footer-name {
+            font-family: var(--font-head);
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 8px
+        }
+
+        .footer-copy {
+            font-size: .85rem;
+            color: var(--muted)
+        }
+
+        /* ─── REVEAL ANIMATION ──────────────────────────────────────── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity .7s ease, transform .7s ease
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        /* ─── ADMIN LOGIN OVERLAY ───────────────────────────────────── */
+        #admin-login-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 5, 10, .97);
+            z-index: 100000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column
+        }
+
+        #admin-login-overlay.active {
+            display: flex
+        }
+
+        .login-box {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 48px;
+            width: 380px;
+            text-align: center
+        }
+
+        .login-title {
+            font-family: var(--font-head);
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 8px
+        }
+
+        .login-sub {
+            color: var(--muted);
+            font-size: .9rem;
+            margin-bottom: 32px
+        }
+
+        .login-input {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-size: 1rem;
+            outline: none;
+            margin-bottom: 12px;
+            text-align: center;
+            letter-spacing: .2em;
+            transition: border-color .3s
+        }
+
+        .login-input:focus {
+            border-color: var(--gold)
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--gold);
+            color: #000;
+            font-weight: 700;
+            border-radius: 8px;
+            font-size: .95rem;
+            margin-bottom: 12px;
+            transition: opacity .3s
+        }
+
+        .login-btn:hover {
+            opacity: .85
+        }
+
+        .login-error {
+            color: #ff6b6b;
+            font-size: .85rem;
+            min-height: 20px;
+            margin-bottom: 8px
+        }
+
+        .login-close {
+            color: var(--muted);
+            font-size: .85rem;
+            background: none;
+            border: none;
+            color: var(--muted);
+            cursor: pointer
+        }
+
+        .login-close:hover {
+            color: var(--text)
+        }
+
+        /* ─── ADMIN PANEL ───────────────────────────────────────────── */
+        #admin-panel {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #0d0d14;
+            z-index: 99999;
+            overflow: hidden
+        }
+
+        #admin-panel.active {
+            display: flex
+        }
+
+        .admin-sidebar {
+            width: 240px;
+            flex-shrink: 0;
+            background: #111119;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-y: auto
+        }
+
+        .admin-logo {
+            padding: 28px 24px 20px;
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            color: var(--gold);
+            border-bottom: 1px solid var(--border)
+        }
+
+        .admin-logo span {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: .65rem;
+            color: var(--muted);
+            font-weight: 400;
+            margin-top: 2px;
+            letter-spacing: .1em
+        }
+
+        .admin-nav {
+            padding: 16px 0;
+            flex: 1
+        }
+
+        .admin-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            font-size: .9rem;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all .2s;
+            border-left: 2px solid transparent;
+            user-select: none
+        }
+
+        .admin-nav-item:hover {
+            color: var(--text);
+            background: rgba(232, 184, 102, .04)
+        }
+
+        .admin-nav-item.active {
+            color: var(--gold);
+            border-left-color: var(--gold);
+            background: rgba(232, 184, 102, .06)
+        }
+
+        .admin-nav-item .nav-icon {
+            font-size: 1rem;
+            width: 20px;
+            text-align: center
+        }
+
+        .admin-sidebar-bottom {
+            padding: 16px;
+            border-top: 1px solid var(--border)
+        }
+
+        .admin-logout-btn {
+            width: 100%;
+            padding: 10px;
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            border-radius: 6px;
+            font-size: .85rem;
+            margin-bottom: 8px;
+            transition: all .3s
+        }
+
+        .admin-logout-btn:hover {
+            border-color: #ff6b6b;
+            color: #ff6b6b
+        }
+
+        .admin-view-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            border-radius: 6px;
+            font-size: .85rem;
+            transition: all .3s
+        }
+
+        .admin-view-btn:hover {
+            background: var(--gold);
+            color: #000
+        }
+
+        .admin-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden
+        }
+
+        .admin-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #111119
+        }
+
+        .admin-header-title {
+            font-family: var(--font-head);
+            font-size: 1.4rem
+        }
+
+        .admin-save-btn {
+            padding: 10px 24px;
+            background: var(--gold);
+            color: #000;
+            font-weight: 600;
+            border-radius: 6px;
+            font-size: .9rem;
+            transition: opacity .3s
+        }
+
+        .admin-save-btn:hover {
+            opacity: .85
+        }
+
+        .admin-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px
+        }
+
+        /* ─── ADMIN CARDS & INPUTS ──────────────────────────────────── */
+        .admin-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 28px;
+            margin-bottom: 20px
+        }
+
+        .admin-card-title {
+            font-family: var(--font-mono);
+            font-size: .75rem;
+            color: var(--teal);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-bottom: 20px
+        }
+
+        .admin-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        .admin-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px
+        }
+
+        .admin-form-group.full {
+            grid-column: 1/-1
+        }
+
+        .admin-label {
+            font-family: var(--font-mono);
+            font-size: .72rem;
+            color: var(--muted);
+            letter-spacing: .08em;
+            text-transform: uppercase
+        }
+
+        .admin-input,
+        .admin-textarea,
+        .admin-select {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: .9rem;
+            outline: none;
+            transition: border-color .3s;
+            width: 100%
+        }
+
+        .admin-input:focus,
+        .admin-textarea:focus,
+        .admin-select:focus {
+            border-color: var(--gold)
+        }
+
+        .admin-textarea {
+            resize: vertical;
+            min-height: 90px
+        }
+
+        .admin-select option {
+            background: var(--surface2)
+        }
+
+        .admin-btn {
+            padding: 9px 20px;
+            border-radius: 6px;
+            font-size: .85rem;
+            font-weight: 500;
+            transition: all .2s;
+            border: none
+        }
+
+        .admin-btn-gold {
+            background: var(--gold);
+            color: #000;
+            font-weight: 600
+        }
+
+        .admin-btn-gold:hover {
+            opacity: .85
+        }
+
+        .admin-btn-ghost {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text)
+        }
+
+        .admin-btn-ghost:hover {
+            border-color: var(--gold);
+            color: var(--gold)
+        }
+
+        .admin-btn-danger {
+            background: none;
+            border: 1px solid #ff6b6b44;
+            color: #ff6b6b
+        }
+
+        .admin-btn-danger:hover {
+            background: #ff6b6b;
+            color: #fff
+        }
+
+        .admin-btn-sm {
+            padding: 6px 14px;
+            font-size: .8rem
+        }
+
+        /* ─── DASHBOARD STATS ───────────────────────────────────────── */
+        .dash-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 28px
+        }
+
+        .dash-stat {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 24px;
+            text-align: center
+        }
+
+        .dash-stat-num {
+            font-family: var(--font-head);
+            font-size: 2.2rem;
+            color: var(--gold);
+            margin-bottom: 4px
+        }
+
+        .dash-stat-label {
+            font-family: var(--font-mono);
+            font-size: .72rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .1em
+        }
+
+        .dash-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 28px
+        }
+
+        .dash-action-btn {
+            padding: 10px 20px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: .9rem;
+            transition: all .2s;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .dash-action-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold)
+        }
+
+        /* ─── TAG INPUT ─────────────────────────────────────────────── */
+        .tag-input-container {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            min-height: 44px;
+            transition: border-color .3s;
+            cursor: text
+        }
+
+        .tag-input-container.focused {
+            border-color: var(--gold)
+        }
+
+        .tag-pill {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(232, 184, 102, .12);
+            border: 1px solid rgba(232, 184, 102, .25);
+            color: var(--gold);
+            font-family: var(--font-mono);
+            font-size: .73rem;
+            padding: 3px 10px;
+            border-radius: 20px
+        }
+
+        .tag-pill-x {
+            background: none;
+            border: none;
+            color: var(--gold);
+            cursor: pointer;
+            font-size: .9rem;
+            line-height: 1;
+            padding: 0 2px
+        }
+
+        .tag-input-field {
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text);
+            font-size: .9rem;
+            font-family: var(--font-body);
+            min-width: 80px;
+            flex: 1
+        }
+
+        /* ─── TOGGLE SWITCH ─────────────────────────────────────────── */
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .toggle-row:last-child {
+            border-bottom: none
+        }
+
+        .toggle-label {
+            font-size: .9rem;
+            color: var(--text)
+        }
+
+        .toggle-sub {
+            font-size: .8rem;
+            color: var(--muted)
+        }
+
+        .toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0
+        }
+
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: #333;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: .3s
+        }
+
+        .toggle-slider:before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            left: 3px;
+            bottom: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: .3s
+        }
+
+        .toggle input:checked+.toggle-slider {
+            background: var(--gold)
+        }
+
+        .toggle input:checked+.toggle-slider:before {
+            transform: translateX(20px)
+        }
+
+        /* ─── MODAL ─────────────────────────────────────────────────── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 5, 10, .85);
+            z-index: 200000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(4px)
+        }
+
+        .modal-overlay.active {
+            display: flex
+        }
+
+        .modal-box {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 640px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 32px;
+            position: relative
+        }
+
+        .modal-title {
+            font-family: var(--font-head);
+            font-size: 1.4rem;
+            margin-bottom: 24px
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-size: 1.4rem;
+            cursor: pointer;
+            line-height: 1
+        }
+
+        .modal-close:hover {
+            color: var(--text)
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border)
+        }
+
+        /* ─── TOAST ─────────────────────────────────────────────────── */
+        #toast {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            z-index: 300000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .toast-msg {
+            background: var(--surface2);
+            border: 1px solid var(--gold);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: .9rem;
+            animation: toastIn .3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .toast-msg.error {
+            border-color: #ff6b6b;
+            color: #ff6b6b
+        }
+
+        .toast-msg::before {
+            content: '✓';
+            color: var(--gold);
+            font-weight: 700
+        }
+
+        .toast-msg.error::before {
+            content: '✕';
+            color: #ff6b6b
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        /* ─── CONFIRM DIALOG ────────────────────────────────────────── */
+        #confirm-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 5, 10, .85);
+            z-index: 300000;
+            align-items: center;
+            justify-content: center
+        }
+
+        #confirm-overlay.active {
+            display: flex
+        }
+
+        .confirm-box {
+            background: var(--surface2);
+            border: 1px solid #ff6b6b44;
+            border-radius: 12px;
+            padding: 32px;
+            width: 360px;
+            text-align: center
+        }
+
+        .confirm-title {
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            margin-bottom: 8px
+        }
+
+        .confirm-msg {
+            color: var(--muted);
+            font-size: .9rem;
+            margin-bottom: 24px
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center
+        }
+
+        /* ─── SKILLS ADMIN GRID ─────────────────────────────────────── */
+        .skill-admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px
+        }
+
+        .skill-admin-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 20px
+        }
+
+        .skill-admin-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px
+        }
+
+        .skill-admin-actions {
+            display: flex;
+            gap: 6px
+        }
+
+        /* ─── PROJECTS TABLE ────────────────────────────────────────── */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .9rem
+        }
+
+        .admin-table th {
+            text-align: left;
+            font-family: var(--font-mono);
+            font-size: .7rem;
+            color: var(--muted);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .admin-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(30, 30, 46, .5);
+            color: var(--text);
+            vertical-align: middle
+        }
+
+        .admin-table tr:hover td {
+            background: rgba(232, 184, 102, .03)
+        }
+
+        .featured-badge {
+            background: rgba(232, 184, 102, .15);
+            color: var(--gold);
+            font-size: .72rem;
+            font-family: var(--font-mono);
+            padding: 2px 8px;
+            border-radius: 10px
+        }
+
+        .td-actions {
+            display: flex;
+            gap: 8px
+        }
+
+        /* ─── COLOR PICKER ──────────────────────────────────────────── */
+        .color-input-row {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        input[type="color"] {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 2px;
+            background: var(--bg);
+            cursor: pointer
+        }
+
+        .color-hex {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-family: var(--font-mono);
+            font-size: .85rem;
+            width: 100px;
+            outline: none
+        }
+
+        .color-hex:focus {
+            border-color: var(--gold)
+        }
+
+        /* ─── DRAG HANDLE ───────────────────────────────────────────── */
+        .drag-handle {
+            cursor: grab;
+            color: var(--muted);
+            font-size: 1rem;
+            padding: 0 4px;
+            user-select: none
+        }
+
+        .drag-handle:active {
+            cursor: grabbing
+        }
+
+        .dragging {
+            opacity: .5;
+            background: rgba(232, 184, 102, .05) !important
+        }
+
+        /* ─── DYNAMIC FEATURES LIST ─────────────────────────────────── */
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 8px
+        }
+
+        .feature-row {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        .feature-input {
+            flex: 1;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: .9rem;
+            outline: none
+        }
+
+        .feature-input:focus {
+            border-color: var(--gold)
+        }
+
+        .feature-rm {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 0 6px
+        }
+
+        /* ─── RESPONSIVE ────────────────────────────────────────────── */
+        @media(max-width:900px) {
+            .container {
+                padding: 0 20px
+            }
+
+            section {
+                padding: 60px 0
+            }
+
+            .hero-name {
+                font-size: 2.8rem
+            }
+
+            .hero-stats {
+                gap: 20px
+            }
+
+            .about-grid,
+            .contact-grid,
+            .exp-grid {
+                grid-template-columns: 1fr
+            }
+
+            .about-cards {
+                grid-template-columns: 1fr
+            }
+
+            .featured-project {
+                grid-template-columns: 1fr
+            }
+
+            .admin-panel .admin-sidebar {
+                width: 60px
+            }
+
+            .admin-nav-item span {
+                display: none
+            }
+
+            .admin-logo span {
+                display: none
+            }
+
+            .nav-links {
+                display: none
+            }
+
+            .nav-menu-btn {
+                display: block
+            }
+
+            .dash-stats {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .admin-form-grid {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body class="grain">
+
+    <!-- CUSTOM CURSOR -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast"></div>
+
+    <!-- CONFIRM DIALOG -->
+    <div id="confirm-overlay">
+        <div class="confirm-box">
+            <div class="confirm-title" id="confirm-title">Are you sure?</div>
+            <div class="confirm-msg" id="confirm-msg">This action cannot be undone.</div>
+            <div class="confirm-actions">
+                <button class="admin-btn admin-btn-ghost" id="confirm-cancel">Cancel</button>
+                <button class="admin-btn admin-btn-danger" id="confirm-ok">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN LOGIN OVERLAY -->
+    <div id="admin-login-overlay">
+        <div class="login-box">
+            <div class="login-title">⚡ Admin Access</div>
+            <div class="login-sub">Enter your password to access the dashboard</div>
+            <div class="login-error" id="login-error"></div>
+            <input type="password" class="login-input" id="login-password" placeholder="••••••••"
+                autocomplete="current-password">
+            <button class="login-btn" id="login-btn">Enter Dashboard</button>
+            <button class="login-close" id="login-close">✕ Close</button>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div id="admin-panel">
+        <aside class="admin-sidebar">
+            <div class="admin-logo">Admin Panel <span>rohitranvir.dev</span></div>
+            <nav class="admin-nav" id="admin-nav">
+                <div class="admin-nav-item active" data-section="dashboard"><span
+                        class="nav-icon">🏠</span><span>Dashboard</span></div>
+                <div class="admin-nav-item" data-section="profile"><span class="nav-icon">👤</span><span>Profile &
+                        About</span></div>
+                <div class="admin-nav-item" data-section="skills"><span class="nav-icon">🛠️</span><span>Skills</span>
+                </div>
+                <div class="admin-nav-item" data-section="projects"><span
+                        class="nav-icon">📁</span><span>Projects</span></div>
+                <div class="admin-nav-item" data-section="research"><span
+                        class="nav-icon">📄</span><span>Research</span></div>
+                <div class="admin-nav-item" data-section="experience"><span
+                        class="nav-icon">💼</span><span>Experience</span></div>
+                <div class="admin-nav-item" data-section="contact"><span class="nav-icon">📬</span><span>Contact
+                        Info</span></div>
+                <div class="admin-nav-item" data-section="appearance"><span
+                        class="nav-icon">🎨</span><span>Appearance</span></div>
+            </nav>
+            <div class="admin-sidebar-bottom">
+                <button class="admin-logout-btn" id="admin-logout">🚪 Logout</button>
+                <a href="#" class="admin-view-btn" id="admin-view-portfolio">View Portfolio →</a>
+            </div>
+        </aside>
+        <div class="admin-main">
+            <div class="admin-header">
+                <div class="admin-header-title" id="admin-header-title">Dashboard</div>
+                <button class="admin-save-btn" id="admin-save-btn">💾 Save Changes</button>
+            </div>
+            <div class="admin-content" id="admin-content"><!-- filled by JS --></div>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-box" id="modal-box">
+            <button class="modal-close" id="modal-close">✕</button>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- PUBLIC PORTFOLIO -->
+    <div id="portfolio">
+        <nav id="nav">
+            <div class="container">
+                <div class="nav-logo" id="nav-logo">RR</div>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#research">Research</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a href="#contact" class="nav-cta">Hire Me</a>
+                <button class="nav-menu-btn" id="nav-menu-btn">☰</button>
+            </div>
+        </nav>
+
+        <section id="hero">
+            <div class="container">
+                <div id="hero-content"><!-- rendered by JS --></div>
+                <div class="hero-scroll">
+                    <div class="scroll-line"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container" id="about-content"></div>
+        </section>
+        <section id="skills">
+            <div class="container" id="skills-content"></div>
+        </section>
+        <section id="projects">
+            <div class="container" id="projects-content"></div>
+        </section>
+        <section id="research">
+            <div class="container" id="research-content"></div>
+        </section>
+        <section id="experience">
+            <div class="container" id="experience-content"></div>
+        </section>
+        <section id="contact">
+            <div class="container" id="contact-content"></div>
+        </section>
+        <footer id="footer">
+            <div class="container" id="footer-content"></div>
+        </footer>
+    </div>
+
+    <script>
+        /* ── DB ── */
+        const DB = {
+            get: (k) => { try { return JSON.parse(localStorage.getItem(k)) } catch { return null } },
+            set: (k, v) => localStorage.setItem(k, JSON.stringify(v)),
+            keys: { profile: 'portfolio_profile', skills: 'portfolio_skills', projects: 'portfolio_projects', research: 'portfolio_research', experience: 'portfolio_experience', contact: 'portfolio_contact', appearance: 'portfolio_appearance', meta: 'portfolio_meta' }
+        };
+
+        /* ── DEFAULT DATA ── */
+        const DEFAULTS = {
+            profile: { name: 'Rohit Ranvir', title: 'Data Science & Machine Learning Graduate', tagline: 'Recent B.E. graduate building practical AI solutions — from deep learning sentiment analysis to published research. Passionate about turning data into decisions.', about1: 'I am a passionate Data Science and Machine Learning engineer with a strong foundation in Python, statistical modeling, and deep learning. My work spans sentiment analysis, predictive modeling, and data-driven decision making.', about2: 'With a published research paper and several end-to-end ML projects, I thrive at the intersection of data and real-world impact. I\'m currently seeking opportunities where I can apply AI to solve meaningful problems.', location: 'Pusad, Maharashtra, India', email: 'rohitranveer358@gmail.com', phone: '+91 9158000676', linkedin: 'https://www.linkedin.com/in/rohit-ranveer', github: 'https://github.com/rohitranvir', stats: [{ num: '3+', label: 'DS Projects' }, { num: '1', label: 'Publication' }, { num: '10+', label: 'Total Projects' }], tags: ['Open to Work', 'Data Science', 'ML Engineer'] },
+            skills: [
+                { id: 's1', icon: '🐍', category: 'Python & ML', color: '#e8b866', skills: ['Python', 'NumPy', 'Pandas', 'Scikit-learn', 'TensorFlow', 'Keras'] },
+                { id: 's2', icon: '📊', category: 'Data Analysis', color: '#4ecdc4', skills: ['SQL', 'Power BI', 'Excel', 'Matplotlib', 'Seaborn', 'Plotly'] },
+                { id: 's3', icon: '🧠', category: 'Deep Learning', color: '#a78bfa', skills: ['LSTM', 'CNN', 'BERT', 'Transformers', 'NLP', 'Sentiment Analysis'] },
+                { id: 's4', icon: '⚙️', category: 'Tools & Cloud', color: '#f97316', skills: ['Git', 'GitHub', 'Jupyter', 'VS Code', 'Google Colab', 'Streamlit'] }
+            ],
+            projects: [
+                { id: 'p1', title: 'YouTube Comments Sentiment Analyzer', badge: 'Highlight Project', badgeStyle: 'gold', description: 'Full-stack NLP application that performs real-time sentiment analysis on YouTube comment sections using a fine-tuned BERT model, providing actionable insights for content creators.', features: ['Fine-tuned BERT on 50K+ labeled comments achieving 91% accuracy', 'Real-time YouTube Data API v3 integration for live comment fetching', 'Interactive Streamlit dashboard with sentiment trend charts'], tech: ['Python', 'BERT', 'Transformers', 'Streamlit', 'YouTube API', 'Pandas'], github: 'https://github.com/rohitranvir', demo: '', featured: true, codeSnippet: `from transformers import pipeline\nimport streamlit as st\n\n@st.cache_resource\ndef load_model():\n    return pipeline(\n        "sentiment-analysis",\n        model="cardiffnlp/twitter-roberta-base-sentiment"\n    )\n\nclassifier = load_model()\n\ndef analyze_comments(comments):\n    results = classifier(\n        comments,\n        truncation=True,\n        max_length=512\n    )\n    return [\n        {"text": c, "label": r["label"],\n         "score": round(r["score"]*100, 1)}\n        for c, r in zip(comments, results)\n    ]`, type: 'NLP', order: 1 },
+                { id: 'p2', title: 'Customer Shopping Behaviour Analysis', badge: 'Data Analytics', badgeStyle: 'teal', description: 'Comprehensive EDA and predictive modeling pipeline on 99K+ retail transactions to uncover purchasing patterns and create customer segments.', features: ['RFM-based customer segmentation with K-Means clustering', 'Power BI dashboard with 12+ interactive visualizations', 'Churn prediction model with 84% accuracy'], tech: ['Python', 'Pandas', 'Scikit-learn', 'Power BI', 'SQL', 'Matplotlib'], github: 'https://github.com/rohitranvir', demo: '', featured: false, codeSnippet: '', type: 'Analytics', order: 2 },
+                { id: 'p3', title: 'Diabetic Prediction System', badge: 'Healthcare ML', badgeStyle: 'teal', description: 'Machine learning model to predict diabetes risk using clinical parameters with an interactive Streamlit interface for medical professionals.', features: ['Ensemble model (XGBoost + RF) achieving 87% accuracy', 'SMOTE applied for class imbalance handling', 'SHAP explainability for model transparency'], tech: ['Python', 'XGBoost', 'SHAP', 'Streamlit', 'Scikit-learn'], github: 'https://github.com/rohitranvir', demo: '', featured: false, codeSnippet: '', type: 'Data Science', order: 3 },
+                { id: 'p4', title: 'Healthcare Fraud Detection', badge: 'ML Pipeline', badgeStyle: 'gold', description: 'End-to-end fraud detection pipeline for medical insurance claims using anomaly detection and supervised classification.', features: ['Isolation Forest + supervised ensemble for dual-layer detection', 'Reduced false positives by 23% vs baseline', 'Automated report generation with flagged claims'], tech: ['Python', 'Scikit-learn', 'Pandas', 'Isolation Forest', 'XGBoost'], github: 'https://github.com/rohitranvir', demo: '', featured: false, codeSnippet: '', type: 'Data Science', order: 4 }
+            ],
+            research: [
+                { id: 'r1', type: 'Peer Reviewed Journal Article', title: 'Sentiment Analysis of Social Media Using Deep Learning Techniques', journal: 'International Journal of Advanced Research in Computer Science (IJARCS)', year: '2024', description: 'Proposed a hybrid deep learning architecture combining BiLSTM and attention mechanisms for multi-class sentiment classification on Twitter data, achieving state-of-the-art results on benchmark datasets.', url: '' }
+            ],
+            experience: [
+                { id: 'e1', date: '2024', role: 'Data Science Intern', company: 'Self-Directed Projects & Research · Remote', description: 'Developed and deployed ML models for sentiment analysis, fraud detection, and predictive analytics. Published research on deep learning-based sentiment classification.', itemType: 'Internship' },
+                { id: 'e2', date: '2023', role: 'Python & Data Analysis Trainee', company: 'Online Learning & Freelance · Remote', description: 'Completed advanced courses in machine learning, deep learning, and data visualization. Built multiple end-to-end projects using real-world datasets.', itemType: 'Education' },
+                { id: 'e3', date: '2022–2025', role: 'B.E. Computer Engineering Student', company: 'BNCOE Pusad · Maharashtra', description: 'Pursued Bachelor of Engineering with focus on AI/ML coursework, completed capstone project in NLP-based sentiment analysis.', itemType: 'Education' }
+            ],
+            education: { degree: 'Bachelor of Engineering — Computer Engineering', institution: 'Babasaheb Naik College of Engineering, Pusad', year: 'May 2025' },
+            contact: { email: 'rohitranveer358@gmail.com', phone: '+91 9158000676', linkedin: 'https://www.linkedin.com/in/rohit-ranveer', github: 'https://github.com/rohitranvir', socials: [], showPhone: true, showForm: true, showLocation: true },
+            appearance: { primaryColor: '#e8b866', secondaryColor: '#4ecdc4', bgColor: '#0a0a0f', font: 'Playfair+DM Sans', cursor: true, animations: true, grain: true }
+        };
+
+        function seed() {
+            const k = DB.keys;
+            if (!DB.get(k.profile)) DB.set(k.profile, DEFAULTS.profile);
+            if (!DB.get(k.skills)) DB.set(k.skills, DEFAULTS.skills);
+            if (!DB.get(k.projects)) DB.set(k.projects, DEFAULTS.projects);
+            if (!DB.get(k.research)) DB.set(k.research, DEFAULTS.research);
+            if (!DB.get(k.experience)) DB.set(k.experience, { items: DEFAULTS.experience, education: DEFAULTS.education });
+            if (!DB.get(k.contact)) DB.set(k.contact, DEFAULTS.contact);
+            if (!DB.get(k.appearance)) DB.set(k.appearance, DEFAULTS.appearance);
+            if (!DB.get(k.meta)) DB.set(k.meta, { lastEdited: new Date().toISOString(), version: '1.0' });
+        }
+        seed();
+
+        /* ── APPEARANCE ── */
+        function applyAppearance() {
+            const a = DB.get(DB.keys.appearance) || DEFAULTS.appearance;
+            const r = document.documentElement.style;
+            r.setProperty('--gold', a.primaryColor);
+            r.setProperty('--teal', a.secondaryColor);
+            r.setProperty('--bg', a.bgColor);
+            document.body.classList.toggle('grain', a.grain !== false);
+            const cursorEl = [document.getElementById('cursor-dot'), document.getElementById('cursor-ring')];
+            cursorEl.forEach(el => { if (el) el.style.display = a.cursor === false ? 'none' : '' });
+        }
+        applyAppearance();
+
+        /* ── UTILS ── */
+        function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') }
+        function uid() { return '_' + Math.random().toString(36).slice(2, 9) }
+        function toast(msg, err = false) {
+            const t = document.getElementById('toast');
+            const d = document.createElement('div');
+            d.className = 'toast-msg' + (err ? ' error' : '');
+            d.textContent = msg;
+            if (err) d.style.setProperty('--before-content', '✕');
+            t.appendChild(d);
+            setTimeout(() => d.remove(), 2800);
+        }
+        function confirm2(title, msg, cb) {
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-msg').textContent = msg;
+            document.getElementById('confirm-overlay').classList.add('active');
+            document.getElementById('confirm-ok').onclick = () => { document.getElementById('confirm-overlay').classList.remove('active'); cb() };
+            document.getElementById('confirm-cancel').onclick = () => document.getElementById('confirm-overlay').classList.remove('active');
+        }
+        function openModal(content, title) {
+            document.getElementById('modal-content').innerHTML = (title ? `<div class="modal-title">${title}</div>` : '') + content;
+            document.getElementById('modal-overlay').classList.add('active');
+        }
+        function closeModal() { document.getElementById('modal-overlay').classList.remove('active') }
+        document.getElementById('modal-close').onclick = closeModal;
+        document.getElementById('modal-overlay').onclick = e => { if (e.target === document.getElementById('modal-overlay')) closeModal() };
+        document.getElementById('confirm-cancel').onclick = () => document.getElementById('confirm-overlay').classList.remove('active');
+
+        /* ── CURSOR ── */
+        let mx = 0, my = 0, rx = 0, ry = 0;
+        const cdot = document.getElementById('cursor-dot');
+        const cring = document.getElementById('cursor-ring');
+        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; if (cdot) { cdot.style.left = mx + 'px'; cdot.style.top = my + 'px' } });
+        function animRing() { if (cring) { const dx = mx - rx, dy = my - ry; rx += dx * .12; ry += dy * .12; cring.style.left = rx + 'px'; cring.style.top = ry + 'px' } requestAnimationFrame(animRing) }
+        animRing();
+        document.querySelectorAll('a,button,.admin-nav-item').forEach(el => { el.addEventListener('mouseenter', () => { if (cdot) cdot.style.transform = 'translate(-50%,-50%) scale(2.5)' }); el.addEventListener('mouseleave', () => { if (cdot) cdot.style.transform = 'translate(-50%,-50%) scale(1)' }) });
+
+        /* ── NAV SCROLL ── */
+        window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60) });
+
+        /* ── SCROLL REVEAL ── */
+        function setupReveal() {
+            const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') }) }, { threshold: .1 });
+            document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+        }
+        /* ══ PORTFOLIO RENDER ══════════════════════════════════════════ */
+        const Portfolio = {
+            render() { this.renderHero(); this.renderAbout(); this.renderSkills(); this.renderProjects(); this.renderResearch(); this.renderExperience(); this.renderContact(); this.renderFooter(); setupReveal(); applyAppearance(); },
+            renderHero() {
+                const p = DB.get(DB.keys.profile) || DEFAULTS.profile;
+                const names = p.name.split(' '); const first = names[0]; const last = names.slice(1).join(' ');
+                const stats = (p.stats || []).map(s => `<div class="hero-stat"><span class="stat-num">${esc(s.num)}</span><span class="stat-label">${esc(s.label)}</span></div>`).join('');
+                const tags = (p.tags || []).map(t => `<span class="skill-pill">${esc(t)}</span>`).join('');
+                document.getElementById('hero-content').innerHTML = `
+      <div class="hero-eyebrow">// Available for hire · ${esc(p.location)}</div>
+      <h1 class="hero-name">${esc(first)} <span class="gold">${esc(last)}</span></h1>
+      <p class="hero-title">${esc(p.title)}</p>
+      <p class="hero-bio">${esc(p.tagline)}</p>
+      <div class="hero-stats">${stats}</div>
+      <div class="skill-pills" style="margin-bottom:32px;opacity:0;animation:fadeUp .6s .9s forwards">${tags}</div>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-primary">View My Work</a>
+        <a href="#contact" class="btn-ghost">Get In Touch</a>
+      </div>`;
+                document.getElementById('nav-logo').textContent = p.name.split(' ').map(w => w[0]).join('');
+            },
+            renderAbout() {
+                const p = DB.get(DB.keys.profile) || DEFAULTS.profile;
+                const ct = DB.get(DB.keys.contact) || DEFAULTS.contact;
+                const cards = [
+                    { icon: '📍', label: 'Location', val: p.location },
+                    { icon: '✉️', label: 'Email', val: `<a href="mailto:${esc(p.email)}" style="color:var(--gold)">${esc(p.email)}</a>` },
+                    ct.showPhone !== false ? { icon: '📱', label: 'Phone', val: esc(p.phone) } : null,
+                    { icon: '💼', label: 'LinkedIn', val: `<a href="${esc(p.linkedin)}" target="_blank" style="color:var(--gold)">linkedin.com/in/rohit-ranveer</a>` },
+                    { icon: '🐙', label: 'GitHub', val: `<a href="${esc(p.github)}" target="_blank" style="color:var(--gold)">github.com/rohitranvir</a>` }
+                ].filter(Boolean).map(c => `<div class="about-card reveal"><div class="about-card-icon">${c.icon}</div><div class="about-card-label">${c.label}</div><div class="about-card-value">${c.val}</div></div>`).join('');
+                document.getElementById('about-content').innerHTML = `
+      <span class="section-label">// About Me</span>
+      <h2 class="section-title">The Person <span>Behind the Data</span></h2>
+      <div class="section-line"></div>
+      <div class="about-grid">
+        <div class="about-text reveal"><p>${esc(p.about1)}</p><p>${esc(p.about2)}</p></div>
+        <div class="about-cards">${cards}</div>
+      </div>`;
+            },
+            renderSkills() {
+                const skills = DB.get(DB.keys.skills) || DEFAULTS.skills;
+                const cards = skills.map(s => `
+      <div class="skill-card reveal" style="--card-color:${esc(s.color)}">
+        <div class="skill-card-head"><span class="skill-icon">${esc(s.icon)}</span><span class="skill-cat">${esc(s.category)}</span></div>
+        <div class="skill-pills">${(s.skills || []).map(sk => `<span class="skill-pill">${esc(sk)}</span>`).join('')}</div>
+      </div>`).join('');
+                document.getElementById('skills-content').innerHTML = `
+      <span class="section-label">// Technical Skills</span>
+      <h2 class="section-title">Tools & <span>Technologies</span></h2>
+      <div class="section-line"></div>
+      <div class="skills-grid">${cards}</div>`;
+            },
+            renderProjects() {
+                const projects = (DB.get(DB.keys.projects) || DEFAULTS.projects).sort((a, b) => (a.order || 0) - (b.order || 0));
+                const featured = projects.find(p => p.featured);
+                const others = projects.filter(p => !p.featured);
+                let html = `<span class="section-label">// Projects</span><h2 class="section-title">What I've <span>Built</span></h2><div class="section-line"></div>`;
+                if (featured) {
+                    const bc = featured.badgeStyle === 'teal' ? 'badge-teal' : 'badge-gold';
+                    const feats = (featured.features || []).map(f => `<li>${esc(f)}</li>`).join('');
+                    const techs = (featured.tech || []).map(t => `<span class="tech-tag">${esc(t)}</span>`).join('');
+                    const links = (featured.github ? `<a href="${esc(featured.github)}" target="_blank" class="project-link link-github">⭐ GitHub</a>` : '') +
+                        (featured.demo ? `<a href="${esc(featured.demo)}" target="_blank" class="project-link link-demo">🚀 Live Demo</a>` : '');
+                    html += `<div class="featured-project reveal">
+        <div>
+          <span class="project-badge ${bc}">${esc(featured.badge)}</span>
+          <h3 class="project-title">${esc(featured.title)}</h3>
+          <p class="project-desc">${esc(featured.description)}</p>
+          <ul class="project-features">${feats}</ul>
+          <div class="project-tech">${techs}</div>
+          <div class="project-links">${links}</div>
+        </div>
+        <div class="project-code-panel">
+          <div class="code-panel-header">
+            <div class="code-dot" style="background:#ff5f57"></div>
+            <div class="code-dot" style="background:#febc2e"></div>
+            <div class="code-dot" style="background:#28c840"></div>
+            <span class="code-panel-title">${esc(featured.title.toLowerCase().replace(/\s/g, '_'))}.py</span>
+          </div>
+          <div class="code-panel-body">${esc(featured.codeSnippet || '# No code snippet added yet')}</div>
+        </div>
+      </div>`;
+                }
+                const grid = others.map(p => {
+                    const bc = p.badgeStyle === 'teal' ? 'badge-teal' : 'badge-gold';
+                    const techs = (p.tech || []).map(t => `<span class="tech-tag">${esc(t)}</span>`).join('');
+                    const links = (p.github ? `<a href="${esc(p.github)}" target="_blank" class="project-link link-github">⭐ GitHub</a>` : '') +
+                        (p.demo ? `<a href="${esc(p.demo)}" target="_blank" class="project-link link-demo">🚀 Demo</a>` : '');
+                    return `<div class="project-card reveal">
+        <span class="project-badge ${bc}">${esc(p.badge)}</span>
+        <h3 class="project-title" style="font-size:1.15rem;margin:12px 0 8px">${esc(p.title)}</h3>
+        <p class="project-desc" style="font-size:.9rem;margin-bottom:14px">${esc(p.description)}</p>
+        <div class="project-tech" style="margin-bottom:16px">${techs}</div>
+        <div class="project-links">${links}</div>
+      </div>`;
+                }).join('');
+                html += `<div class="projects-grid">${grid}</div>`;
+                document.getElementById('projects-content').innerHTML = html;
+            },
+            renderResearch() {
+                const research = DB.get(DB.keys.research) || DEFAULTS.research;
+                const items = research.map(r => `
+      <div class="research-card reveal">
+        <div class="research-type">${esc(r.type)}</div>
+        <div class="research-title">${esc(r.title)}</div>
+        <div class="research-meta">${esc(r.journal)} · ${esc(r.year)}</div>
+        <div class="research-desc">${esc(r.description)}</div>
+        ${r.url ? `<a href="${esc(r.url)}" target="_blank" class="research-link">Read Paper →</a>` : ''}
+      </div>`).join('');
+                document.getElementById('research-content').innerHTML = `
+      <span class="section-label">// Research</span>
+      <h2 class="section-title">Published <span>Work</span></h2>
+      <div class="section-line"></div>
+      <div class="research-list">${items}</div>`;
+            },
+            renderExperience() {
+                const data = DB.get(DB.keys.experience) || { items: DEFAULTS.experience, education: DEFAULTS.education };
+                const items = (data.items || []).map(e => `
+      <div class="exp-item">
+        <div class="exp-date">${esc(e.date)}</div>
+        <div class="exp-role">${esc(e.role)}</div>
+        <div class="exp-company">${esc(e.company)}</div>
+        <div class="exp-desc">${esc(e.description)}</div>
+      </div>`).join('');
+                const edu = data.education || DEFAULTS.education;
+                document.getElementById('experience-content').innerHTML = `
+      <span class="section-label">// Experience</span>
+      <h2 class="section-title">My <span>Journey</span></h2>
+      <div class="section-line"></div>
+      <div class="exp-grid">
+        <div><div class="exp-timeline reveal">${items}</div></div>
+        <div class="edu-card reveal">
+          <div class="edu-label">Education</div>
+          <div class="edu-degree">${esc(edu.degree)}</div>
+          <div class="edu-institution">${esc(edu.institution)}</div>
+          <div class="edu-year">${esc(edu.year)}</div>
+        </div>
+      </div>`;
+            },
+            renderContact() {
+                const ct = DB.get(DB.keys.contact) || DEFAULTS.contact;
+                const p = DB.get(DB.keys.profile) || DEFAULTS.profile;
+                const items = [
+                    { icon: '✉️', label: 'Email', val: ct.email, href: `mailto:${ct.email}` },
+                    ct.showPhone !== false ? { icon: '📱', label: 'Phone', val: ct.phone, href: `tel:${ct.phone}` } : null,
+                    { icon: '💼', label: 'LinkedIn', val: 'linkedin.com/in/rohit-ranveer', href: ct.linkedin },
+                    { icon: '🐙', label: 'GitHub', val: 'github.com/rohitranvir', href: ct.github },
+                    ct.showLocation !== false ? { icon: '📍', label: 'Location', val: p.location, href: null } : null
+                ].filter(Boolean).map(i => `
+      <div class="contact-item reveal">
+        <div class="contact-item-icon">${i.icon}</div>
+        <div><div class="contact-item-label">${i.label}</div>
+        <div class="contact-item-val">${i.href ? `<a href="${esc(i.href)}" target="_blank" style="color:var(--gold)">${esc(i.val)}</a>` : esc(i.val)}</div></div>
+      </div>`).join('');
+                const form = ct.showForm !== false ? `
+      <div class="contact-form reveal">
+        <h3 style="font-family:var(--font-head);font-size:1.3rem;margin-bottom:20px">Send a <span style="color:var(--gold)">Message</span></h3>
+        <div class="form-group"><label class="form-label">Name</label><input class="form-input" placeholder="Your name" id="cf-name"></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="your@email.com" id="cf-email"></div>
+        <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Your message..." id="cf-msg"></textarea></div>
+        <button class="btn-primary" onclick="alert('Form submitted! (Configure a backend to receive messages.)')">Send Message</button>
+      </div>`: '';
+                document.getElementById('contact-content').innerHTML = `
+      <span class="section-label">// Contact</span>
+      <h2 class="section-title">Let's <span>Connect</span></h2>
+      <div class="section-line"></div>
+      <div class="contact-grid">
+        <div><div class="contact-info-list">${items}</div></div>
+        ${form}
+      </div>`;
+            },
+            renderFooter() {
+                const p = DB.get(DB.keys.profile) || DEFAULTS.profile;
+                document.getElementById('footer-content').innerHTML = `
+      <div class="footer-name">${esc(p.name)}</div>
+      <div class="footer-copy">© ${new Date().getFullYear()} ${esc(p.name)} · Built with passion for data & design · <span style="color:var(--gold)">Open to opportunities</span></div>`;
+            }
+        };
+        Portfolio.render();
+
+        /* ══ TAG INPUT HELPER ══ */
+        function makeTagInput(container, initial, placeholder = 'Add skill...') {
+            let tags = [...(initial || [])];
+            function render() {
+                container.innerHTML = '';
+                container.classList.add('tag-input-container');
+                tags.forEach((t, i) => {
+                    const pill = document.createElement('div'); pill.className = 'tag-pill';
+                    pill.innerHTML = `<span>${esc(t)}</span><button class="tag-pill-x" data-i="${i}">×</button>`;
+                    container.appendChild(pill);
+                });
+                const inp = document.createElement('input'); inp.className = 'tag-input-field'; inp.placeholder = placeholder;
+                inp.onkeydown = e => { if ((e.key === 'Enter' || e.key === ',') && inp.value.trim()) { e.preventDefault(); tags.push(inp.value.trim()); inp.value = ''; render(); } if (e.key === 'Backspace' && !inp.value && tags.length) { tags.pop(); render(); } };
+                inp.onfocus = () => container.classList.add('focused'); inp.onblur = () => container.classList.remove('focused');
+                container.appendChild(inp);
+                container.querySelectorAll('.tag-pill-x').forEach(btn => btn.onclick = () => { tags.splice(+btn.dataset.i, 1); render(); });
+            }
+            render();
+            return { get: () => tags, set: (v) => { tags = [...v]; render() } };
+        }
+
+        /* ══ FEATURES LIST HELPER ══ */
+        function makeFeatList(container, initial) {
+            let feats = [...(initial || [])];
+            function render() {
+                container.innerHTML = `<div class="features-list" id="fl-list"></div><button type="button" class="admin-btn admin-btn-ghost admin-btn-sm" id="fl-add">+ Add Feature</button>`;
+                const list = container.querySelector('#fl-list');
+                feats.forEach((f, i) => {
+                    const row = document.createElement('div'); row.className = 'feature-row';
+                    row.innerHTML = `<input class="feature-input" value="${esc(f)}" data-i="${i}"><button class="feature-rm" data-i="${i}">×</button>`;
+                    list.appendChild(row);
+                });
+                list.querySelectorAll('.feature-input').forEach(inp => inp.oninput = () => feats[+inp.dataset.i] = inp.value);
+                list.querySelectorAll('.feature-rm').forEach(btn => btn.onclick = () => { feats.splice(+btn.dataset.i, 1); render(); });
+                container.querySelector('#fl-add').onclick = () => { feats.push(''); render(); container.querySelectorAll('.feature-input').at(-1)?.focus(); };
+            }
+            render();
+            return { get: () => feats.filter(f => f.trim()) };
+        }
+
+        /* ══ ADMIN CORE ══ */
+        const Admin = {
+            currentSection: 'dashboard',
+            show() { document.getElementById('admin-panel').classList.add('active'); document.getElementById('portfolio').style.display = 'none'; this.navigate('dashboard'); },
+            hide() { document.getElementById('admin-panel').classList.remove('active'); document.getElementById('portfolio').style.display = ''; Portfolio.render(); },
+            login(pw) { if (pw === 'rohit2025') { document.getElementById('admin-login-overlay').classList.remove('active'); this.show(); return true; } return false; },
+            logout() { this.hide(); },
+            navigate(section) {
+                this.currentSection = section;
+                document.querySelectorAll('.admin-nav-item').forEach(el => el.classList.toggle('active', el.dataset.section === section));
+                const titles = { dashboard: 'Dashboard', profile: 'Profile & About', skills: 'Skills', projects: 'Projects', research: 'Research', experience: 'Experience', contact: 'Contact Info', appearance: 'Appearance' };
+                document.getElementById('admin-header-title').textContent = titles[section] || section;
+                const renders = { dashboard: () => this.renderDashboard(), profile: () => this.renderProfile(), skills: () => this.renderSkills(), projects: () => this.renderProjects(), research: () => this.renderResearch(), experience: () => this.renderExperience(), contact: () => this.renderContact(), appearance: () => this.renderAppearance() };
+                (renders[section] || renders.dashboard)();
+            },
+
+            /* DASHBOARD */
+            renderDashboard() {
+                const skills = DB.get(DB.keys.skills) || []; const projects = DB.get(DB.keys.projects) || []; const research = DB.get(DB.keys.research) || []; const meta = DB.get(DB.keys.meta) || {};
+                document.getElementById('admin-content').innerHTML = `
+      <div class="dash-stats">
+        <div class="dash-stat"><div class="dash-stat-num">${projects.length}</div><div class="dash-stat-label">Projects</div></div>
+        <div class="dash-stat"><div class="dash-stat-num">${skills.length}</div><div class="dash-stat-label">Skill Categories</div></div>
+        <div class="dash-stat"><div class="dash-stat-num">${research.length}</div><div class="dash-stat-label">Publications</div></div>
+        <div class="dash-stat"><div class="dash-stat-num">${skills.reduce((a, s) => a + (s.skills || []).length, 0)}</div><div class="dash-stat-label">Total Skills</div></div>
+      </div>
+      <div class="admin-card"><div class="admin-card-title">Quick Actions</div>
+        <div class="dash-actions">
+          <button class="dash-action-btn" onclick="Admin.navigate('projects')">📁 Manage Projects</button>
+          <button class="dash-action-btn" onclick="Admin.navigate('skills')">🛠️ Manage Skills</button>
+          <button class="dash-action-btn" onclick="Admin.navigate('profile')">👤 Edit Profile</button>
+          <button class="dash-action-btn" onclick="Admin.navigate('research')">📄 Manage Research</button>
+        </div>
+      </div>
+      <div class="admin-card"><div class="admin-card-title">Last Saved</div><div style="color:var(--muted);font-size:.9rem">${meta.lastEdited ? new Date(meta.lastEdited).toLocaleString() : 'Never'}</div></div>`;
+            },
+
+            /* PROFILE */
+            renderProfile() {
+                const p = DB.get(DB.keys.profile) || DEFAULTS.profile;
+                document.getElementById('admin-content').innerHTML = `
+      <div class="admin-card"><div class="admin-card-title">Personal Info</div>
+        <div class="admin-form-grid">
+          <div class="admin-form-group"><label class="admin-label">Full Name</label><input class="admin-input" id="p-name" value="${esc(p.name)}"></div>
+          <div class="admin-form-group"><label class="admin-label">Title</label><input class="admin-input" id="p-title" value="${esc(p.title)}"></div>
+          <div class="admin-form-group full"><label class="admin-label">Tagline</label><textarea class="admin-textarea" id="p-tagline">${esc(p.tagline)}</textarea></div>
+          <div class="admin-form-group full"><label class="admin-label">About Paragraph 1</label><textarea class="admin-textarea" id="p-about1">${esc(p.about1)}</textarea></div>
+          <div class="admin-form-group full"><label class="admin-label">About Paragraph 2</label><textarea class="admin-textarea" id="p-about2">${esc(p.about2)}</textarea></div>
+          <div class="admin-form-group"><label class="admin-label">Location</label><input class="admin-input" id="p-location" value="${esc(p.location)}"></div>
+          <div class="admin-form-group"><label class="admin-label">Email</label><input class="admin-input" id="p-email" value="${esc(p.email)}"></div>
+          <div class="admin-form-group"><label class="admin-label">Phone</label><input class="admin-input" id="p-phone" value="${esc(p.phone)}"></div>
+          <div class="admin-form-group"><label class="admin-label">LinkedIn URL</label><input class="admin-input" id="p-linkedin" value="${esc(p.linkedin)}"></div>
+          <div class="admin-form-group"><label class="admin-label">GitHub URL</label><input class="admin-input" id="p-github" value="${esc(p.github)}"></div>
+        </div>
+      </div>
+      <div class="admin-card"><div class="admin-card-title">Hero Stats (3 items)</div>
+        <div class="admin-form-grid">
+          ${(p.stats || [{ num: '', label: '' }]).slice(0, 3).map((s, i) => `
+            <div class="admin-form-group"><label class="admin-label">Stat ${i + 1} Number</label><input class="admin-input stat-num" data-i="${i}" value="${esc(s.num)}"></div>
+            <div class="admin-form-group"><label class="admin-label">Stat ${i + 1} Label</label><input class="admin-input stat-lbl" data-i="${i}" value="${esc(s.label)}"></div>`).join('')}
+        </div>
+      </div>
+      <div class="admin-card"><div class="admin-card-title">Availability Tags</div>
+        <div id="p-tags-container"></div>
+      </div>`;
+                this._profileTagInput = makeTagInput(document.getElementById('p-tags-container'), p.tags || [], 'Add tag...');
+            },
+            saveProfile() {
+                const p = DB.get(DB.keys.profile) || {};
+                p.name = document.getElementById('p-name').value; p.title = document.getElementById('p-title').value;
+                p.tagline = document.getElementById('p-tagline').value; p.about1 = document.getElementById('p-about1').value; p.about2 = document.getElementById('p-about2').value;
+                p.location = document.getElementById('p-location').value; p.email = document.getElementById('p-email').value; p.phone = document.getElementById('p-phone').value;
+                p.linkedin = document.getElementById('p-linkedin').value; p.github = document.getElementById('p-github').value;
+                const nums = [...document.querySelectorAll('.stat-num')]; const lbls = [...document.querySelectorAll('.stat-lbl')];
+                p.stats = nums.map((n, i) => ({ num: n.value, label: lbls[i]?.value || '' }));
+                p.tags = this._profileTagInput ? this._profileTagInput.get() : p.tags;
+                DB.set(DB.keys.profile, p); this._saveMeta(); toast('Profile saved!'); Portfolio.render();
+            },
+
+            /* SKILLS */
+            renderSkills() {
+                const skills = DB.get(DB.keys.skills) || DEFAULTS.skills;
+                const cards = skills.map((s, i) => `
+      <div class="skill-admin-card">
+        <div class="skill-admin-head">
+          <div style="display:flex;gap:8px;align-items:center">
+            <input class="admin-input" style="width:48px;font-size:1.2rem;text-align:center;padding:4px" id="sk-icon-${i}" value="${esc(s.icon)}">
+            <input class="admin-input" style="flex:1" id="sk-cat-${i}" value="${esc(s.category)}">
+          </div>
+          <div class="skill-admin-actions">
+            <input type="color" value="${s.color || '#e8b866'}" id="sk-col-${i}" title="Accent color" style="width:32px;height:32px">
+            <button class="admin-btn admin-btn-danger admin-btn-sm" onclick="Admin.deleteSkill('${s.id}')">×</button>
+          </div>
+        </div>
+        <div id="sk-tags-${i}"></div>
+      </div>`).join('');
+                document.getElementById('admin-content').innerHTML = `
+      <button class="admin-btn admin-btn-gold" style="margin-bottom:20px" onclick="Admin.addSkillModal()">+ Add Skill Category</button>
+      <div class="skill-admin-grid">${cards}</div>`;
+                this._skillTagInputs = {};
+                skills.forEach((s, i) => { this._skillTagInputs[i] = makeTagInput(document.getElementById(`sk-tags-${i}`), s.skills || [], 'Add skill...'); });
+            },
+            saveSkills() {
+                const skills = DB.get(DB.keys.skills) || [];
+                skills.forEach((s, i) => {
+                    s.icon = document.getElementById(`sk-icon-${i}`)?.value || s.icon;
+                    s.category = document.getElementById(`sk-cat-${i}`)?.value || s.category;
+                    s.color = document.getElementById(`sk-col-${i}`)?.value || s.color;
+                    s.skills = this._skillTagInputs[i] ? this._skillTagInputs[i].get() : s.skills;
+                });
+                DB.set(DB.keys.skills, skills); this._saveMeta(); toast('Skills saved!'); Portfolio.renderSkills();
+            },
+            deleteSkill(id) { confirm2('Delete Skill Category', 'This will remove the entire category.', () => { let s = DB.get(DB.keys.skills) || []; s = s.filter(x => x.id !== id); DB.set(DB.keys.skills, s); this.renderSkills(); Portfolio.renderSkills(); toast('Deleted.'); }); },
+            addSkillModal() {
+                openModal(`
+      <div class="admin-form-group" style="margin-bottom:12px"><label class="admin-label">Icon (emoji)</label><input class="admin-input" id="m-icon" value="⭐"></div>
+      <div class="admin-form-group" style="margin-bottom:12px"><label class="admin-label">Category Name</label><input class="admin-input" id="m-cat" placeholder="e.g. Front-End"></div>
+      <div class="admin-form-group" style="margin-bottom:12px"><label class="admin-label">Accent Color</label><div class="color-input-row"><input type="color" id="m-col" value="#e8b866"><input class="color-hex" id="m-col-hex" value="#e8b866"></div></div>
+      <div class="admin-form-group" style="margin-bottom:12px"><label class="admin-label">Skills</label><div id="m-skills-container"></div></div>
+      <div class="modal-footer"><button class="admin-btn admin-btn-ghost" onclick="closeModal()">Cancel</button><button class="admin-btn admin-btn-gold" onclick="Admin._addSkillSave()">Add Category</button></div>
+    `, 'New Skill Category');
+                this._newSkillTagInput = makeTagInput(document.getElementById('m-skills-container'), [], 'Add skill...');
+                const colInput = document.getElementById('m-col'); const hexInput = document.getElementById('m-col-hex');
+                colInput.oninput = () => hexInput.value = colInput.value; hexInput.oninput = () => { if (/^#[0-9a-f]{6}$/i.test(hexInput.value)) colInput.value = hexInput.value; };
+            },
+            _addSkillSave() {
+                const skills = DB.get(DB.keys.skills) || [];
+                skills.push({ id: uid(), icon: document.getElementById('m-icon').value, category: document.getElementById('m-cat').value, color: document.getElementById('m-col').value, skills: this._newSkillTagInput.get() });
+                DB.set(DB.keys.skills, skills); closeModal(); this.renderSkills(); Portfolio.renderSkills(); toast('Skill category added!');
+            },
+
+            /* PROJECTS */
+            renderProjects() {
+                const projects = (DB.get(DB.keys.projects) || DEFAULTS.projects).sort((a, b) => (a.order || 0) - (b.order || 0));
+                const rows = projects.map(p => `
+      <tr>
+        <td>${esc(p.title)}</td><td><span style="color:var(--muted);font-size:.8rem">${esc(p.type || '')}</span></td>
+        <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(p.tech || []).join(', ')}</td>
+        <td>${p.featured ? '<span class="featured-badge">⭐ Featured</span>' : ''}</td>
+        <td><div class="td-actions">
+          <button class="admin-btn admin-btn-ghost admin-btn-sm" onclick="Admin.editProject('${p.id}')">Edit</button>
+          <button class="admin-btn admin-btn-danger admin-btn-sm" onclick="Admin.deleteProject('${p.id}')">Del</button>
+        </div></td>
+      </tr>`).join('');
+                document.getElementById('admin-content').innerHTML = `
+      <button class="admin-btn admin-btn-gold" style="margin-bottom:20px" onclick="Admin.editProject(null)">+ Add New Project</button>
+      <div class="admin-card" style="padding:0;overflow:auto">
+        <table class="admin-table"><thead><tr><th>Title</th><th>Type</th><th>Tech Stack</th><th>Featured</th><th>Actions</th></tr></thead>
+        <tbody>${rows}</tbody></table>
+      </div>`;
+            },
+            editProject(id) {
+                const projects = DB.get(DB.keys.projects) || [];
+                const p = id ? projects.find(x => x.id === id) || {} : { id: uid(), title: '', badge: '', badgeStyle: 'gold', description: '', features: [], tech: [], github: '', demo: '', featured: false, codeSnippet: '', type: 'Data Science', order: projects.length + 1 };
+                openModal(`
+      <div class="admin-form-grid">
+        <div class="admin-form-group"><label class="admin-label">Title</label><input class="admin-input" id="ep-title" value="${esc(p.title)}"></div>
+        <div class="admin-form-group"><label class="admin-label">Badge Label</label><input class="admin-input" id="ep-badge" value="${esc(p.badge)}"></div>
+        <div class="admin-form-group"><label class="admin-label">Badge Style</label><select class="admin-select" id="ep-style"><option value="gold" ${p.badgeStyle === 'gold' ? 'selected' : ''}>Gold</option><option value="teal" ${p.badgeStyle === 'teal' ? 'selected' : ''}>Teal</option></select></div>
+        <div class="admin-form-group"><label class="admin-label">Type</label><select class="admin-select" id="ep-type"><option ${p.type === 'Data Science' ? 'selected' : ''}>Data Science</option><option ${p.type === 'NLP' ? 'selected' : ''}>NLP</option><option ${p.type === 'Analytics' ? 'selected' : ''}>Analytics</option><option ${p.type === 'Web' ? 'selected' : ''}>Web</option><option ${p.type === 'Other' ? 'selected' : ''}>Other</option></select></div>
+        <div class="admin-form-group"><label class="admin-label">GitHub URL</label><input class="admin-input" id="ep-github" value="${esc(p.github)}"></div>
+        <div class="admin-form-group"><label class="admin-label">Demo URL</label><input class="admin-input" id="ep-demo" value="${esc(p.demo)}"></div>
+        <div class="admin-form-group"><label class="admin-label">Order</label><input class="admin-input" type="number" id="ep-order" value="${p.order || 1}"></div>
+        <div class="admin-form-group"><label class="admin-label">Featured?</label><label class="toggle" style="margin-top:8px"><input type="checkbox" id="ep-feat" ${p.featured ? 'checked' : ''}><span class="toggle-slider"></span></label></div>
+        <div class="admin-form-group full"><label class="admin-label">Description</label><textarea class="admin-textarea" id="ep-desc">${esc(p.description)}</textarea></div>
+        <div class="admin-form-group full"><label class="admin-label">Tech Stack</label><div id="ep-tech-container"></div></div>
+        <div class="admin-form-group full"><label class="admin-label">Features / Bullet Points</label><div id="ep-feats-container"></div></div>
+        <div class="admin-form-group full"><label class="admin-label">Code Snippet (for featured card)</label><textarea class="admin-textarea" id="ep-code" style="font-family:var(--font-mono);font-size:.82rem;min-height:140px">${esc(p.codeSnippet || '')}</textarea></div>
+      </div>
+      <div class="modal-footer"><button class="admin-btn admin-btn-ghost" onclick="closeModal()">Cancel</button><button class="admin-btn admin-btn-gold" onclick="Admin._saveProject('${p.id}')">Save Project</button></div>
+    `, id ? 'Edit Project' : 'New Project');
+                this._epTech = makeTagInput(document.getElementById('ep-tech-container'), p.tech || [], 'Add tech...');
+                this._epFeats = makeFeatList(document.getElementById('ep-feats-container'), p.features || []);
+            },
+            _saveProject(id) {
+                let projects = DB.get(DB.keys.projects) || [];
+                const idx = projects.findIndex(x => x.id === id);
+                const updated = {
+                    id, title: document.getElementById('ep-title').value, badge: document.getElementById('ep-badge').value,
+                    badgeStyle: document.getElementById('ep-style').value, type: document.getElementById('ep-type').value,
+                    github: document.getElementById('ep-github').value, demo: document.getElementById('ep-demo').value,
+                    order: +document.getElementById('ep-order').value, featured: document.getElementById('ep-feat').checked,
+                    description: document.getElementById('ep-desc').value, tech: this._epTech.get(),
+                    features: this._epFeats.get(), codeSnippet: document.getElementById('ep-code').value
+                };
+                if (idx >= 0) projects[idx] = updated; else projects.push(updated);
+                DB.set(DB.keys.projects, projects); closeModal(); this.renderProjects(); Portfolio.renderProjects(); this._saveMeta(); toast('Project saved!');
+            },
+            deleteProject(id) { confirm2('Delete Project', 'Remove this project from your portfolio?', () => { let p = DB.get(DB.keys.projects) || []; p = p.filter(x => x.id !== id); DB.set(DB.keys.projects, p); this.renderProjects(); Portfolio.renderProjects(); toast('Deleted.'); }); },
+
+            /* RESEARCH */
+            renderResearch() {
+                const research = DB.get(DB.keys.research) || [];
+                const items = research.map(r => `
+      <div class="admin-card" style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px">
+          <div style="font-family:var(--font-head);font-size:1rem">${esc(r.title)}</div>
+          <div style="display:flex;gap:8px">
+            <button class="admin-btn admin-btn-ghost admin-btn-sm" onclick="Admin.editResearch('${r.id}')">Edit</button>
+            <button class="admin-btn admin-btn-danger admin-btn-sm" onclick="Admin.deleteResearch('${r.id}')">Del</button>
+          </div>
+        </div>
+        <div style="font-size:.85rem;color:var(--muted)">${esc(r.journal)} · ${esc(r.year)}</div>
+      </div>`).join('');
+                document.getElementById('admin-content').innerHTML = `
+      <button class="admin-btn admin-btn-gold" style="margin-bottom:20px" onclick="Admin.editResearch(null)">+ Add Publication</button>${items}`;
+            },
+            editResearch(id) {
+                const research = DB.get(DB.keys.research) || [];
+                const r = id ? research.find(x => x.id === id) || {} : { id: uid(), type: '', title: '', journal: '', year: '', description: '', url: '' };
+                openModal(`
+      <div class="admin-form-grid">
+        <div class="admin-form-group full"><label class="admin-label">Publication Type</label><input class="admin-input" id="er-type" value="${esc(r.type)}"></div>
+        <div class="admin-form-group full"><label class="admin-label">Paper Title</label><input class="admin-input" id="er-title" value="${esc(r.title)}"></div>
+        <div class="admin-form-group"><label class="admin-label">Journal / Conference</label><input class="admin-input" id="er-journal" value="${esc(r.journal)}"></div>
+        <div class="admin-form-group"><label class="admin-label">Year</label><input class="admin-input" id="er-year" value="${esc(r.year)}"></div>
+        <div class="admin-form-group full"><label class="admin-label">Description</label><textarea class="admin-textarea" id="er-desc">${esc(r.description)}</textarea></div>
+        <div class="admin-form-group full"><label class="admin-label">URL / DOI (optional)</label><input class="admin-input" id="er-url" value="${esc(r.url)}"></div>
+      </div>
+      <div class="modal-footer"><button class="admin-btn admin-btn-ghost" onclick="closeModal()">Cancel</button><button class="admin-btn admin-btn-gold" onclick="Admin._saveResearch('${r.id}')">Save</button></div>
+    `, id ? 'Edit Publication' : 'New Publication');
+            },
+            _saveResearch(id) {
+                let research = DB.get(DB.keys.research) || []; const idx = research.findIndex(x => x.id === id);
+                const updated = { id, type: document.getElementById('er-type').value, title: document.getElementById('er-title').value, journal: document.getElementById('er-journal').value, year: document.getElementById('er-year').value, description: document.getElementById('er-desc').value, url: document.getElementById('er-url').value };
+                if (idx >= 0) research[idx] = updated; else research.push(updated);
+                DB.set(DB.keys.research, research); closeModal(); this.renderResearch(); Portfolio.renderResearch(); this._saveMeta(); toast('Publication saved!');
+            },
+            deleteResearch(id) { confirm2('Delete Publication', 'Remove this publication?', () => { let r = DB.get(DB.keys.research) || []; r = r.filter(x => x.id !== id); DB.set(DB.keys.research, r); this.renderResearch(); Portfolio.renderResearch(); toast('Deleted.'); }); },
+
+            /* EXPERIENCE */
+            renderExperience() {
+                const data = DB.get(DB.keys.experience) || { items: [], education: DEFAULTS.education };
+                const items = (data.items || []).map(e => `
+      <div class="admin-card" style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px">
+          <div><div style="font-family:var(--font-head);font-size:1rem">${esc(e.role)}</div><div style="font-size:.85rem;color:var(--muted)">${esc(e.company)} · ${esc(e.date)}</div></div>
+          <div style="display:flex;gap:8px">
+            <button class="admin-btn admin-btn-ghost admin-btn-sm" onclick="Admin.editExp('${e.id}')">Edit</button>
+            <button class="admin-btn admin-btn-danger admin-btn-sm" onclick="Admin.deleteExp('${e.id}')">Del</button>
+          </div>
+        </div>
+      </div>`).join('');
+                const edu = data.education || DEFAULTS.education;
+                document.getElementById('admin-content').innerHTML = `
+      <button class="admin-btn admin-btn-gold" style="margin-bottom:20px" onclick="Admin.editExp(null)">+ Add Experience</button>${items}
+      <div class="admin-card" style="margin-top:8px"><div class="admin-card-title">Education</div>
+        <div class="admin-form-grid">
+          <div class="admin-form-group full"><label class="admin-label">Degree</label><input class="admin-input" id="edu-degree" value="${esc(edu.degree)}"></div>
+          <div class="admin-form-group"><label class="admin-label">Institution</label><input class="admin-input" id="edu-inst" value="${esc(edu.institution)}"></div>
+          <div class="admin-form-group"><label class="admin-label">Year</label><input class="admin-input" id="edu-year" value="${esc(edu.year)}"></div>
+        </div>
+      </div>`;
+            },
+            editExp(id) {
+                const data = DB.get(DB.keys.experience) || { items: [] };
+                const e = id ? data.items.find(x => x.id === id) || {} : { id: uid(), date: '', role: '', company: '', description: '', itemType: 'Work' };
+                openModal(`
+      <div class="admin-form-grid">
+        <div class="admin-form-group"><label class="admin-label">Date / Period</label><input class="admin-input" id="ee-date" value="${esc(e.date)}"></div>
+        <div class="admin-form-group"><label class="admin-label">Type</label><select class="admin-select" id="ee-type"><option ${e.itemType === 'Work' ? 'selected' : ''}>Work</option><option ${e.itemType === 'Internship' ? 'selected' : ''}>Internship</option><option ${e.itemType === 'Freelance' ? 'selected' : ''}>Freelance</option><option ${e.itemType === 'Education' ? 'selected' : ''}>Education</option></select></div>
+        <div class="admin-form-group"><label class="admin-label">Role / Title</label><input class="admin-input" id="ee-role" value="${esc(e.role)}"></div>
+        <div class="admin-form-group"><label class="admin-label">Company & Location</label><input class="admin-input" id="ee-company" value="${esc(e.company)}"></div>
+        <div class="admin-form-group full"><label class="admin-label">Description</label><textarea class="admin-textarea" id="ee-desc">${esc(e.description)}</textarea></div>
+      </div>
+      <div class="modal-footer"><button class="admin-btn admin-btn-ghost" onclick="closeModal()">Cancel</button><button class="admin-btn admin-btn-gold" onclick="Admin._saveExp('${e.id}')">Save</button></div>
+    `, id ? 'Edit Experience' : 'New Experience');
+            },
+            _saveExp(id) {
+                let data = DB.get(DB.keys.experience) || { items: [], education: DEFAULTS.education };
+                const idx = (data.items || []).findIndex(x => x.id === id);
+                const updated = { id, date: document.getElementById('ee-date').value, role: document.getElementById('ee-role').value, company: document.getElementById('ee-company').value, description: document.getElementById('ee-desc').value, itemType: document.getElementById('ee-type').value };
+                if (idx >= 0) data.items[idx] = updated; else data.items.push(updated);
+                DB.set(DB.keys.experience, data); closeModal(); this.renderExperience(); Portfolio.renderExperience(); this._saveMeta(); toast('Experience saved!');
+            },
+            deleteExp(id) { confirm2('Delete Experience', 'Remove this entry?', () => { let d = DB.get(DB.keys.experience) || { items: [] }; d.items = d.items.filter(x => x.id !== id); DB.set(DB.keys.experience, d); this.renderExperience(); Portfolio.renderExperience(); toast('Deleted.'); }); },
+            saveExperience() {
+                let data = DB.get(DB.keys.experience) || { items: [], education: {} };
+                data.education = { degree: document.getElementById('edu-degree')?.value || '', institution: document.getElementById('edu-inst')?.value || '', year: document.getElementById('edu-year')?.value || '' };
+                DB.set(DB.keys.experience, data); this._saveMeta(); toast('Education saved!'); Portfolio.renderExperience();
+            },
+
+            /* CONTACT */
+            renderContact() {
+                const ct = DB.get(DB.keys.contact) || DEFAULTS.contact;
+                document.getElementById('admin-content').innerHTML = `
+      <div class="admin-card"><div class="admin-card-title">Contact Details</div>
+        <div class="admin-form-grid">
+          <div class="admin-form-group"><label class="admin-label">Email</label><input class="admin-input" id="ct-email" value="${esc(ct.email)}"></div>
+          <div class="admin-form-group"><label class="admin-label">Phone</label><input class="admin-input" id="ct-phone" value="${esc(ct.phone)}"></div>
+          <div class="admin-form-group"><label class="admin-label">LinkedIn URL</label><input class="admin-input" id="ct-linkedin" value="${esc(ct.linkedin)}"></div>
+          <div class="admin-form-group"><label class="admin-label">GitHub URL</label><input class="admin-input" id="ct-github" value="${esc(ct.github)}"></div>
+        </div>
+      </div>
+      <div class="admin-card"><div class="admin-card-title">Visibility Settings</div>
+        <div class="toggle-row"><div><div class="toggle-label">Show Phone Number</div></div><label class="toggle"><input type="checkbox" id="ct-show-phone" ${ct.showPhone !== false ? 'checked' : ''}><span class="toggle-slider"></span></label></div>
+        <div class="toggle-row"><div><div class="toggle-label">Show Contact Form</div></div><label class="toggle"><input type="checkbox" id="ct-show-form" ${ct.showForm !== false ? 'checked' : ''}><span class="toggle-slider"></span></label></div>
+        <div class="toggle-row"><div><div class="toggle-label">Show Location</div></div><label class="toggle"><input type="checkbox" id="ct-show-loc" ${ct.showLocation !== false ? 'checked' : ''}><span class="toggle-slider"></span></label></div>
+      </div>`;
+            },
+            saveContact() {
+                const ct = DB.get(DB.keys.contact) || {};
+                ct.email = document.getElementById('ct-email').value; ct.phone = document.getElementById('ct-phone').value;
+                ct.linkedin = document.getElementById('ct-linkedin').value; ct.github = document.getElementById('ct-github').value;
+                ct.showPhone = document.getElementById('ct-show-phone').checked; ct.showForm = document.getElementById('ct-show-form').checked; ct.showLocation = document.getElementById('ct-show-loc').checked;
+                DB.set(DB.keys.contact, ct); this._saveMeta(); toast('Contact saved!'); Portfolio.renderContact(); Portfolio.renderAbout();
+            },
+
+            /* APPEARANCE */
+            renderAppearance() {
+                const a = DB.get(DB.keys.appearance) || DEFAULTS.appearance;
+                document.getElementById('admin-content').innerHTML = `
+      <div class="admin-card"><div class="admin-card-title">Theme Colors</div>
+        <div class="admin-form-grid">
+          <div class="admin-form-group"><label class="admin-label">Primary / Gold</label><div class="color-input-row"><input type="color" id="ap-primary" value="${a.primaryColor}"><input class="color-hex" id="ap-primary-hex" value="${a.primaryColor}"></div></div>
+          <div class="admin-form-group"><label class="admin-label">Secondary / Teal</label><div class="color-input-row"><input type="color" id="ap-secondary" value="${a.secondaryColor}"><input class="color-hex" id="ap-secondary-hex" value="${a.secondaryColor}"></div></div>
+          <div class="admin-form-group"><label class="admin-label">Background</label><div class="color-input-row"><input type="color" id="ap-bg" value="${a.bgColor}"><input class="color-hex" id="ap-bg-hex" value="${a.bgColor}"></div></div>
+        </div>
+      </div>
+      <div class="admin-card"><div class="admin-card-title">Display Options</div>
+        <div class="toggle-row"><div><div class="toggle-label">Custom Cursor</div><div class="toggle-sub">Gold dot + lagging ring</div></div><label class="toggle"><input type="checkbox" id="ap-cursor" ${a.cursor !== false ? 'checked' : ''}><span class="toggle-slider"></span></label></div>
+        <div class="toggle-row"><div><div class="toggle-label">Scroll Animations</div><div class="toggle-sub">Fade-in on scroll</div></div><label class="toggle"><input type="checkbox" id="ap-anim" ${a.animations !== false ? 'checked' : ''}><span class="toggle-slider"></span></label></div>
+        <div class="toggle-row"><div><div class="toggle-label">Grain Texture</div><div class="toggle-sub">Subtle noise overlay</div></div><label class="toggle"><input type="checkbox" id="ap-grain" ${a.grain !== false ? 'checked' : ''}><span class="toggle-slider"></span></label></div>
+      </div>
+      <div style="margin-top:16px"><button class="admin-btn admin-btn-ghost" onclick="Admin.resetAppearance()">↺ Reset to Defaults</button></div>`;
+                ['primary', 'secondary', 'bg'].forEach(k => {
+                    const cp = document.getElementById(`ap-${k}`); const hx = document.getElementById(`ap-${k}-hex`);
+                    cp.oninput = () => { hx.value = cp.value; this._liveApply(); }; hx.oninput = () => { if (/^#[0-9a-f]{6}$/i.test(hx.value)) { cp.value = hx.value; this._liveApply(); } };
+                });
+            },
+            _liveApply() {
+                const r = document.documentElement.style;
+                r.setProperty('--gold', document.getElementById('ap-primary')?.value || '#e8b866');
+                r.setProperty('--teal', document.getElementById('ap-secondary')?.value || '#4ecdc4');
+                r.setProperty('--bg', document.getElementById('ap-bg')?.value || '#0a0a0f');
+            },
+            saveAppearance() {
+                const a = { primaryColor: document.getElementById('ap-primary').value, secondaryColor: document.getElementById('ap-secondary').value, bgColor: document.getElementById('ap-bg').value, cursor: document.getElementById('ap-cursor').checked, animations: document.getElementById('ap-anim').checked, grain: document.getElementById('ap-grain').checked };
+                DB.set(DB.keys.appearance, a); this._saveMeta(); applyAppearance(); toast('Appearance saved!');
+            },
+            resetAppearance() { DB.set(DB.keys.appearance, DEFAULTS.appearance); this.renderAppearance(); applyAppearance(); toast('Reset to defaults.'); },
+            _saveMeta() { DB.set(DB.keys.meta, { lastEdited: new Date().toISOString(), version: '1.0' }); },
+
+            /* GLOBAL SAVE DISPATCH */
+            save() {
+                const s = this.currentSection;
+                if (s === 'profile') this.saveProfile();
+                else if (s === 'skills') this.saveSkills();
+                else if (s === 'contact') this.saveContact();
+                else if (s === 'appearance') this.saveAppearance();
+                else if (s === 'experience') this.saveExperience();
+                else toast('Use the section-specific save buttons for Projects, Research.', true);
+            }
+        };
+
+        /* ══ EVENT WIRING ══ */
+        // Admin login
+        document.getElementById('login-btn').onclick = () => {
+            const pw = document.getElementById('login-password').value;
+            if (!Admin.login(pw)) { document.getElementById('login-error').textContent = 'Incorrect password. Try again.'; document.getElementById('login-password').value = ''; }
+        };
+        document.getElementById('login-password').onkeydown = e => { if (e.key === 'Enter') document.getElementById('login-btn').click(); };
+        document.getElementById('login-close').onclick = () => document.getElementById('admin-login-overlay').classList.remove('active');
+        // Keyboard shortcut
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && e.shiftKey && e.key === 'A') { e.preventDefault(); document.getElementById('admin-login-overlay').classList.add('active'); setTimeout(() => document.getElementById('login-password').focus(), 100); }
+        });
+        // URL hash
+        if (location.hash === '#admin-login') { document.getElementById('admin-login-overlay').classList.add('active'); }
+        // Sidebar nav
+        document.getElementById('admin-nav').querySelectorAll('.admin-nav-item').forEach(el => el.onclick = () => Admin.navigate(el.dataset.section));
+        // Logout
+        document.getElementById('admin-logout').onclick = () => { Admin.logout(); toast('Logged out.'); };
+        // View portfolio from admin
+        document.getElementById('admin-view-portfolio').onclick = (e) => { e.preventDefault(); Admin.hide(); };
+        // Save button
+        document.getElementById('admin-save-btn').onclick = () => Admin.save();
+
+    </script>
+</body>
+
+</html>
