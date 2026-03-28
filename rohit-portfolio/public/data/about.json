@@ -1,0 +1,37 @@
+{
+    "name": "Rohit Ranvir",
+    "tagline": "Building intelligent systems & elegant interfaces from Pusad, Maharashtra.",
+    "roles": [
+        "Python Full Stack Developer",
+        "Data Analyst",
+        "Machine Learning Engineer",
+        "Java Developer",
+        "Software Developer"
+    ],
+    "availability": "Available for Opportunities",
+    "photo": "",
+    "bio": [
+        "I'm Rohit Ranvir, a Computer Science & Engineering graduate with specialization in Data Science & Machine Learning from Babasaheb Naik College of Engineering, Pusad (Class of 2025). I build intelligent, scalable systems that solve real problems.",
+        "My expertise spans Python full stack development, machine learning, deep learning, data analysis, and Java development. I love turning complex data into meaningful insights and building elegant web applications from scratch.",
+        "I've completed internships at Zidio Development (Web Development) and Codesoft Private Limited (Data Analyst), where I worked on real-world projects and sharpened my skills. I've also published a research paper in IJISRT on deep learning based sentiment analysis."
+    ],
+    "stats": {
+        "projects": "12+",
+        "internships": "2",
+        "cgpa": "7.5"
+    },
+    "info": {
+        "location": "Pusad, Maharashtra",
+        "degree": "B.E. CSE (Data Science & ML)",
+        "cgpa": "7.5 / 10",
+        "languages": "English, Marathi",
+        "email": "rohitranveer358@gmail.com",
+        "status": "Actively Job Seeking"
+    },
+    "social": {
+        "github": "https://github.com/rohitranvir",
+        "linkedin": "https://www.linkedin.com/in/rohit-ranveer",
+        "email": "rohitranveer358@gmail.com",
+        "phone": "+91 9158000676"
+    }
+}

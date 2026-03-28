@@ -1,0 +1,696 @@
+2026-03-10 02:35:10,715  INFO      Found 50 job(s) in data/jobs.xlsx
+
+2026-03-10 02:35:10,718  INFO      [1/50]  Razorpay  —  Associate Software Engineer
+2026-03-10 02:35:10,721  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:13,018  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:13,020  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:13,022  INFO      [2/50]  PhonePe  —  Junior Backend Developer
+2026-03-10 02:35:13,025  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:15,245  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:15,246  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:15,247  INFO      [3/50]  CRED  —  Associate Backend Engineer
+2026-03-10 02:35:15,251  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:17,395  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:17,396  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:17,397  INFO      [4/50]  Groww  —  Junior Software Engineer
+2026-03-10 02:35:17,401  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:19,650  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:19,651  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:19,653  INFO      [5/50]  Slice  —  Junior Data Analyst
+2026-03-10 02:35:19,655  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:21,863  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:21,865  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:21,867  INFO      [6/50]  Jupiter Money  —  Python Developer - Fresher
+2026-03-10 02:35:21,869  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:24,268  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:24,270  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:24,270  INFO      [7/50]  Skydo  —  Junior Backend Developer
+2026-03-10 02:35:24,275  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:26,488  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:26,488  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:26,492  INFO      [8/50]  Zepto  —  Junior Software Engineer
+2026-03-10 02:35:26,502  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:28,739  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:28,740  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:28,741  INFO      [9/50]  Blinkit (Zomato)  —  Associate Data Analyst
+2026-03-10 02:35:28,745  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:30,960  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:30,961  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:30,962  INFO      [10/50]  Meesho  —  Junior Data Analyst
+2026-03-10 02:35:30,966  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:33,123  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:33,125  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:33,126  INFO      [11/50]  Udaan  —  Junior Python Developer
+2026-03-10 02:35:33,128  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:35,407  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:35,408  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:35,409  INFO      [12/50]  ShopDeck  —  Associate Software Developer
+2026-03-10 02:35:35,423  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:37,646  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:37,647  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:37,647  INFO      [13/50]  Testbook  —  Junior Python Developer
+2026-03-10 02:35:37,653  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:39,866  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:39,867  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:39,868  INFO      [14/50]  Unacademy  —  Associate Software Engineer
+2026-03-10 02:35:39,871  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:42,126  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:42,126  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:42,126  INFO      [15/50]  Scaler Academy  —  Junior QA Engineer
+2026-03-10 02:35:42,131  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:44,367  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:44,369  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:44,370  INFO      [16/50]  Newton School  —  Junior Backend Developer
+2026-03-10 02:35:44,373  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:46,617  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:46,617  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:46,618  INFO      [17/50]  Sunstone Eduversity  —  Data Analyst Trainee
+2026-03-10 02:35:46,621  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:48,840  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:48,841  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:48,842  INFO      [18/50]  Practo  —  Junior Software Developer
+2026-03-10 02:35:48,845  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:51,050  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:51,051  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:51,052  INFO      [19/50]  PharmEasy  —  Junior Data Analyst
+2026-03-10 02:35:51,056  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:53,319  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:53,319  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:53,321  INFO      [20/50]  Eka Care  —  Junior Python Developer
+2026-03-10 02:35:53,324  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:55,543  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:55,543  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:55,544  INFO      [21/50]  Innovaccer  —  Associate Data Engineer
+2026-03-10 02:35:55,550  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:35:57,741  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:35:57,743  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:35:57,744  INFO      [22/50]  Hasura  —  Associate Software Engineer
+2026-03-10 02:35:57,750  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:00,192  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:00,192  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:00,194  INFO      [23/50]  Postman  —  Junior QA Automation Engineer
+2026-03-10 02:36:00,200  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:02,484  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:02,486  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:02,488  INFO      [24/50]  Chargebee  —  Junior Python Developer
+2026-03-10 02:36:02,492  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:04,704  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:04,705  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:04,706  INFO      [25/50]  Setu (Pine Labs)  —  Junior Backend Developer
+2026-03-10 02:36:04,708  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:06,936  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:06,936  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:06,938  INFO      [26/50]  Springworks  —  Junior Backend Developer
+2026-03-10 02:36:06,942  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:09,135  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:09,137  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:09,138  INFO      [27/50]  Leadsquared  —  Junior Software Developer
+2026-03-10 02:36:09,143  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:11,359  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:11,360  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:11,360  INFO      [28/50]  Clevertap  —  Junior Data Analyst
+2026-03-10 02:36:11,366  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:13,580  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:13,581  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:13,585  INFO      [29/50]  Salesken.ai  —  Junior Python / ML Developer
+2026-03-10 02:36:13,588  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:15,789  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:15,792  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:15,792  INFO      [30/50]  Cropin  —  Associate Data Analyst
+2026-03-10 02:36:15,798  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:18,007  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:18,009  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:18,010  INFO      [31/50]  Krutrim (Ola AI)  —  Junior ML Engineer
+2026-03-10 02:36:18,015  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:20,196  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:20,197  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:20,200  INFO      [32/50]  Sarvam AI  —  Junior Python Developer
+2026-03-10 02:36:20,205  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:22,393  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:22,394  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:22,395  INFO      [33/50]  Turing  —  Junior Software Engineer
+2026-03-10 02:36:22,399  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:24,616  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:24,618  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:24,621  INFO      [34/50]  Haptik (Jio)  —  Junior QA Engineer
+2026-03-10 02:36:24,625  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:26,877  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:26,877  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:26,879  INFO      [35/50]  Observe.AI  —  Associate Data Analyst
+2026-03-10 02:36:26,885  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:29,093  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:29,094  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:29,096  INFO      [36/50]  Porter  —  Junior Backend Developer
+2026-03-10 02:36:29,099  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:31,317  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:31,317  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:31,318  INFO      [37/50]  Shadowfax  —  Junior Data Analyst
+2026-03-10 02:36:31,322  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:33,650  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:33,651  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:33,652  INFO      [38/50]  Rapido  —  Associate Software Engineer
+2026-03-10 02:36:33,656  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:35,826  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:35,827  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:35,830  INFO      [39/50]  BluSmart  —  Junior Software Developer
+2026-03-10 02:36:35,835  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:38,020  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:38,021  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:38,021  INFO      [40/50]  Hirect  —  Junior QA Tester
+2026-03-10 02:36:38,025  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:40,227  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:40,228  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:40,229  INFO      [41/50]  Apna.co  —  Junior Data Analyst
+2026-03-10 02:36:40,236  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:42,475  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:42,476  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:42,477  INFO      [42/50]  Darwinbox  —  Associate Software Engineer
+2026-03-10 02:36:42,482  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:44,649  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:44,651  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:44,653  INFO      [43/50]  Juspay  —  Junior Haskell/Python Developer
+2026-03-10 02:36:44,657  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:46,908  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:46,910  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:46,912  INFO      [44/50]  Yellow.ai  —  Junior QA Automation Engineer
+2026-03-10 02:36:46,917  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:49,126  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:49,126  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:49,128  INFO      [45/50]  Amura Marketing  —  Junior Data Analyst
+2026-03-10 02:36:49,130  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:51,283  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:51,284  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:51,286  INFO      [46/50]  Zidio Development  —  Junior Web Developer
+2026-03-10 02:36:51,292  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:53,510  ERROR       ❌ SMTP auth failed — check EMAIL_ADDRESS / EMAIL_PASSWORD in .env
+2026-03-10 02:36:53,511  ERROR          Tip: Use a Gmail App Password → https://myaccount.google.com/apppasswords
+2026-03-10 02:36:53,512  INFO      [47/50]  Codesoft Pvt Ltd  —  Python Developer Trainee
+2026-03-10 02:36:53,517  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:54,789  ERROR       ❌ Failed to send to careers@codesoft.in: Connection unexpectedly closed
+2026-03-10 02:36:54,790  INFO      [48/50]  Vyapar App  —  Junior QA Engineer
+2026-03-10 02:36:54,793  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:56,054  ERROR       ❌ Failed to send to campus@vyaparapp.in: Connection unexpectedly closed
+2026-03-10 02:36:56,055  INFO      [49/50]  Signzy  —  Junior Backend Developer
+2026-03-10 02:36:56,058  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:57,339  ERROR       ❌ Failed to send to campus@signzy.com: Connection unexpectedly closed
+2026-03-10 02:36:57,341  INFO      [50/50]  Smallcase  —  Associate Software Developer
+2026-03-10 02:36:57,343  INFO        📎 Resume attached: resume/Rohit_Ranvir_FullStack_Resume.docx
+2026-03-10 02:36:58,614  ERROR       ❌ Failed to send to campus@smallcase.com: Connection unexpectedly closed
+2026-03-10 02:36:58,615  INFO      
+==================================================
+2026-03-10 02:36:58,616  INFO      Done!  ✅ Sent: 0  |  ❌ Failed/Skipped: 50  |  Total: 50
+2026-03-10 02:36:58,617  INFO      ==================================================
+2026-03-10 02:45:11,452  INFO      Found 50 job(s) in data/jobs.xlsx
+
+2026-03-10 02:45:11,456  INFO      [1/50]  Razorpay  —  Associate Software Engineer
+2026-03-10 02:45:11,457  INFO        📎 Resume attached
+2026-03-10 02:45:15,031  INFO        ✅ Email sent to campus@razorpay.com
+2026-03-10 02:45:15,040  INFO      [2/50]  PhonePe  —  Junior Backend Developer
+2026-03-10 02:45:15,044  INFO        📎 Resume attached
+2026-03-10 02:45:18,508  INFO        ✅ Email sent to campus@phonepe.com
+2026-03-10 02:45:18,519  INFO      [3/50]  CRED  —  Associate Backend Engineer
+2026-03-10 02:45:18,519  INFO        📎 Resume attached
+2026-03-10 02:45:22,093  INFO        ✅ Email sent to talent@cred.club
+2026-03-10 02:45:22,101  INFO      [4/50]  Groww  —  Junior Software Engineer
+2026-03-10 02:45:22,106  INFO        📎 Resume attached
+2026-03-10 02:45:25,986  INFO        ✅ Email sent to campus@groww.in
+2026-03-10 02:45:25,992  INFO      [5/50]  Slice  —  Junior Data Analyst
+2026-03-10 02:45:25,996  INFO        📎 Resume attached
+2026-03-10 02:45:29,368  INFO        ✅ Email sent to careers@sliceit.com
+2026-03-10 02:45:29,373  INFO      [6/50]  Jupiter Money  —  Python Developer - Fresher
+2026-03-10 02:45:29,375  INFO        📎 Resume attached
+2026-03-10 02:45:32,611  INFO        ✅ Email sent to careers@jupitermoney.com
+2026-03-10 02:45:32,620  INFO      [7/50]  Skydo  —  Junior Backend Developer
+2026-03-10 02:45:32,623  INFO        📎 Resume attached
+2026-03-10 02:45:35,909  INFO        ✅ Email sent to hr@skydo.com
+2026-03-10 02:45:35,916  INFO      [8/50]  Zepto  —  Junior Software Engineer
+2026-03-10 02:45:35,919  INFO        📎 Resume attached
+2026-03-10 02:45:39,232  INFO        ✅ Email sent to hiring@zeptonow.com
+2026-03-10 02:45:39,243  INFO      [9/50]  Blinkit (Zomato)  —  Associate Data Analyst
+2026-03-10 02:45:39,247  INFO        📎 Resume attached
+2026-03-10 02:45:43,056  INFO        ✅ Email sent to campus@blinkit.com
+2026-03-10 02:45:43,067  INFO      [10/50]  Meesho  —  Junior Data Analyst
+2026-03-10 02:45:43,073  INFO        📎 Resume attached
+2026-03-10 02:45:46,409  INFO        ✅ Email sent to campus@meesho.com
+2026-03-10 02:45:46,420  INFO      [11/50]  Udaan  —  Junior Python Developer
+2026-03-10 02:45:46,426  INFO        📎 Resume attached
+2026-03-10 02:45:49,674  INFO        ✅ Email sent to campus@udaan.com
+2026-03-10 02:45:49,701  INFO      [12/50]  ShopDeck  —  Associate Software Developer
+2026-03-10 02:45:49,743  INFO        📎 Resume attached
+2026-03-10 02:45:52,995  INFO        ✅ Email sent to hr@shopdeck.com
+2026-03-10 02:45:53,004  INFO      [13/50]  Testbook  —  Junior Python Developer
+2026-03-10 02:45:53,011  INFO        📎 Resume attached
+2026-03-10 02:45:56,277  INFO        ✅ Email sent to hr@testbook.com
+2026-03-10 02:45:56,288  INFO      [14/50]  Unacademy  —  Associate Software Engineer
+2026-03-10 02:45:56,293  INFO        📎 Resume attached
+2026-03-10 02:45:59,605  INFO        ✅ Email sent to campus@unacademy.com
+2026-03-10 02:45:59,618  INFO      [15/50]  Scaler Academy  —  Junior QA Engineer
+2026-03-10 02:45:59,625  INFO        📎 Resume attached
+2026-03-10 02:46:03,042  INFO        ✅ Email sent to careers@scaler.com
+2026-03-10 02:46:03,054  INFO      [16/50]  Newton School  —  Junior Backend Developer
+2026-03-10 02:46:03,060  INFO        📎 Resume attached
+2026-03-10 02:46:06,493  INFO        ✅ Email sent to hr@newtonschool.co
+2026-03-10 02:46:06,506  INFO      [17/50]  Sunstone Eduversity  —  Data Analyst Trainee
+2026-03-10 02:46:06,517  INFO        📎 Resume attached
+2026-03-10 02:46:09,820  INFO        ✅ Email sent to campus@sunstone.edu.in
+2026-03-10 02:46:09,830  INFO      [18/50]  Practo  —  Junior Software Developer
+2026-03-10 02:46:09,835  INFO        📎 Resume attached
+2026-03-10 02:46:13,063  INFO        ✅ Email sent to campus@practo.com
+2026-03-10 02:46:13,073  INFO      [19/50]  PharmEasy  —  Junior Data Analyst
+2026-03-10 02:46:13,085  INFO        📎 Resume attached
+2026-03-10 02:46:16,382  INFO        ✅ Email sent to campus@pharmaeasy.in
+2026-03-10 02:46:16,390  INFO      [20/50]  Eka Care  —  Junior Python Developer
+2026-03-10 02:46:16,396  INFO        📎 Resume attached
+2026-03-10 02:46:19,743  INFO        ✅ Email sent to hr@eka.care
+2026-03-10 02:46:19,760  INFO      [21/50]  Innovaccer  —  Associate Data Engineer
+2026-03-10 02:46:19,773  INFO        📎 Resume attached
+2026-03-10 02:46:23,141  INFO        ✅ Email sent to campus@innovaccer.com
+2026-03-10 02:46:23,156  INFO      [22/50]  Hasura  —  Associate Software Engineer
+2026-03-10 02:46:23,160  INFO        📎 Resume attached
+2026-03-10 02:46:26,352  INFO        ✅ Email sent to campus@hasura.io
+2026-03-10 02:46:26,367  INFO      [23/50]  Postman  —  Junior QA Automation Engineer
+2026-03-10 02:46:26,376  INFO        📎 Resume attached
+2026-03-10 02:46:29,753  INFO        ✅ Email sent to campus@postman.com
+2026-03-10 02:46:29,770  INFO      [24/50]  Chargebee  —  Junior Python Developer
+2026-03-10 02:46:29,779  INFO        📎 Resume attached
+2026-03-10 02:46:33,195  INFO        ✅ Email sent to campus@chargebee.com
+2026-03-10 02:46:33,209  INFO      [25/50]  Setu (Pine Labs)  —  Junior Backend Developer
+2026-03-10 02:46:33,215  INFO        📎 Resume attached
+2026-03-10 02:46:36,494  INFO        ✅ Email sent to campus@setu.co
+2026-03-10 02:46:36,509  INFO      [26/50]  Springworks  —  Junior Backend Developer
+2026-03-10 02:46:36,516  INFO        📎 Resume attached
+2026-03-10 02:46:39,977  INFO        ✅ Email sent to campus@springworks.in
+2026-03-10 02:46:39,987  INFO      [27/50]  Leadsquared  —  Junior Software Developer
+2026-03-10 02:46:39,993  INFO        📎 Resume attached
+2026-03-10 02:46:43,284  INFO        ✅ Email sent to campus@leadsquared.com
+2026-03-10 02:46:43,294  INFO      [28/50]  Clevertap  —  Junior Data Analyst
+2026-03-10 02:46:43,303  INFO        📎 Resume attached
+2026-03-10 02:46:47,048  INFO        ✅ Email sent to campus@clevertap.com
+2026-03-10 02:46:47,054  INFO      [29/50]  Salesken.ai  —  Junior Python / ML Developer
+2026-03-10 02:46:47,060  INFO        📎 Resume attached
+2026-03-10 02:46:50,286  INFO        ✅ Email sent to hr@salesken.ai
+2026-03-10 02:46:50,292  INFO      [30/50]  Cropin  —  Associate Data Analyst
+2026-03-10 02:46:50,293  INFO        📎 Resume attached
+2026-03-10 02:46:53,584  INFO        ✅ Email sent to careers@cropin.com
+2026-03-10 02:46:53,591  INFO      [31/50]  Krutrim (Ola AI)  —  Junior ML Engineer
+2026-03-10 02:46:53,593  INFO        📎 Resume attached
+2026-03-10 02:46:56,882  INFO        ✅ Email sent to campus@krutrim.ai
+2026-03-10 02:46:56,894  INFO      [32/50]  Sarvam AI  —  Junior Python Developer
+2026-03-10 02:46:56,896  INFO        📎 Resume attached
+2026-03-10 02:47:00,300  INFO        ✅ Email sent to careers@sarvam.ai
+2026-03-10 02:47:00,308  INFO      [33/50]  Turing  —  Junior Software Engineer
+2026-03-10 02:47:00,310  INFO        📎 Resume attached
+2026-03-10 02:47:03,671  INFO        ✅ Email sent to jobs@turing.com
+2026-03-10 02:47:03,680  INFO      [34/50]  Haptik (Jio)  —  Junior QA Engineer
+2026-03-10 02:47:03,684  INFO        📎 Resume attached
+2026-03-10 02:47:06,911  INFO        ✅ Email sent to campus@haptik.ai
+2026-03-10 02:47:06,921  INFO      [35/50]  Observe.AI  —  Associate Data Analyst
+2026-03-10 02:47:06,924  INFO        📎 Resume attached
+2026-03-10 02:47:10,751  INFO        ✅ Email sent to campus@observe.ai
+2026-03-10 02:47:10,756  INFO      [36/50]  Porter  —  Junior Backend Developer
+2026-03-10 02:47:10,758  INFO        📎 Resume attached
+2026-03-10 02:47:14,023  INFO        ✅ Email sent to campus@porter.in
+2026-03-10 02:47:14,030  INFO      [37/50]  Shadowfax  —  Junior Data Analyst
+2026-03-10 02:47:14,033  INFO        📎 Resume attached
+2026-03-10 02:47:17,522  INFO        ✅ Email sent to campus@shadowfax.in
+2026-03-10 02:47:17,529  INFO      [38/50]  Rapido  —  Associate Software Engineer
+2026-03-10 02:47:17,532  INFO        📎 Resume attached
+2026-03-10 02:47:20,946  INFO        ✅ Email sent to careers@rapido.bike
+2026-03-10 02:47:20,955  INFO      [39/50]  BluSmart  —  Junior Software Developer
+2026-03-10 02:47:20,958  INFO        📎 Resume attached
+2026-03-10 02:47:24,270  INFO        ✅ Email sent to hr@blu-smart.com
+2026-03-10 02:47:24,279  INFO      [40/50]  Hirect  —  Junior QA Tester
+2026-03-10 02:47:24,282  INFO        📎 Resume attached
+2026-03-10 02:47:27,608  INFO        ✅ Email sent to campus@hirect.in
+2026-03-10 02:47:27,619  INFO      [41/50]  Apna.co  —  Junior Data Analyst
+2026-03-10 02:47:27,622  INFO        📎 Resume attached
+2026-03-10 02:47:30,888  INFO        ✅ Email sent to campus@apna.co
+2026-03-10 02:47:30,893  INFO      [42/50]  Darwinbox  —  Associate Software Engineer
+2026-03-10 02:47:30,897  INFO        📎 Resume attached
+2026-03-10 02:47:34,223  INFO        ✅ Email sent to campus@darwinbox.com
+2026-03-10 02:47:34,230  INFO      [43/50]  Juspay  —  Junior Haskell/Python Developer
+2026-03-10 02:47:34,234  INFO        📎 Resume attached
+2026-03-10 02:47:37,350  INFO        ✅ Email sent to campus@juspay.in
+2026-03-10 02:47:37,356  INFO      [44/50]  Yellow.ai  —  Junior QA Automation Engineer
+2026-03-10 02:47:37,359  INFO        📎 Resume attached
+2026-03-10 02:47:40,742  INFO        ✅ Email sent to campus@yellow.ai
+2026-03-10 02:47:40,751  INFO      [45/50]  Amura Marketing  —  Junior Data Analyst
+2026-03-10 02:47:40,753  INFO        📎 Resume attached
+2026-03-10 02:47:43,986  INFO        ✅ Email sent to hr@amuratech.com
+2026-03-10 02:47:43,995  INFO      [46/50]  Zidio Development  —  Junior Web Developer
+2026-03-10 02:47:43,997  INFO        📎 Resume attached
+2026-03-10 02:47:47,116  INFO        ✅ Email sent to hr@zidio.in
+2026-03-10 02:47:47,124  INFO      [47/50]  Codesoft Pvt Ltd  —  Python Developer Trainee
+2026-03-10 02:47:47,126  INFO        📎 Resume attached
+2026-03-10 02:47:50,868  INFO        ✅ Email sent to careers@codesoft.in
+2026-03-10 02:47:50,875  INFO      [48/50]  Vyapar App  —  Junior QA Engineer
+2026-03-10 02:47:50,877  INFO        📎 Resume attached
+2026-03-10 02:47:54,079  INFO        ✅ Email sent to campus@vyaparapp.in
+2026-03-10 02:47:54,090  INFO      [49/50]  Signzy  —  Junior Backend Developer
+2026-03-10 02:47:54,094  INFO        📎 Resume attached
+2026-03-10 02:47:57,332  INFO        ✅ Email sent to campus@signzy.com
+2026-03-10 02:47:57,340  INFO      [50/50]  Smallcase  —  Associate Software Developer
+2026-03-10 02:47:57,342  INFO        📎 Resume attached
+2026-03-10 02:48:00,676  INFO        ✅ Email sent to campus@smallcase.com
+2026-03-10 02:48:00,687  INFO      
+==================================================
+2026-03-10 02:48:00,688  INFO      Done!  ✅ Sent: 50  |  ❌ Failed/Skipped: 0  |  Total: 50
+2026-03-10 02:48:00,688  INFO      ==================================================
+2026-03-10 02:48:00,689  INFO      Run:  streamlit run dashboard.py
+2026-03-10 02:52:25,993  INFO        📩 Response found from hr@zidio.in
+2026-03-10 02:52:27,516  INFO        Response check done — 1 new response(s) found.
+2026-03-10 02:53:48,100  INFO        Response check done — 0 new response(s) found.
+2026-03-10 06:39:38,808  ERROR     Excel must have columns: {'Position', 'Startup Name', 'HR Contact Email'}. Found: ['Sr.', 'Company', 'Sector / Type', 'Position', 'Job Type', 'Experience', 'HR Contact Email', 'Careers Page', 'Location']
+2026-03-10 06:40:17,023  INFO      Found 55 job(s) in data/jobs.xlsx
+
+2026-03-10 06:40:17,028  INFO      [1/55]  Lawvriksh  —  Junior Backend Developer
+2026-03-10 06:40:17,030  INFO        📎 FullStack resume attached
+2026-03-10 06:40:25,554  INFO        ✅ Email sent to hr@lawvriksh.com
+2026-03-10 06:40:25,568  INFO      [2/55]  MikeLegal  —  Junior QA Engineer
+2026-03-10 06:40:25,575  INFO        📎 FullStack resume attached
+2026-03-10 06:40:28,887  INFO        ✅ Email sent to hr@mikelegal.com
+2026-03-10 06:40:28,897  INFO      [3/55]  Leegality  —  Python Developer Trainee
+2026-03-10 06:40:28,900  INFO        📎 FullStack resume attached
+2026-03-10 06:40:32,352  INFO        ✅ Email sent to careers@leegality.com
+2026-03-10 06:40:32,361  INFO      [4/55]  SpotDraft  —  Associate Software Engineer
+2026-03-10 06:40:32,366  INFO        📎 FullStack resume attached
+2026-03-10 06:40:35,987  INFO        ✅ Email sent to campus@spotdraft.com
+2026-03-10 06:40:35,998  INFO      [5/55]  DeHaat  —  Junior Data Analyst
+2026-03-10 06:40:36,032  INFO        📎 Data Analyst resume attached
+2026-03-10 06:40:40,368  INFO        ✅ Email sent to hr@dehaat.com
+2026-03-10 06:40:40,374  INFO      [6/55]  Fasal  —  Junior Python Developer
+2026-03-10 06:40:40,379  INFO        📎 FullStack resume attached
+2026-03-10 06:40:43,597  INFO        ✅ Email sent to careers@fasal.co
+2026-03-10 06:40:43,607  INFO      [7/55]  Ninjacart  —  Associate Data Analyst
+2026-03-10 06:40:43,622  INFO        📎 Data Analyst resume attached
+2026-03-10 06:40:47,819  INFO        ✅ Email sent to campus@ninjacart.com
+2026-03-10 06:40:47,833  INFO      [8/55]  AgroStar  —  Junior Backend Developer
+2026-03-10 06:40:47,855  INFO        📎 FullStack resume attached
+2026-03-10 06:40:51,143  INFO        ✅ Email sent to careers@agrostar.in
+2026-03-10 06:40:51,157  INFO      [9/55]  Sentra.world  —  Junior Data Analyst
+2026-03-10 06:40:51,178  INFO        📎 Data Analyst resume attached
+2026-03-10 06:40:55,479  INFO        ✅ Email sent to hr@sentra.world
+2026-03-10 06:40:55,496  INFO      [10/55]  Creduce  —  Python Developer Trainee
+2026-03-10 06:40:55,506  INFO        📎 FullStack resume attached
+2026-03-10 06:40:58,768  INFO        ✅ Email sent to hr@creduce.com
+2026-03-10 06:40:58,778  INFO      [11/55]  Buyofuel  —  Junior QA Tester
+2026-03-10 06:40:58,783  INFO        📎 FullStack resume attached
+2026-03-10 06:41:02,202  INFO        ✅ Email sent to hr@buyofuel.com
+2026-03-10 06:41:02,216  INFO      [12/55]  Turtlemint  —  Associate Software Developer
+2026-03-10 06:41:02,223  INFO        📎 FullStack resume attached
+2026-03-10 06:41:05,950  INFO        ✅ Email sent to campus@turtlemint.com
+2026-03-10 06:41:05,964  INFO      [13/55]  Onsurity  —  Junior Python Developer
+2026-03-10 06:41:05,970  INFO        📎 FullStack resume attached
+2026-03-10 06:41:09,780  INFO        ✅ Email sent to careers@onsurity.com
+2026-03-10 06:41:09,792  INFO      [14/55]  Plum Insurance  —  Junior Data Analyst
+2026-03-10 06:41:09,807  INFO        📎 Data Analyst resume attached
+2026-03-10 06:41:14,698  INFO        ✅ Email sent to careers@plumhq.com
+2026-03-10 06:41:14,716  INFO      [15/55]  Digit Insurance  —  QA Automation Trainee
+2026-03-10 06:41:14,726  INFO        📎 FullStack resume attached
+2026-03-10 06:41:18,484  INFO        ✅ Email sent to campus@godigit.com
+2026-03-10 06:41:18,493  INFO      [16/55]  NoBroker  —  Junior Software Developer
+2026-03-10 06:41:18,499  INFO        📎 FullStack resume attached
+2026-03-10 06:41:22,376  INFO        ✅ Email sent to campus@nobroker.in
+2026-03-10 06:41:22,382  INFO      [17/55]  Stanza Living  —  Associate Data Analyst
+2026-03-10 06:41:22,398  INFO        📎 Data Analyst resume attached
+2026-03-10 06:41:27,293  INFO        ✅ Email sent to hr@stanzaliving.com
+2026-03-10 06:41:27,331  INFO      [18/55]  Settl.  —  Junior Backend Developer
+2026-03-10 06:41:27,347  INFO        📎 FullStack resume attached
+2026-03-10 06:41:31,038  INFO        ✅ Email sent to careers@settl.in
+2026-03-10 06:41:31,060  INFO      [19/55]  iNeuron.ai  —  Python Developer Trainee
+2026-03-10 06:41:31,068  INFO        📎 FullStack resume attached
+2026-03-10 06:41:34,969  INFO        ✅ Email sent to hr@ineuron.ai
+2026-03-10 06:41:34,997  INFO      [20/55]  Coding Ninjas  —  Junior QA Engineer
+2026-03-10 06:41:35,013  INFO        📎 FullStack resume attached
+2026-03-10 06:41:38,862  INFO        ✅ Email sent to campus@codingninjas.com
+2026-03-10 06:41:38,876  INFO      [21/55]  Skill-Lync  —  Associate Backend Developer
+2026-03-10 06:41:38,880  INFO        📎 FullStack resume attached
+2026-03-10 06:41:42,853  INFO        ✅ Email sent to hr@skill-lync.com
+2026-03-10 06:41:42,864  INFO      [22/55]  Classplus  —  Junior Software Engineer
+2026-03-10 06:41:42,869  INFO        📎 FullStack resume attached
+2026-03-10 06:41:46,744  INFO        ✅ Email sent to campus@classplusapp.com
+2026-03-10 06:41:46,755  INFO      [23/55]  Teachmint  —  QA Automation Fresher
+2026-03-10 06:41:46,762  INFO        📎 FullStack resume attached
+2026-03-10 06:41:50,841  INFO        ✅ Email sent to careers@teachmint.com
+2026-03-10 06:41:50,870  INFO      [24/55]  Fi Money (EpiFi)  —  Junior Backend Engineer
+2026-03-10 06:41:50,891  INFO        📎 FullStack resume attached
+2026-03-10 06:41:57,534  INFO        ✅ Email sent to campus@fi.money
+2026-03-10 06:41:57,541  INFO      [25/55]  Jar App  —  Junior Data Analyst
+2026-03-10 06:41:57,551  INFO        📎 Data Analyst resume attached
+2026-03-10 06:42:01,670  INFO        ✅ Email sent to hr@myjar.app
+2026-03-10 06:42:01,683  INFO      [26/55]  Niyo Solutions  —  Associate Software Developer
+2026-03-10 06:42:01,688  INFO        📎 FullStack resume attached
+2026-03-10 06:42:05,157  INFO        ✅ Email sent to campus@goniyo.com
+2026-03-10 06:42:05,164  INFO      [27/55]  INDmoney  —  Junior Python Developer
+2026-03-10 06:42:05,171  INFO        📎 FullStack resume attached
+2026-03-10 06:42:08,504  INFO        ✅ Email sent to campus@indmoney.com
+2026-03-10 06:42:08,515  INFO      [28/55]  Kuvera  —  Junior QA Tester
+2026-03-10 06:42:08,522  INFO        📎 FullStack resume attached
+2026-03-10 06:42:12,244  INFO        ✅ Email sent to careers@kuvera.in
+2026-03-10 06:42:12,253  INFO      [29/55]  Csharptek  —  Full Stack Developer Trainee
+2026-03-10 06:42:12,259  INFO        📎 FullStack resume attached
+2026-03-10 06:42:16,034  INFO        ✅ Email sent to hr@csharptek.com
+2026-03-10 06:42:16,064  INFO      [30/55]  HashTrust Technologies  —  Junior Python Developer
+2026-03-10 06:42:16,119  INFO        📎 FullStack resume attached
+2026-03-10 06:42:19,848  INFO        ✅ Email sent to hr@hashtrust.in
+2026-03-10 06:42:19,877  INFO      [31/55]  Grovyn  —  Associate Software Engineer
+2026-03-10 06:42:19,888  INFO        📎 FullStack resume attached
+2026-03-10 06:42:23,303  INFO        ✅ Email sent to hr@grovyn.com
+2026-03-10 06:42:23,311  INFO      [32/55]  Sprinto  —  Junior QA Automation Engineer
+2026-03-10 06:42:23,317  INFO        📎 FullStack resume attached
+2026-03-10 06:42:26,818  INFO        ✅ Email sent to campus@sprinto.com
+2026-03-10 06:42:26,829  INFO      [33/55]  Whatfix  —  Associate Software Engineer
+2026-03-10 06:42:26,837  INFO        📎 FullStack resume attached
+2026-03-10 06:42:30,365  INFO        ✅ Email sent to campus@whatfix.com
+2026-03-10 06:42:30,374  INFO      [34/55]  Exotel  —  Junior Backend Developer
+2026-03-10 06:42:30,381  INFO        📎 FullStack resume attached
+2026-03-10 06:42:33,841  INFO        ✅ Email sent to campus@exotel.com
+2026-03-10 06:42:33,850  INFO      [35/55]  Ozonetel  —  Junior QA Engineer
+2026-03-10 06:42:33,854  INFO        📎 FullStack resume attached
+2026-03-10 06:42:37,470  INFO        ✅ Email sent to hr@ozonetel.com
+2026-03-10 06:42:37,481  INFO      [36/55]  Locus.sh  —  Junior Data Analyst
+2026-03-10 06:42:37,497  INFO        📎 Data Analyst resume attached
+2026-03-10 06:42:41,769  INFO        ✅ Email sent to campus@locus.sh
+2026-03-10 06:42:41,784  INFO      [37/55]  Vahak  —  Python Developer Trainee
+2026-03-10 06:42:41,794  INFO        📎 FullStack resume attached
+2026-03-10 06:42:45,397  INFO        ✅ Email sent to hr@vahak.in
+2026-03-10 06:42:45,411  INFO      [38/55]  LogiNext  —  Junior Software Engineer
+2026-03-10 06:42:45,416  INFO        📎 FullStack resume attached
+2026-03-10 06:42:49,516  INFO        ✅ Email sent to campus@loginextsolutions.com
+2026-03-10 06:42:49,530  INFO      [39/55]  Shiprocket  —  Junior QA Tester
+2026-03-10 06:42:49,537  INFO        📎 FullStack resume attached
+2026-03-10 06:42:53,309  INFO        ✅ Email sent to campus@shiprocket.in
+2026-03-10 06:42:53,325  INFO      [40/55]  Pickrr (Shiprocket)  —  Associate Data Analyst
+2026-03-10 06:42:53,367  INFO        📎 Data Analyst resume attached
+2026-03-10 06:42:57,537  INFO        ✅ Email sent to hr@pickrr.com
+2026-03-10 06:42:57,548  INFO      [41/55]  WinZO Games  —  Junior Software Developer
+2026-03-10 06:42:57,552  INFO        📎 FullStack resume attached
+2026-03-10 06:43:01,169  INFO        ✅ Email sent to campus@winzogames.com
+2026-03-10 06:43:01,183  INFO      [42/55]  Bombay Play  —  Junior QA Tester
+2026-03-10 06:43:01,189  INFO        📎 FullStack resume attached
+2026-03-10 06:43:04,877  INFO        ✅ Email sent to hr@bombayplay.com
+2026-03-10 06:43:04,898  INFO      [43/55]  Entropik Tech  —  Junior Data Analyst
+2026-03-10 06:43:04,909  INFO        📎 Data Analyst resume attached
+2026-03-10 06:43:09,341  INFO        ✅ Email sent to campus@entropik.io
+2026-03-10 06:43:09,352  INFO      [44/55]  Mad Street Den (Vue.ai)  —  Junior Python Developer
+2026-03-10 06:43:09,362  INFO        📎 FullStack resume attached
+2026-03-10 06:43:13,000  INFO        ✅ Email sent to campus@madstreetden.com
+2026-03-10 06:43:13,020  INFO      [45/55]  Keka HR  —  Junior QA Automation Engineer
+2026-03-10 06:43:13,027  INFO        📎 FullStack resume attached
+2026-03-10 06:43:16,755  INFO        ✅ Email sent to campus@keka.com
+2026-03-10 06:43:16,770  INFO      [46/55]  GreytHR  —  Junior Software Developer
+2026-03-10 06:43:16,777  INFO        📎 FullStack resume attached
+2026-03-10 06:43:20,441  INFO        ✅ Email sent to careers@greythr.com
+2026-03-10 06:43:20,453  INFO      [47/55]  Skuad  —  Associate Backend Engineer
+2026-03-10 06:43:20,458  INFO        📎 FullStack resume attached
+2026-03-10 06:43:24,332  INFO        ✅ Email sent to hr@skuad.io
+2026-03-10 06:43:24,348  INFO      [48/55]  Zimyo  —  Python Developer Fresher
+2026-03-10 06:43:24,356  INFO        📎 FullStack resume attached
+2026-03-10 06:43:28,078  INFO        ✅ Email sent to hr@zimyo.com
+2026-03-10 06:43:28,093  INFO      [49/55]  Lemnisk  —  Junior Data Analyst
+2026-03-10 06:43:28,107  INFO        📎 Data Analyst resume attached
+2026-03-10 06:43:32,423  INFO        ✅ Email sent to hr@lemnisk.co
+2026-03-10 06:43:32,430  INFO      [50/55]  MoEngage  —  QA Engineer - Fresher
+2026-03-10 06:43:32,435  INFO        📎 FullStack resume attached
+2026-03-10 06:43:36,416  INFO        ✅ Email sent to campus@moengage.com
+2026-03-10 06:43:36,430  INFO      [51/55]  WebEngage  —  Junior Backend Developer
+2026-03-10 06:43:36,440  INFO        📎 FullStack resume attached
+2026-03-10 06:43:39,999  INFO        ✅ Email sent to campus@webengage.com
+2026-03-10 06:43:40,027  INFO      [52/55]  Netcore Cloud  —  Associate Software Engineer
+2026-03-10 06:43:40,041  INFO        📎 FullStack resume attached
+2026-03-10 06:43:43,791  INFO        ✅ Email sent to campus@netcorecloud.com
+2026-03-10 06:43:43,808  INFO      [53/55]  Lucideus (SAFE)  —  Junior QA / Security Tester
+2026-03-10 06:43:43,813  INFO        📎 FullStack resume attached
+2026-03-10 06:43:47,128  INFO        ✅ Email sent to hr@lucideus.com
+2026-03-10 06:43:47,140  INFO      [54/55]  TAC Security  —  Junior Security Analyst
+2026-03-10 06:43:47,147  INFO        📎 FullStack resume attached
+2026-03-10 06:43:51,085  INFO        ✅ Email sent to hr@tacsecurity.com
+2026-03-10 06:43:51,101  INFO      [55/55]  Seconize  —  Python Developer Trainee
+2026-03-10 06:43:51,107  INFO        📎 FullStack resume attached
+2026-03-10 06:43:54,628  INFO        ✅ Email sent to hr@seconize.co
+2026-03-10 06:43:54,650  INFO      
+==================================================
+2026-03-10 06:43:54,650  INFO      Done!  ✅ Sent: 55  |  ❌ Failed/Skipped: 0  |  Total: 55
+2026-03-10 06:43:54,652  INFO      ==================================================
+2026-03-10 06:43:54,652  INFO      Run:  streamlit run dashboard.py
+2026-03-11 13:02:08,449  INFO      Found 50 job(s) in data/jobs.xlsx
+
+2026-03-11 13:02:08,451  INFO      [1/50]  Soranova Technologies  —  Junior Software Developer
+2026-03-11 13:02:08,454  INFO        📎 FullStack resume attached
+2026-03-11 13:03:11,268  INFO      Found 50 job(s) in data/jobs.xlsx
+
+2026-03-11 13:03:11,268  INFO      [1/50]  Soranova Technologies  —  Junior Software Developer
+2026-03-11 13:03:11,270  INFO        📎 FullStack resume attached
+2026-03-11 13:03:18,438  INFO        ✅ Email sent to hr@soranova.in
+2026-03-11 13:03:18,463  INFO      [2/50]  Technaureus Info Solutions  —  Python Developer Trainee
+2026-03-11 13:03:18,471  INFO        📎 FullStack resume attached
+2026-03-11 13:03:23,196  INFO        ✅ Email sent to hr@technaureus.com
+2026-03-11 13:03:23,221  INFO      [3/50]  FaithCode Technologies  —  Junior QA Tester
+2026-03-11 13:03:23,228  INFO        📎 FullStack resume attached
+2026-03-11 13:03:27,745  INFO        ✅ Email sent to hr@faithcode.in
+2026-03-11 13:03:27,782  INFO      [4/50]  Amplework Software  —  Junior Backend Developer
+2026-03-11 13:03:27,799  INFO        📎 FullStack resume attached
+2026-03-11 13:03:32,245  INFO        ✅ Email sent to hr@amplework.com
+2026-03-11 13:03:32,260  INFO      [5/50]  V2STech Solutions  —  Junior Python Developer
+2026-03-11 13:03:32,268  INFO        📎 FullStack resume attached
+2026-03-11 13:03:36,852  INFO        ✅ Email sent to hr@v2stech.com
+2026-03-11 13:03:36,858  INFO      [6/50]  Weavers Web  —  Junior Full Stack Developer
+2026-03-11 13:03:36,861  INFO        📎 FullStack resume attached
+2026-03-11 13:03:41,201  INFO        ✅ Email sent to hr@weaversweb.in
+2026-03-11 13:03:41,206  INFO      [7/50]  Harptec Software  —  Associate Software Engineer
+2026-03-11 13:03:41,209  INFO        📎 FullStack resume attached
+2026-03-11 13:03:45,578  INFO        ✅ Email sent to hr@harptec.com
+2026-03-11 13:03:45,620  INFO      [8/50]  Emerinter Infotech  —  Junior QA Automation Engineer
+2026-03-11 13:03:45,628  INFO        📎 FullStack resume attached
+2026-03-11 13:03:50,093  INFO        ✅ Email sent to hr@emerinter.com
+2026-03-11 13:03:50,104  INFO      [9/50]  Openspace Services  —  Data Analyst Trainee
+2026-03-11 13:03:50,127  INFO        📎 Data Analyst resume attached
+2026-03-11 13:03:55,338  INFO        ✅ Email sent to hr@openspace.services
+2026-03-11 13:03:55,347  INFO      [10/50]  Cansvolution  —  Junior Software Tester (Manual)
+2026-03-11 13:03:55,353  INFO        📎 FullStack resume attached
+2026-03-11 13:03:59,632  INFO        ✅ Email sent to hr@cansvolution.com
+2026-03-11 13:03:59,640  INFO      [11/50]  Quickwork  —  Junior Backend Developer
+2026-03-11 13:03:59,645  INFO        📎 FullStack resume attached
+2026-03-11 13:04:04,047  INFO        ✅ Email sent to careers@quickwork.co
+2026-03-11 13:04:04,077  INFO      [12/50]  Tagbox (formerly Taggbox)  —  Junior QA Engineer
+2026-03-11 13:04:04,088  INFO        📎 FullStack resume attached
+2026-03-11 13:04:08,549  INFO        ✅ Email sent to hr@tagbox.com
+2026-03-11 13:04:08,557  INFO      [13/50]  Appknox  —  Junior QA / Security Tester
+2026-03-11 13:04:08,563  INFO        📎 FullStack resume attached
+2026-03-11 13:04:12,785  INFO        ✅ Email sent to careers@appknox.com
+2026-03-11 13:04:12,793  INFO      [14/50]  Pepper Content  —  Junior Data Analyst
+2026-03-11 13:04:12,799  INFO        📎 Data Analyst resume attached
+2026-03-11 13:04:18,043  INFO        ✅ Email sent to careers@peppercontent.io
+2026-03-11 13:04:18,052  INFO      [15/50]  Recko (Stripe)  —  Associate Software Engineer
+2026-03-11 13:04:18,060  INFO        📎 FullStack resume attached
+2026-03-11 13:04:22,504  INFO        ✅ Email sent to campus@recko.io
+2026-03-11 13:04:22,540  INFO      [16/50]  HyperVerge  —  Junior Python Developer
+2026-03-11 13:04:22,546  INFO        📎 FullStack resume attached
+2026-03-11 13:04:26,810  INFO        ✅ Email sent to careers@hyperverge.co
+2026-03-11 13:04:26,822  INFO      [17/50]  Mudrex  —  Junior Backend Developer
+2026-03-11 13:04:26,845  INFO        📎 FullStack resume attached
+2026-03-11 13:04:31,079  INFO        ✅ Email sent to careers@mudrex.com
+2026-03-11 13:04:31,087  INFO      [18/50]  Rooter  —  Junior Software Developer
+2026-03-11 13:04:31,091  INFO        📎 FullStack resume attached
+2026-03-11 13:04:35,502  INFO        ✅ Email sent to careers@rooter.in
+2026-03-11 13:04:35,507  INFO      [19/50]  GameEon Studios  —  Junior QA Tester
+2026-03-11 13:04:35,509  INFO        📎 FullStack resume attached
+2026-03-11 13:04:39,957  INFO        ✅ Email sent to hr@gameeon.in
+2026-03-11 13:04:39,962  INFO      [20/50]  Toch.ai  —  Junior Python / ML Developer
+2026-03-11 13:04:39,969  INFO        📎 Data Analyst resume attached
+2026-03-11 13:04:45,290  INFO        ✅ Email sent to hr@toch.ai
+2026-03-11 13:04:45,336  INFO      [21/50]  Miror (FemTech)  —  Junior Data Analyst
+2026-03-11 13:04:45,343  INFO        📎 Data Analyst resume attached
+2026-03-11 13:04:50,446  INFO        ✅ Email sent to hr@miror.in
+2026-03-11 13:04:50,476  INFO      [22/50]  Niramai Health  —  Junior Python Developer
+2026-03-11 13:04:50,478  INFO        📎 FullStack resume attached
+2026-03-11 13:04:54,869  INFO        ✅ Email sent to careers@niramai.com
+2026-03-11 13:04:54,874  INFO      [23/50]  Healthplix  —  Junior Backend Developer
+2026-03-11 13:04:54,877  INFO        📎 FullStack resume attached
+2026-03-11 13:04:59,453  INFO        ✅ Email sent to careers@healthplix.com
+2026-03-11 13:04:59,465  INFO      [24/50]  MediBuddy  —  Junior QA Automation Engineer
+2026-03-11 13:04:59,474  INFO        📎 FullStack resume attached
+2026-03-11 13:05:03,986  INFO        ✅ Email sent to campus@medibuddy.in
+2026-03-11 13:05:03,997  INFO      [25/50]  Eka Care (new roles)  —  Associate Data Analyst
+2026-03-11 13:05:04,020  INFO        📎 Data Analyst resume attached
+2026-03-11 13:05:09,365  INFO        ✅ Email sent to careers@eka.care
+2026-03-11 13:05:09,373  INFO      [26/50]  iQuanta  —  Junior Backend Developer
+2026-03-11 13:05:09,380  INFO        📎 FullStack resume attached
+2026-03-11 13:05:13,631  INFO        ✅ Email sent to hr@iquanta.in
+2026-03-11 13:05:13,648  INFO      [27/50]  Edugorilla  —  Junior Python Developer
+2026-03-11 13:05:13,657  INFO        📎 FullStack resume attached
+2026-03-11 13:05:17,933  INFO        ✅ Email sent to careers@edugorilla.com
+2026-03-11 13:05:17,947  INFO      [28/50]  Intellipaat  —  Junior Data Analyst
+2026-03-11 13:05:17,959  INFO        📎 Data Analyst resume attached
+2026-03-11 13:05:23,361  INFO        ✅ Email sent to hr@intellipaat.com
+2026-03-11 13:05:23,368  INFO      [29/50]  Imarticus Learning  —  Associate Software Developer
+2026-03-11 13:05:23,372  INFO        📎 FullStack resume attached
+2026-03-11 13:05:28,612  INFO        ✅ Email sent to hr@imarticus.org
+2026-03-11 13:05:28,628  INFO      [30/50]  Entri App  —  Junior QA Tester
+2026-03-11 13:05:28,640  INFO        📎 FullStack resume attached
+2026-03-11 13:05:33,790  INFO        ✅ Email sent to careers@entri.app
+2026-03-11 13:05:33,801  INFO      [31/50]  Blowhorn  —  Junior Software Developer
+2026-03-11 13:05:33,809  INFO        📎 FullStack resume attached
+2026-03-11 13:05:38,211  INFO        ✅ Email sent to careers@blowhorn.com
+2026-03-11 13:05:38,219  INFO      [32/50]  Fareye  —  Junior Backend Developer
+2026-03-11 13:05:38,223  INFO        📎 FullStack resume attached
+2026-03-11 13:05:42,547  INFO        ✅ Email sent to campus@fareye.com
+2026-03-11 13:05:42,574  INFO      [33/50]  Increff  —  Junior Software Engineer
+2026-03-11 13:05:42,579  INFO        📎 FullStack resume attached
+2026-03-11 13:05:46,938  INFO        ✅ Email sent to campus@increff.com
+2026-03-11 13:05:46,947  INFO      [34/50]  Cogoport  —  Junior Data Analyst
+2026-03-11 13:05:46,961  INFO        📎 Data Analyst resume attached
+2026-03-11 13:05:52,267  INFO        ✅ Email sent to careers@cogoport.com
+2026-03-11 13:05:52,273  INFO      [35/50]  ElasticRun  —  Associate Data Analyst
+2026-03-11 13:05:52,283  INFO        📎 Data Analyst resume attached
+2026-03-11 13:05:57,525  INFO        ✅ Email sent to campus@elasticrun.com
+2026-03-11 13:05:57,533  INFO      [36/50]  Cashfree Payments  —  Junior Backend Developer
+2026-03-11 13:05:57,536  INFO        📎 FullStack resume attached
+2026-03-11 13:06:01,795  INFO        ✅ Email sent to careers@cashfree.com
+2026-03-11 13:06:01,802  INFO      [37/50]  Open Financial (Neo)  —  Junior Python Developer
+2026-03-11 13:06:01,805  INFO        📎 FullStack resume attached
+2026-03-11 13:06:06,561  INFO        ✅ Email sent to careers@open.money
+2026-03-11 13:06:06,566  INFO      [38/50]  BharatPe  —  Junior Data Analyst
+2026-03-11 13:06:06,577  INFO        📎 Data Analyst resume attached
+2026-03-11 13:06:11,768  INFO        ✅ Email sent to campus@bharatpe.com
+2026-03-11 13:06:11,774  INFO      [39/50]  Perfios  —  Junior QA Engineer
+2026-03-11 13:06:11,778  INFO        📎 FullStack resume attached
+2026-03-11 13:06:16,108  INFO        ✅ Email sent to campus@perfios.com
+2026-03-11 13:06:16,143  INFO      [40/50]  Sarvatra Technologies  —  Python Developer Trainee
+2026-03-11 13:06:16,154  INFO        📎 FullStack resume attached
+2026-03-11 13:06:20,584  INFO        ✅ Email sent to hr@sarvatra.in
+2026-03-11 13:06:20,663  INFO      [41/50]  Pixis  —  Junior Data Analyst
+2026-03-11 13:06:20,674  INFO        📎 Data Analyst resume attached
+2026-03-11 13:06:26,166  INFO        ✅ Email sent to careers@pixis.ai
+2026-03-11 13:06:26,195  INFO      [42/50]  Cogno AI  —  Junior QA Automation Engineer
+2026-03-11 13:06:26,205  INFO        📎 FullStack resume attached
+2026-03-11 13:06:30,520  INFO        ✅ Email sent to hr@cogno.ai
+2026-03-11 13:06:30,633  INFO      [43/50]  Vernacular.ai  —  Junior Python / NLP Developer
+2026-03-11 13:06:30,638  INFO        📎 FullStack resume attached
+2026-03-11 13:06:34,945  INFO        ✅ Email sent to careers@vernacular.ai
+2026-03-11 13:06:34,963  INFO      [44/50]  Detect Technologies  —  Junior Data Analyst
+2026-03-11 13:06:34,971  INFO        📎 Data Analyst resume attached
+2026-03-11 13:06:40,210  INFO        ✅ Email sent to careers@detect.com
+2026-03-11 13:06:40,254  INFO      [45/50]  Utthunga Technologies  —  Junior Software Developer
+2026-03-11 13:06:40,263  INFO        📎 FullStack resume attached
+2026-03-11 13:06:44,429  INFO        ✅ Email sent to hr@utthunga.com
+2026-03-11 13:06:44,450  INFO      [46/50]  Reloy  —  Junior Backend Developer
+2026-03-11 13:06:44,454  INFO        📎 FullStack resume attached
+2026-03-11 13:06:48,881  INFO        ✅ Email sent to hr@reloy.in
+2026-03-11 13:06:48,892  INFO      [47/50]  SmartOwner  —  Junior Data Analyst
+2026-03-11 13:06:48,905  INFO        📎 Data Analyst resume attached
+2026-03-11 13:06:54,604  INFO        ✅ Email sent to careers@smartowner.com
+2026-03-11 13:06:54,629  INFO      [48/50]  Ambee  —  Junior Python Developer
+2026-03-11 13:06:54,634  INFO        📎 FullStack resume attached
+2026-03-11 13:06:58,977  INFO        ✅ Email sent to careers@getambee.com
+2026-03-11 13:06:58,990  INFO      [49/50]  RateGain  —  Junior QA Automation Engineer
+2026-03-11 13:06:59,009  INFO        📎 FullStack resume attached
+2026-03-11 13:07:03,320  INFO        ✅ Email sent to campus@rategain.com
+2026-03-11 13:07:03,332  INFO      [50/50]  HotelKey  —  Junior Software Developer
+2026-03-11 13:07:03,336  INFO        📎 FullStack resume attached
+2026-03-11 13:07:07,760  INFO        ✅ Email sent to hr@hotelkey.com
+2026-03-11 13:07:07,898  INFO      
+==================================================
+2026-03-11 13:07:07,901  INFO      Done!  ✅ Sent: 50  |  ❌ Failed/Skipped: 0  |  Total: 50
+2026-03-11 13:07:07,902  INFO      ==================================================
+2026-03-11 13:07:07,903  INFO      Run:  streamlit run dashboard.py

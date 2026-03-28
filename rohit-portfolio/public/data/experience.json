@@ -1,0 +1,71 @@
+{
+    "experience": [
+        {
+            "id": 1,
+            "role": "Data Analyst Intern",
+            "company": "Codesoft Private Limited",
+            "duration": "Jun 2024 – Aug 2024",
+            "description": [
+                "Performed exploratory data analysis on large datasets using Python",
+                "Built automated reporting dashboards with actionable insights",
+                "Executed data cleaning, preprocessing, and advanced visualization",
+                "Created strategic insights reports driving business decisions"
+            ],
+            "tools": [
+                "Python",
+                "Pandas",
+                "NumPy",
+                "SQL",
+                "Excel",
+                "Matplotlib",
+                "Seaborn"
+            ]
+        },
+        {
+            "id": 2,
+            "role": "Web Development Intern",
+            "company": "Zidio Development",
+            "duration": "Jan 2024 – Mar 2024",
+            "description": [
+                "Developed responsive frontend components for live client projects",
+                "Built pixel-perfect UI implementations from Figma design mockups",
+                "Collaborated with cross-functional teams using Git/GitHub workflow",
+                "Implemented mobile-first responsive designs with modern CSS patterns"
+            ],
+            "tools": [
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "React",
+                "Git",
+                "Bootstrap"
+            ]
+        }
+    ],
+    "education": [
+        {
+            "id": 1,
+            "degree": "B.E. Computer Science & Engineering",
+            "specialization": "Data Science & Machine Learning",
+            "institution": "Babasaheb Naik College of Engineering, Pusad",
+            "year": "2021 – 2025",
+            "score": "CGPA: 7.5 / 10"
+        },
+        {
+            "id": 2,
+            "degree": "HSC (12th Grade)",
+            "specialization": "Science",
+            "institution": "Your School Name Here",
+            "year": "2020 – 2021",
+            "score": "Your Percentage%"
+        },
+        {
+            "id": 3,
+            "degree": "SSC (10th Grade)",
+            "specialization": "",
+            "institution": "Your School Name Here",
+            "year": "2018 – 2019",
+            "score": "Your Percentage%"
+        }
+    ]
+}

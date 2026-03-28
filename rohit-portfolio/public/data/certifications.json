@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "name": "Python for Data Science",
+        "platform": "Coursera",
+        "date": "2024",
+        "link": ""
+    },
+    {
+        "id": 2,
+        "name": "Machine Learning Specialization",
+        "platform": "Coursera",
+        "date": "2024",
+        "link": ""
+    },
+    {
+        "id": 3,
+        "name": "Full Stack Web Development",
+        "platform": "Udemy",
+        "date": "2023",
+        "link": ""
+    },
+    {
+        "id": 4,
+        "name": "Data Analysis with Python",
+        "platform": "freeCodeCamp",
+        "date": "2023",
+        "link": ""
+    }
+]

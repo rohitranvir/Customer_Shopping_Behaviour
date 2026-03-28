@@ -1,0 +1,231 @@
+[
+  {
+    "id": "backend-b6s8c",
+    "title": "Backend",
+    "description": "A project built by Rohit Ranvir.",
+    "category": "Web Dev",
+    "tech": [
+      "Python",
+      "Django"
+    ],
+    "githubUrl": "",
+    "liveUrl": "",
+    "image": "",
+    "featured": false,
+    "visible": true
+  },
+  {
+    "id": "frontend-viqzu",
+    "title": "Chatapp Frontend",
+    "description": "A project built by Rohit Ranvir.",
+    "category": "Web Dev",
+    "tech": [
+      "React",
+      "Tailwind CSS",
+      "Node.js"
+    ],
+    "githubUrl": "",
+    "liveUrl": "",
+    "image": "",
+    "featured": false,
+    "visible": true
+  },
+  {
+    "id": "customer-trends-data-analysis-sql-python-powerbi-y4ygv",
+    "title": "Customer Trends Data Analysis SQL Python PowerBI",
+    "description": "A project built by Rohit Ranvir.",
+    "category": "ML & AI",
+    "tech": [
+      "Python",
+      "Jupyter"
+    ],
+    "githubUrl": "https://github.com/amlanmohanty1/customer-trends-data-analysis-SQL-Python-PowerBI.git",
+    "liveUrl": "",
+    "image": "",
+    "featured": false,
+    "visible": true
+  },
+  {
+    "id": "database-query-analyzer-p4xpw",
+    "title": "Database Query Analyzer",
+    "description": "A project built by Rohit Ranvir.",
+    "category": "Data",
+    "tech": [
+      "Python",
+      "Pandas"
+    ],
+    "githubUrl": "",
+    "liveUrl": "",
+    "image": "",
+    "featured": false,
+    "visible": true
+  },
+  {
+    "id": "healthcare-fraud-detection-me1w7",
+    "title": "Healthcare Fraud Detection",
+    "description": "\"# Healthcare-fraud-detection\"...",
+    "category": "Web Dev",
+    "tech": [
+      "Python"
+    ],
+    "githubUrl": "https://github.com/rohitranvir/Healthcare-fraud-detection.git",
+    "liveUrl": "",
+    "image": "",
+    "featured": false,
+    "visible": true
+  },
+  {
+    "id": "hyperlocal_air_quality_forecasting-dmseu",
+    "title": "Hyperlocal Air Quality Forecasting",
+    "description": "A project built by Rohit Ranvir.",
+    "category": "ML & AI",
+    "tech": [
+      "Python",
+      "Pandas",
+      "NumPy",
+      "Deep Learning",
+      "Machine Learning"
+    ],
+    "githubUrl": "",
+    "liveUrl": "",
+    "image": "",
+    "featured": false,
+    "visible": true
+  },
+  {
+    "id": ".ipynb_checkpoints-81qo2",
+    "title": ".Ipynb Checkpoints",
+    "description": "A project built by Rohit Ranvir.",
+    "category": "ML & AI",
+    "tech": [
+      "Python",
+      "Jupyter"
+    ],
+    "githubUrl": "",
+    "liveUrl": "",
+    "image": "",
+    "featured": false,
+    "visible": true
+  },
+  {
+    "id": "inflation-basket-n3to3",
+    "title": "Inflation Basket",
+    "description": "A project built by Rohit Ranvir.",
+    "category": "ML & AI",
+    "tech": [
+      "Python",
+      "Pandas",
+      "NumPy",
+      "Machine Learning"
+    ],
+    "githubUrl": "",
+    "liveUrl": "",
+    "image": "",
+    "featured": false,
+    "visible": true
+  },
+  {
+    "id": "job-agent-dx58q",
+    "title": "Job Agent",
+    "description": "A project built by Rohit Ranvir.",
+    "category": "Data",
+    "tech": [
+      "Python",
+      "Pandas"
+    ],
+    "githubUrl": "",
+    "liveUrl": "",
+    "image": "",
+    "featured": false,
+    "visible": true
+  },
+  {
+    "id": "job_automation-92h8q",
+    "title": "Job Automation",
+    "description": "A project built by Rohit Ranvir.",
+    "category": "Data",
+    "tech": [
+      "Python",
+      "Pandas"
+    ],
+    "githubUrl": "",
+    "liveUrl": "",
+    "image": "",
+    "featured": false,
+    "visible": true
+  },
+  {
+    "id": "fastapi_ws-p4iza",
+    "title": "Fastapi Ws",
+    "description": "A project built by Rohit Ranvir.",
+    "category": "Web Dev",
+    "tech": [
+      "Python"
+    ],
+    "githubUrl": "",
+    "liveUrl": "",
+    "image": "",
+    "featured": false,
+    "visible": true
+  },
+  {
+    "id": "frontend-oj3tj",
+    "title": "Frontend",
+    "description": "A project built by Rohit Ranvir.",
+    "category": "Web Dev",
+    "tech": [
+      "React",
+      "Tailwind CSS",
+      "Node.js"
+    ],
+    "githubUrl": "",
+    "liveUrl": "",
+    "image": "",
+    "featured": false,
+    "visible": true
+  },
+  {
+    "id": "restaurantmanagementsystem-xed6i",
+    "title": "RestaurantManagementSystem",
+    "description": "# RMS V0.1.2\r\n## Restaurant Management System \r\n\r\n - [**Video Link**](https://youtu.be/JIb5oQDGY3c)\r\n\r\n\r\n - **General introduction**\r\n\tRestaurants now...",
+    "category": "Web Dev",
+    "tech": [
+      "Python"
+    ],
+    "githubUrl": "https://github.com/rohitranvir/RestaurantManagementSystem.git",
+    "liveUrl": "",
+    "image": "",
+    "featured": false,
+    "visible": true
+  },
+  {
+    "id": "sales-analysis-wq4pu",
+    "title": "Sales Analysis",
+    "description": "A project built by Rohit Ranvir.",
+    "category": "ML & AI",
+    "tech": [
+      "Python",
+      "Jupyter"
+    ],
+    "githubUrl": "https://github.com/pik1989/Sales-Analysis.git",
+    "liveUrl": "",
+    "image": "",
+    "featured": false,
+    "visible": true
+  },
+  {
+    "id": "wiki_edit_war_analyzer-jf5oh",
+    "title": "Wiki Edit War Analyzer",
+    "description": "A project built by Rohit Ranvir.",
+    "category": "Data",
+    "tech": [
+      "Python",
+      "Pandas"
+    ],
+    "githubUrl": "",
+    "liveUrl": "",
+    "image": "",
+    "featured": false,
+    "visible": true
+  }
+]

@@ -1,0 +1,5 @@
+.env
+applications.db
+automation.log
+__pycache__/
+*.pyc

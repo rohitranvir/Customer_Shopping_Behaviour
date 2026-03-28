@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # ── PostgreSQL Database ──
+  postgres:
+    image: postgres:15
+    container_name: chatapp_postgres
+    environment:
+      POSTGRES_DB: chatapp_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # ── Redis (Channel Layer) ──
+  redis:
+    image: redis:7-alpine
+    container_name: chatapp_redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  # ── Django Backend (Daphne ASGI) ──
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: chatapp_backend
+    command: >
+      sh -c "python manage.py migrate &&
+             daphne -b 0.0.0.0 -p 8000 chatapp.asgi:application"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend/media:/app/media
+    restart: unless-stopped
+
+  # ── React Frontend (Vite Dev Server) ──
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: chatapp_frontend
+    command: npm run dev -- --host
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

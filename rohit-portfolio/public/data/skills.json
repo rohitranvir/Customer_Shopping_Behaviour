@@ -1,0 +1,154 @@
+{
+    "categories": [
+        "Frontend",
+        "Backend",
+        "Data & ML",
+        "Tools"
+    ],
+    "skills": {
+        "Frontend": [
+            {
+                "name": "React.js",
+                "icon": "⚛️"
+            },
+            {
+                "name": "HTML5",
+                "icon": "🌐"
+            },
+            {
+                "name": "CSS3",
+                "icon": "🎨"
+            },
+            {
+                "name": "JavaScript",
+                "icon": "⚡"
+            },
+            {
+                "name": "Tailwind CSS",
+                "icon": "💨"
+            },
+            {
+                "name": "Bootstrap",
+                "icon": "🅱️"
+            }
+        ],
+        "Backend": [
+            {
+                "name": "Python",
+                "icon": "🐍"
+            },
+            {
+                "name": "Flask",
+                "icon": "🧪"
+            },
+            {
+                "name": "Django",
+                "icon": "🎯"
+            },
+            {
+                "name": "Java",
+                "icon": "☕"
+            },
+            {
+                "name": "Node.js",
+                "icon": "🟢"
+            },
+            {
+                "name": "Express.js",
+                "icon": "🚀"
+            },
+            {
+                "name": "REST APIs",
+                "icon": "🔗"
+            }
+        ],
+        "Data & ML": [
+            {
+                "name": "Machine Learning",
+                "icon": "🤖"
+            },
+            {
+                "name": "Deep Learning",
+                "icon": "🧠"
+            },
+            {
+                "name": "TensorFlow",
+                "icon": "📊"
+            },
+            {
+                "name": "Keras",
+                "icon": "🔬"
+            },
+            {
+                "name": "CNN",
+                "icon": "👁️"
+            },
+            {
+                "name": "NLP",
+                "icon": "💬"
+            },
+            {
+                "name": "Pandas",
+                "icon": "🐼"
+            },
+            {
+                "name": "NumPy",
+                "icon": "🔢"
+            },
+            {
+                "name": "Matplotlib",
+                "icon": "📈"
+            },
+            {
+                "name": "Seaborn",
+                "icon": "🌊"
+            },
+            {
+                "name": "SQL",
+                "icon": "🗄️"
+            },
+            {
+                "name": "Power BI",
+                "icon": "📉"
+            }
+        ],
+        "Tools": [
+            {
+                "name": "Git",
+                "icon": "📝"
+            },
+            {
+                "name": "GitHub",
+                "icon": "🐙"
+            },
+            {
+                "name": "VS Code",
+                "icon": "💻"
+            },
+            {
+                "name": "Jupyter Notebook",
+                "icon": "📓"
+            },
+            {
+                "name": "MySQL",
+                "icon": "🐬"
+            },
+            {
+                "name": "MongoDB",
+                "icon": "🍃"
+            },
+            {
+                "name": "Postman",
+                "icon": "📮"
+            },
+            {
+                "name": "Linux",
+                "icon": "🐧"
+            },
+            {
+                "name": "Figma",
+                "icon": "🎨"
+            }
+        ]
+    }
+}

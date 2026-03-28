@@ -1,0 +1,17 @@
+{
+    "adminPassword": "rohit@2025",
+    "siteTitle": "Rohit Ranvir — Full Stack Developer & ML Engineer",
+    "metaDescription": "Portfolio of Rohit Ranvir — Python Full Stack Developer, Data Analyst, and Machine Learning Engineer.",
+    "maintenanceMode": false,
+    "sectionVisibility": {
+        "hero": true,
+        "marquee": true,
+        "about": true,
+        "skills": true,
+        "projects": true,
+        "experience": true,
+        "publications": true,
+        "certifications": true,
+        "contact": true
+    }
+}
