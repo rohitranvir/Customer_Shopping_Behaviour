@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useData } from '../../context/DataContext';
 import { useScrollReveal } from '../../hooks/useAnimations';
 import { Github, ExternalLink, Star } from 'lucide-react';
@@ -11,6 +12,20 @@ export default function Projects() {
     const projects = data?.projects || [];
     const [filter, setFilter] = useState('All');
     const [ref, visible] = useScrollReveal(0.05);
+    const navigate = useNavigate();
+
+    // Slug mapping for projects that have case study pages
+    const caseStudySlugs = {
+        'Vendor Connect India': 'vendor-connect-india',
+        'Multi-Tenant SaaS Expense Manager': 'multi-tenant-saas-expense-manager',
+        'YouTube Comment Sentiment Analysis': 'youtube-comment-sentiment-analysis',
+        'SmartReview AI': 'smartreview-ai',
+    };
+
+    function getSlug(project) {
+        const name = project.name || project.title;
+        return caseStudySlugs[name] || null;
+    }
 
     const visibleProjects = projects.filter(p => p.visible !== false);
     const filtered = filter === 'All' ? visibleProjects : visibleProjects.filter(p => p.category === filter);
@@ -83,7 +98,11 @@ export default function Projects() {
                                     minHeight: project.featured ? 320 : 260,
                                     display: 'flex',
                                     flexDirection: 'column',
-                                    cursor: 'default',
+                                    cursor: getSlug(project) ? 'pointer' : 'default',
+                                }}
+                                onClick={() => {
+                                    const s = getSlug(project);
+                                    if (s) navigate(`/projects/${s}`);
                                 }}
                             >
                                 {/* Top section */}
@@ -134,6 +153,11 @@ export default function Projects() {
                                         <p className="font-mono" style={{ fontSize: '0.7rem', color: 'var(--gold)', marginBottom: 8 }}>
                                             ★ {project.highlight}
                                         </p>
+                                    )}
+                                    {getSlug(project) && (
+                                        <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--gold)', opacity: 0.7, display: 'inline-flex', alignItems: 'center', gap: 4, marginTop: 4 }}>
+                                            View Case Study →
+                                        </span>
                                     )}
                                 </div>
 

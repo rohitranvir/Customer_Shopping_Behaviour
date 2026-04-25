@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu | Tea3 — Luxury Tea & Café, Hyderabad</title>
+  <meta name="description" content="Explore Tea3's full menu — 30 handcrafted teas, artisanal snacks, elegant desserts, and wellness brews. Every sip, thoughtfully crafted.">
+  <meta property="og:title"       content="Menu | Tea3">
+  <meta property="og:description" content="Signature teas, wellness brews, artisanal bites — curated for the discerning palate.">
+  <meta property="og:type"        content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Tea3 Styles -->
+  <link rel="stylesheet" href="css/menu.css">
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════ -->
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+
+    <a href="index.html" class="nav-logo" id="nav-logo">
+      <!-- If logo image exists: <img src="assets/images/logo.png" alt="Tea3 logo"> -->
+      <i class="fa-solid fa-leaf" style="font-size:1.4rem; color:var(--c-gold);"></i>
+      Tea<span style="color:var(--c-gold);">3</span>
+    </a>
+
+    <nav>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html"   id="nav-home">Home</a></li>
+        <li><a href="menu.html"    id="nav-menu" class="active">Menu</a></li>
+        <li><a href="about.html"   id="nav-about">Our Story</a></li>
+        <li><a href="gallery.html" id="nav-gallery">Gallery</a></li>
+        <li><a href="contact.html" id="nav-contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-right">
+      <a href="booking.html" class="btn-reserve" id="nav-reserve">Reserve Table</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars" id="nav-icon"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+
+<!-- ════════════════════════════════════════════
+     SECTION 1 — SHORT HERO (40vh)
+════════════════════════════════════════════ -->
+<section class="menu-hero" id="menu-hero">
+  <div class="hero-inner" data-aos="fade-up" data-aos-duration="900">
+    <nav class="breadcrumb" aria-label="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span style="color:var(--c-cream);">Menu</span>
+    </nav>
+    <h1>Our Menu</h1>
+    <div class="hero-underline"></div>
+    <p>Every sip, thoughtfully crafted</p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════
+     SECTION 2 — STICKY SEARCH + FILTER BAR
+════════════════════════════════════════════ -->
+<div class="filter-bar" id="filter-bar">
+  <div class="container filter-inner">
+
+    <div class="search-row">
+      <div class="search-wrap">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input
+          type="search"
+          id="menu-search"
+          placeholder="Search teas, snacks, desserts…"
+          autocomplete="off"
+          aria-label="Search menu items">
+      </div>
+      <span class="result-count" id="result-count">30 items</span>
+    </div>
+
+    <div class="filter-pills" role="group" aria-label="Filter by category">
+      <button class="pill active" data-cat="all"         id="pill-all">All</button>
+      <button class="pill"        data-cat="signature"   id="pill-sig">🍵 Signature Teas</button>
+      <button class="pill"        data-cat="hot"         id="pill-hot">☕ Hot Drinks</button>
+      <button class="pill"        data-cat="snacks"      id="pill-snacks">🥐 Snacks</button>
+      <button class="pill"        data-cat="desserts"    id="pill-desserts">🍰 Desserts</button>
+      <button class="pill"        data-cat="wellness"    id="pill-wellness">🌿 Wellness</button>
+      <button class="pill"        data-cat="specials"    id="pill-specials">✨ Specials</button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     SECTION 3 — MENU GRID (30 items)
+════════════════════════════════════════════ -->
+<section class="menu-section" id="menu-section">
+  <div class="container">
+    <div class="menu-grid" id="menu-grid">
+
+      <!-- ── SIGNATURE TEAS ─────────────────── -->
+
+      <article class="menu-card" data-category="signature" data-name="Darjeeling First Flush"
+        data-aos="fade-up" data-aos-delay="0">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/1B4D3E/F5F0E8?text=Darjeeling+First+Flush"
+               alt="Darjeeling First Flush" loading="lazy">
+          <span class="cat-badge">Signature Tea</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Darjeeling First Flush</h3>
+          <p class="card-desc">Light, floral, muscatel notes — the champagne of teas, spring harvested.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 180</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Darjeeling First Flush', 180)" id="add-darjeeling">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="signature" data-name="Assam Bold Brew"
+        data-aos="fade-up" data-aos-delay="50">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/1B4D3E/F5F0E8?text=Assam+Bold+Brew"
+               alt="Assam Bold Brew" loading="lazy">
+          <span class="cat-badge">Signature Tea</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Assam Bold Brew</h3>
+          <p class="card-desc">Strong, malty Assam black tea. Deep amber, full-bodied, built for mornings.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 160</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Assam Bold Brew', 160)" id="add-assam">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="signature" data-name="Nilgiri Frost"
+        data-aos="fade-up" data-aos-delay="100">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/1B4D3E/F5F0E8?text=Nilgiri+Frost"
+               alt="Nilgiri Frost" loading="lazy">
+          <span class="cat-badge">Signature Tea</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Nilgiri Frost</h3>
+          <p class="card-desc">South Indian blue mountain tea, bright and brisk with a clean, crisp finish.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 170</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Nilgiri Frost', 170)" id="add-nilgiri">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="signature" data-name="Kashmiri Kahwa"
+        data-aos="fade-up" data-aos-delay="150">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/1B4D3E/F5F0E8?text=Kashmiri+Kahwa"
+               alt="Kashmiri Kahwa" loading="lazy">
+          <span class="cat-badge">Signature Tea</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Kashmiri Kahwa</h3>
+          <p class="card-desc">Saffron, whole cardamom, roasted almonds, dried rose petals — a valley in a cup.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 220</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Kashmiri Kahwa', 220)" id="add-kahwa">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="signature" data-name="Rose Oolong"
+        data-aos="fade-up" data-aos-delay="200">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/1B4D3E/F5F0E8?text=Rose+Oolong"
+               alt="Rose Oolong" loading="lazy">
+          <span class="cat-badge">Signature Tea</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Rose Oolong</h3>
+          <p class="card-desc">Taiwanese high-mountain oolong hand-blended with sun-dried rose petals.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 240</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Rose Oolong', 240)" id="add-rose-oolong">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── HOT DRINKS ─────────────────────── -->
+
+      <article class="menu-card" data-category="hot" data-name="Masala Chai"
+        data-aos="fade-up" data-aos-delay="0">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/2D7A5F/F5F0E8?text=Masala+Chai"
+               alt="Masala Chai" loading="lazy">
+          <span class="cat-badge" style="background:var(--c-mid);">Hot Drink</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Masala Chai</h3>
+          <p class="card-desc">House-blend spiced milk tea — ginger, clove, cinnamon, black pepper, cardamom.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 120</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Masala Chai', 120)" id="add-masala">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="hot" data-name="Matcha Latte"
+        data-aos="fade-up" data-aos-delay="50">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/2D7A5F/F5F0E8?text=Matcha+Latte"
+               alt="Matcha Latte" loading="lazy">
+          <span class="cat-badge" style="background:var(--c-mid);">Hot Drink</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Matcha Latte</h3>
+          <p class="card-desc">Ceremonial-grade Japanese matcha whisked smooth with oat milk. Earthy, sweet, serene.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 210</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Matcha Latte', 210)" id="add-matcha">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="hot" data-name="Turmeric Honey Latte"
+        data-aos="fade-up" data-aos-delay="100">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/2D7A5F/F5F0E8?text=Turmeric+Honey+Latte"
+               alt="Turmeric Honey Latte" loading="lazy">
+          <span class="cat-badge" style="background:var(--c-mid);">Hot Drink</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Turmeric Honey Latte</h3>
+          <p class="card-desc">Golden milk — turmeric, ginger, black pepper, raw honey, steamed whole milk.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 190</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Turmeric Honey Latte', 190)" id="add-turmeric">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="hot" data-name="Filter Coffee"
+        data-aos="fade-up" data-aos-delay="150">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/2D7A5F/F5F0E8?text=Filter+Coffee"
+               alt="Filter Coffee" loading="lazy">
+          <span class="cat-badge" style="background:var(--c-mid);">Hot Drink</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Filter Coffee</h3>
+          <p class="card-desc">Classic South Indian drip coffee — full-bodied, served in traditional davara set.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 150</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Filter Coffee', 150)" id="add-filter">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="hot" data-name="Cardamom Chai"
+        data-aos="fade-up" data-aos-delay="200">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/2D7A5F/F5F0E8?text=Cardamom+Chai"
+               alt="Cardamom Chai" loading="lazy">
+          <span class="cat-badge" style="background:var(--c-mid);">Hot Drink</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Cardamom Chai</h3>
+          <p class="card-desc">Elaichi-forward, delicately sweet, made with organic jaggery. Aromatic and warming.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 140</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Cardamom Chai', 140)" id="add-cardamom">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── SNACKS ──────────────────────────── -->
+
+      <article class="menu-card" data-category="snacks" data-name="Tandoori Paneer Toast"
+        data-aos="fade-up" data-aos-delay="0">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/C8A951/1A1A1A?text=Tandoori+Paneer+Toast"
+               alt="Tandoori Paneer Toast" loading="lazy">
+          <span class="cat-badge" style="background:#8B6914;">Snack</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Tandoori Paneer Toast</h3>
+          <p class="card-desc">Spiced, charred paneer on thick-cut sourdough with mint chutney aioli.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 240</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Tandoori Paneer Toast', 240)" id="add-paneer">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="snacks" data-name="Avocado Bruschetta"
+        data-aos="fade-up" data-aos-delay="50">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/C8A951/1A1A1A?text=Avocado+Bruschetta"
+               alt="Avocado Bruschetta" loading="lazy">
+          <span class="cat-badge" style="background:#8B6914;">Snack</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Avocado Bruschetta</h3>
+          <p class="card-desc">Smashed Hass avocado, bird's eye chili, lemon zest on house-baked ciabatta.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 280</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Avocado Bruschetta', 280)" id="add-avo">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="snacks" data-name="Mushroom Galette"
+        data-aos="fade-up" data-aos-delay="100">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/C8A951/1A1A1A?text=Mushroom+Galette"
+               alt="Mushroom Galette" loading="lazy">
+          <span class="cat-badge" style="background:#8B6914;">Snack</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Mushroom Galette</h3>
+          <p class="card-desc">Wild herbed mushrooms and gruyère in a buckwheat-butter crispy crêpe.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 260</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Mushroom Galette', 260)" id="add-galette">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="snacks" data-name="Cheese & Chutney Sandwich"
+        data-aos="fade-up" data-aos-delay="150">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/C8A951/1A1A1A?text=Cheese+Chutney+Sandwich"
+               alt="Cheese Chutney Sandwich" loading="lazy">
+          <span class="cat-badge" style="background:#8B6914;">Snack</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Cheese & Chutney Sandwich</h3>
+          <p class="card-desc">Triple cheese (cheddar, mozzarella, pepper jack), house-made mint chutney, pressed.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 200</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Cheese & Chutney Sandwich', 200)" id="add-sandwich">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="snacks" data-name="Samosa Chaat Bites"
+        data-aos="fade-up" data-aos-delay="200">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/C8A951/1A1A1A?text=Samosa+Chaat+Bites"
+               alt="Samosa Chaat Bites" loading="lazy">
+          <span class="cat-badge" style="background:#8B6914;">Snack</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Samosa Chaat Bites</h3>
+          <p class="card-desc">Mini crispy samosas, tamarind-date chutney, spiced yogurt, sev, and pomegranate.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 180</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Samosa Chaat Bites', 180)" id="add-samosa">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── DESSERTS ───────────────────────── -->
+
+      <article class="menu-card" data-category="desserts" data-name="Matcha Cheesecake"
+        data-aos="fade-up" data-aos-delay="0">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/0F2E24/C8A951?text=Matcha+Cheesecake"
+               alt="Matcha Cheesecake" loading="lazy">
+          <span class="cat-badge" style="background:var(--c-dark);">Dessert</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Matcha Cheesecake</h3>
+          <p class="card-desc">Japanese-style no-bake cheesecake, ceremonial matcha, graham biscuit base, light cream.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 310</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Matcha Cheesecake', 310)" id="add-matchacake">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="desserts" data-name="Cardamom Panna Cotta"
+        data-aos="fade-up" data-aos-delay="50">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/0F2E24/C8A951?text=Cardamom+Panna+Cotta"
+               alt="Cardamom Panna Cotta" loading="lazy">
+          <span class="cat-badge" style="background:var(--c-dark);">Dessert</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Cardamom Panna Cotta</h3>
+          <p class="card-desc">Silky Italian panna cotta, cardamom-scented, topped with rose syrup and crushed pistachio.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 290</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Cardamom Panna Cotta', 290)" id="add-pannacotta">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="desserts" data-name="Dark Chocolate Brownie"
+        data-aos="fade-up" data-aos-delay="100">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/0F2E24/C8A951?text=Dark+Chocolate+Brownie"
+               alt="Dark Chocolate Brownie" loading="lazy">
+          <span class="cat-badge" style="background:var(--c-dark);">Dessert</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Dark Chocolate Brownie</h3>
+          <p class="card-desc">70% Valrhona cacao fudge brownie, finished with Maldon sea salt and served warm.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 270</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Dark Chocolate Brownie', 270)" id="add-brownie">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="desserts" data-name="Mango Kulfi Tart"
+        data-aos="fade-up" data-aos-delay="150">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/0F2E24/C8A951?text=Mango+Kulfi+Tart"
+               alt="Mango Kulfi Tart" loading="lazy">
+          <span class="cat-badge" style="background:var(--c-dark);">Dessert</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Mango Kulfi Tart</h3>
+          <p class="card-desc">Alphonso mango kulfi set in a buttery French tart shell — India meets Paris.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 300</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Mango Kulfi Tart', 300)" id="add-kulfi">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="desserts" data-name="Saffron Rasmalai Cake"
+        data-aos="fade-up" data-aos-delay="200">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/0F2E24/C8A951?text=Saffron+Rasmalai+Cake"
+               alt="Saffron Rasmalai Cake" loading="lazy">
+          <span class="cat-badge" style="background:var(--c-dark);">Dessert</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Saffron Rasmalai Cake</h3>
+          <p class="card-desc">Fusion Indian-style layered cake slice soaked in kesar-infused malai, rose garnish.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 320</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Saffron Rasmalai Cake', 320)" id="add-rasmalai">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── WELLNESS ───────────────────────── -->
+
+      <article class="menu-card" data-category="wellness" data-name="Tulsi Moringa Green"
+        data-aos="fade-up" data-aos-delay="0">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/1B4D3E/FAFAF5?text=Tulsi+Moringa+Green"
+               alt="Tulsi Moringa Green" loading="lazy">
+          <span class="cat-badge" style="background:#4a8a50;">Wellness</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Tulsi Moringa Green</h3>
+          <p class="card-desc">Immune-boosting herbal blend — holy basil, moringa leaf, and a hint of honey.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 200</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Tulsi Moringa Green', 200)" id="add-tulsi">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="wellness" data-name="Ashwagandha Calm"
+        data-aos="fade-up" data-aos-delay="50">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/1B4D3E/FAFAF5?text=Ashwagandha+Calm"
+               alt="Ashwagandha Calm" loading="lazy">
+          <span class="cat-badge" style="background:#4a8a50;">Wellness</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Ashwagandha Calm</h3>
+          <p class="card-desc">Adaptogen blend with ashwagandha root, raw honey, warm whole milk. De-stress in a cup.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 210</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Ashwagandha Calm', 210)" id="add-ashwa">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="wellness" data-name="Hibiscus Cooler"
+        data-aos="fade-up" data-aos-delay="100">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/1B4D3E/FAFAF5?text=Hibiscus+Cooler"
+               alt="Hibiscus Cooler" loading="lazy">
+          <span class="cat-badge" style="background:#4a8a50;">Wellness</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Hibiscus Cooler</h3>
+          <p class="card-desc">Cold-steeped hibiscus, fresh lemon, organic mint, topped with sparkling water.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 190</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Hibiscus Cooler', 190)" id="add-hibiscus">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="wellness" data-name="Chamomile Sleep"
+        data-aos="fade-up" data-aos-delay="150">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/1B4D3E/FAFAF5?text=Chamomile+Sleep"
+               alt="Chamomile Sleep" loading="lazy">
+          <span class="cat-badge" style="background:#4a8a50;">Wellness</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Chamomile Sleep</h3>
+          <p class="card-desc">Calming chamomile, dried lavender buds, raw honey — the perfect evening ritual.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 180</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Chamomile Sleep', 180)" id="add-chamomile">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="wellness" data-name="Detox Ginger Lemon"
+        data-aos="fade-up" data-aos-delay="200">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/1B4D3E/FAFAF5?text=Detox+Ginger+Lemon"
+               alt="Detox Ginger Lemon" loading="lazy">
+          <span class="cat-badge" style="background:#4a8a50;">Wellness</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Detox Ginger Lemon</h3>
+          <p class="card-desc">Fresh-pressed ginger, lemon, golden turmeric — cleanse and energise in one shot.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 170</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Detox Ginger Lemon', 170)" id="add-detox">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── SPECIALS ───────────────────────── -->
+
+      <article class="menu-card" data-category="specials" data-name="Tea3 Signature Blend"
+        data-aos="fade-up" data-aos-delay="0">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/C8A951/0F2E24?text=Tea3+Signature+Blend"
+               alt="Tea3 Signature Blend" loading="lazy">
+          <span class="cat-badge" style="background:var(--c-gold); color:var(--c-dark);">✨ Special</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Tea3 Signature Blend</h3>
+          <p class="card-desc">Our house secret — a curated blend of three single-origins. The must-try at Tea3.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 260</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Tea3 Signature Blend', 260)" id="add-signature">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="specials" data-name="Blue Pea Iced Tea"
+        data-aos="fade-up" data-aos-delay="50">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/C8A951/0F2E24?text=Blue+Pea+Iced+Tea"
+               alt="Blue Pea Iced Tea" loading="lazy">
+          <span class="cat-badge" style="background:var(--c-gold); color:var(--c-dark);">✨ Special</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Blue Pea Iced Tea</h3>
+          <p class="card-desc">Colour-changing butterfly pea flower tea — add lemon and watch it transform to violet.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 230</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Blue Pea Iced Tea', 230)" id="add-bluepea">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="specials" data-name="Iced Rose Lychee Tea"
+        data-aos="fade-up" data-aos-delay="100">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/C8A951/0F2E24?text=Iced+Rose+Lychee+Tea"
+               alt="Iced Rose Lychee Tea" loading="lazy">
+          <span class="cat-badge" style="background:var(--c-gold); color:var(--c-dark);">✨ Special</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Iced Rose Lychee Tea</h3>
+          <p class="card-desc">Chilled Ceylon black tea with lychee syrup, dried rose, cold-pressed lemon. Summer in a glass.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 250</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Iced Rose Lychee Tea', 250)" id="add-lychee">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="specials" data-name="Spiced Chai Cold Brew"
+        data-aos="fade-up" data-aos-delay="150">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/C8A951/0F2E24?text=Spiced+Chai+Cold+Brew"
+               alt="Spiced Chai Cold Brew" loading="lazy">
+          <span class="cat-badge" style="background:var(--c-gold); color:var(--c-dark);">✨ Special</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Spiced Chai Cold Brew</h3>
+          <p class="card-desc">12-hour cold brew masala chai, served over hand-chipped ice. Intense, slow, smoky.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 240</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Spiced Chai Cold Brew', 240)" id="add-coldbrew">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="specials" data-name="Saffron Milk Foam Tea"
+        data-aos="fade-up" data-aos-delay="200">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x280/C8A951/0F2E24?text=Saffron+Milk+Foam+Tea"
+               alt="Saffron Milk Foam Tea" loading="lazy">
+          <span class="cat-badge" style="background:var(--c-gold); color:var(--c-dark);">✨ Special</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Saffron Milk Foam Tea</h3>
+          <p class="card-desc">Rich layered drink — artisan-brewed black tea, topped with thick kesar milk foam.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 280</span>
+            <button class="btn-add" onclick="Tea3Cart.add('Saffron Milk Foam Tea', 280)" id="add-saffron">Add to Order +</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- No-results fallback -->
+      <div class="no-results" id="no-results">
+        <i class="fa-solid fa-mug-hot"></i>
+        <span id="no-results-msg">No items found for "<span id="query-display"></span>"</span>
+      </div>
+
+    </div><!-- /.menu-grid -->
+  </div><!-- /.container -->
+</section>
+
+
+<!-- ════════════════════════════════════════════
+     SECTION 4 — FLOATING CART BUTTON
+════════════════════════════════════════════ -->
+<button class="cart-float" id="cart-float" aria-label="View your order">
+  🍵
+  <span id="cart-count">0</span>
+</button>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/91XXXXXXXXXX" class="wa-float" target="_blank"
+   rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+
+<!-- ════════════════════════════════════════════
+     CART OVERLAY + SIDE PANEL
+════════════════════════════════════════════ -->
+<div class="cart-overlay" id="cart-overlay" role="presentation"></div>
+
+<aside class="cart-panel" id="cart-panel" role="dialog"
+  aria-label="Your tea order" aria-modal="true">
+
+  <div class="cart-header">
+    <h3>🍵 Your Tea Order</h3>
+    <button class="cart-close" id="cart-close" aria-label="Close cart">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <div class="cart-body" id="cart-body">
+    <div class="cart-empty">
+      <i class="fa-solid fa-mug-hot"></i>
+      <p>Your cup is empty 🍵</p>
+      <span>Add something delightful!</span>
+    </div>
+  </div>
+
+  <div class="cart-footer">
+    <div class="cart-subtotal">
+      <span>Order Total</span>
+      <span class="cart-subtotal-val" id="cart-total">₹ 0</span>
+    </div>
+    <div class="cart-actions">
+      <button class="btn-wa" id="btn-order-wa">
+        <i class="fa-brands fa-whatsapp"></i>
+        Order via WhatsApp 💬
+      </button>
+      <button class="btn-clear" id="btn-clear">
+        <i class="fa-solid fa-xmark"></i>
+        Clear Order
+      </button>
+    </div>
+  </div>
+</aside>
+
+
+<!-- ════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<footer class="footer">
+  <p>
+    © <span id="year"></span> Tea3 — Every sip, thoughtfully crafted. &nbsp;|&nbsp;
+    Hyderabad, India &nbsp;·&nbsp; <a href="tel:+91XXXXXXXXXX">+91-XXXXXXXXXX</a>
+  </p>
+</footer>
+
+
+<!-- ════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════ -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="js/cart.js"></script>
+<script>
+/* ─── Init ──────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // AOS
+  AOS.init({ duration: 700, easing: 'ease-out', once: true, offset: 60 });
+
+  // Navbar scroll tint
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 80);
+  }, { passive: true });
+
+  // Mobile nav
+  const toggle  = document.getElementById('nav-toggle');
+  const navIcon = document.getElementById('nav-icon');
+  const navLinks = document.getElementById('nav-links');
+  toggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navIcon.className = open ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    toggle.setAttribute('aria-expanded', open);
+  });
+
+  // Cart init
+  Tea3Cart.init();
+
+  /* ── Filter + Search ──────────────────────── */
+  const cards     = Array.from(document.querySelectorAll('.menu-card'));
+  const pills     = Array.from(document.querySelectorAll('.pill'));
+  const searchEl  = document.getElementById('menu-search');
+  const countEl   = document.getElementById('result-count');
+  const noResults = document.getElementById('no-results');
+  const queryDisp = document.getElementById('query-display');
+
+  let activeCat   = 'all';
+  let searchQuery = '';
+
+  function applyFilters() {
+    let visible = 0;
+    cards.forEach(card => {
+      const cat   = card.dataset.category;
+      const name  = card.dataset.name.toLowerCase();
+      const desc  = card.querySelector('.card-desc').textContent.toLowerCase();
+      const q     = searchQuery.toLowerCase();
+
+      const catMatch  = activeCat === 'all' || cat === activeCat;
+      const nameMatch = name.includes(q) || desc.includes(q);
+
+      const show = catMatch && (q === '' || nameMatch);
+      card.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+
+    // No results state
+    if (visible === 0) {
+      noResults.style.display = 'flex';
+      noResults.style.flexDirection = 'column';
+      noResults.style.alignItems = 'center';
+      queryDisp.textContent = searchQuery;
+    } else {
+      noResults.style.display = 'none';
+    }
+
+    countEl.textContent = `${visible} item${visible !== 1 ? 's' : ''}`;
+  }
+
+  // Pills
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      activeCat = pill.dataset.cat;
+      applyFilters();
+    });
+  });
+
+  // Search (debounced)
+  let debounceTimer;
+  searchEl.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      searchQuery = searchEl.value.trim();
+      applyFilters();
+    }, 200);
+  });
+
+});
+</script>
+
+</body>
+</html>

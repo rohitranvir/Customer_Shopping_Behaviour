@@ -93,7 +93,7 @@ export default function Hero() {
                 init={particlesInit}
                 options={{
                     background: { color: { value: "transparent" } },
-                    fpsLimit: 60,
+                    fpsLimit: 30,
                     interactivity: {
                         events: {
                             onHover: { enable: true, mode: "repulse" },
@@ -107,7 +107,7 @@ export default function Hero() {
                         color: { value: "#c9a84c" },
                         links: { color: "#c9a84c", distance: 150, enable: true, opacity: 0.2, width: 1 },
                         move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: true, speed: 1, straight: false },
-                        number: { density: { enable: true, area: 800 }, value: window.innerWidth < 768 ? 20 : 50 },
+                        number: { density: { enable: true, area: 800 }, value: 20 },
                         opacity: { value: 0.3 },
                         shape: { type: "circle" },
                         size: { value: { min: 1, max: 3 } },
