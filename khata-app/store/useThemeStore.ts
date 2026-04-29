@@ -2,6 +2,9 @@ import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Appearance } from 'react-native';
 
+// Theme preference is NOT sensitive data — AsyncStorage is fine here
+const THEME_KEY = 'color_scheme';
+
 type ColorScheme = 'system' | 'light' | 'dark';
 
 interface ThemeState {
@@ -23,14 +26,14 @@ export const useThemeStore = create<ThemeState>((set) => ({
 
   loadTheme: async () => {
     try {
-      const stored = await AsyncStorage.getItem('color_scheme');
+      const stored = await AsyncStorage.getItem(THEME_KEY);
       const scheme = (stored as ColorScheme) ?? 'system';
       set({ colorScheme: scheme, isDark: resolveIsDark(scheme) });
     } catch {}
   },
 
   setColorScheme: async (scheme: ColorScheme) => {
-    await AsyncStorage.setItem('color_scheme', scheme);
+    await AsyncStorage.setItem(THEME_KEY, scheme);
     set({ colorScheme: scheme, isDark: resolveIsDark(scheme) });
   },
 }));

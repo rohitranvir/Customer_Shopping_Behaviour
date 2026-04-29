@@ -1,5 +1,8 @@
 import { getDatabase } from './database';
-import { User, Business, Customer, Transaction } from './queries';
+import { User } from './repositories/userRepository';
+import { Business } from './repositories/businessRepository';
+import { Customer } from './repositories/customerRepository';
+import { Transaction } from './repositories/transactionRepository';
 
 export interface DatabaseBackup {
   users: User[];
@@ -32,14 +35,11 @@ export async function exportDatabaseAsJSON(): Promise<string> {
 }
 
 /**
- * Wipes the current database tables and forcefully imports exact rows from the JSON object.
- * Warning: This completely destroys all existing local data.
+ * Executes the database wipe and restore from a parsed backup object.
+ * Private helper to keep the transaction logic clean.
  */
-export async function importDatabaseFromJSON(jsonString: string): Promise<void> {
+async function executeRestoreTransaction(backup: DatabaseBackup): Promise<void> {
   const db = await getDatabase();
-  const backup: DatabaseBackup = JSON.parse(jsonString);
-
-  // Use a transaction to ensure rollback if an error occurs during restore
   await db.withTransactionAsync(async () => {
     // 1. Wipe current tables safely
     await db.runAsync('DELETE FROM transactions');
@@ -79,4 +79,32 @@ export async function importDatabaseFromJSON(jsonString: string): Promise<void> 
       );
     }
   });
+}
+
+/**
+ * Wipes the current database tables and forcefully imports exact rows from the JSON object.
+ * Now includes a safety snapshot to prevent data loss on failed restores.
+ */
+export async function importDatabaseFromJSON(jsonString: string): Promise<void> {
+  const backup: DatabaseBackup = JSON.parse(jsonString);
+  
+  // Create a local snapshot BEFORE attempting to restore the external backup
+  const snapshotJson = await exportDatabaseAsJSON();
+  const snapshot = JSON.parse(snapshotJson);
+
+  try {
+    await executeRestoreTransaction(backup);
+  } catch (error) {
+    console.error('Restore failed, attempting to rollback to snapshot...', error);
+    try {
+      // If the restore fails, automatically roll back to the snapshot
+      await executeRestoreTransaction(snapshot);
+      console.log('Successfully rolled back to snapshot.');
+    } catch (rollbackError) {
+      console.error('CRITICAL: Rollback failed. Database may be in an inconsistent state.', rollbackError);
+      throw new Error('Restore failed and rollback failed. Data may be corrupted.');
+    }
+    // Throw the original error so the UI knows the restore failed
+    throw error;
+  }
 }

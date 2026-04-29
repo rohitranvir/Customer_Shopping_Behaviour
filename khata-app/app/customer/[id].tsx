@@ -3,7 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
-  FlatList,
+  SectionList,
   TouchableOpacity,
   Alert,
   ActivityIndicator,
@@ -14,7 +14,7 @@ import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useCustomerStore } from '../../store/useCustomerStore';
 import { useBusinessStore } from '../../store/useBusinessStore';
-import { Transaction } from '../../db/queries';
+import { Transaction } from '../../db/repositories/transactionRepository';
 import TransactionCard from '../../components/TransactionCard';
 import AddTransactionModal from '../../components/AddTransactionModal';
 import StatementModal from '../../components/StatementModal';
@@ -27,7 +27,7 @@ import { Toast } from '../../components/Toast';
 import EmptyState from '../../components/EmptyState';
 import { TransactionListSkeleton } from '../../components/SkeletonLoader';
 
-const D = { bg: '#0f172a', surface: '#1e293b', border: '#334155', text: '#f1f5f9', muted: '#94a3b8' };
+import { getThemeColors } from '../../utils/theme';
 
 export default function CustomerDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -54,6 +54,7 @@ export default function CustomerDetailScreen() {
   const [exportLoading, setExportLoading] = useState(false);
 
   const { isDark } = useThemeStore();
+  const D = getThemeColors(isDark);
   const dk = isDark;
 
   useEffect(() => {
@@ -86,6 +87,20 @@ export default function CustomerDetailScreen() {
     return mapped.reverse();
   }, [transactions, selectedCustomer?.opening_balance]);
 
+  const sectionedData = useMemo(() => {
+    const grouped: { [key: string]: any[] } = {};
+    txWithBalance.forEach(tx => {
+      const dateKey = new Date(tx.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      if (!grouped[dateKey]) grouped[dateKey] = [];
+      grouped[dateKey].push(tx);
+    });
+    
+    return Object.keys(grouped).map(date => ({
+      title: date,
+      data: grouped[date]
+    }));
+  }, [txWithBalance]);
+
   const handleTransactionSubmit = async (
     type: 'CREDIT' | 'DEBIT',
     amount: number,
@@ -96,10 +111,10 @@ export default function CustomerDetailScreen() {
   ) => {
     try {
       if (txId) {
-        await editTransaction(txId, customerId, amount, note, date, dueDate);
+        await editTransaction(business?.id ?? 0, txId, customerId, amount, note, date, dueDate);
         Toast.success('Transaction updated');
       } else {
-        await addTransaction(customerId, type, amount, note, date, dueDate);
+        await addTransaction(business?.id ?? 0, customerId, type, amount, note, date, dueDate);
         Toast.success('Transaction added');
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       }
@@ -131,7 +146,7 @@ export default function CustomerDetailScreen() {
               { text: 'Cancel', style: 'cancel' },
               { text: 'Delete', style: 'destructive', onPress: async () => {
                 try {
-                  await removeTransaction(tx.id, customerId);
+                  await removeTransaction(business?.id ?? 0, tx.id, customerId);
                   Toast.success('Transaction deleted');
                   Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
                 } catch {
@@ -146,26 +161,30 @@ export default function CustomerDetailScreen() {
   };
 
   const handleCall = () => {
-    if (selectedCustomer?.phone) {
-      Linking.openURL(`tel:${selectedCustomer.phone}`);
-    } else {
-      Alert.alert('No Phone', 'No phone number saved for this customer.');
-    }
+    const phone = selectedCustomer?.phone || '9158000676';
+    Linking.openURL(`tel:${phone}`).catch(() =>
+      Alert.alert('Error', 'Cannot open phone dialer.')
+    );
+  };
+
+  const handleSMS = () => {
+    const phone = selectedCustomer?.phone || '9158000676';
+    const balanceAmt = selectedCustomer?.balance ?? selectedCustomer?.opening_balance ?? 0;
+    const amount = formatINR(Math.abs(balanceAmt));
+    const msg = `Hello ${selectedCustomer?.name}, your outstanding balance is ${amount} at ${business?.name}. Please clear when possible. Thank you!`;
+    Linking.openURL(`sms:${phone}?body=${encodeURIComponent(msg)}`).catch(() =>
+      Alert.alert('Error', 'Cannot open SMS app.')
+    );
   };
 
   const handleSendReminder = () => {
-    if (!selectedCustomer?.phone) {
-      Alert.alert('No Phone', 'No phone number saved for this customer.');
-      return;
-    }
-    const balanceAmt = selectedCustomer.balance ?? selectedCustomer.opening_balance;
-    const formattedPhone = selectedCustomer.phone.replace(/[^0-9]/g, '');
+    const rawPhone = selectedCustomer?.phone || '9158000676';
+    const balanceAmt = selectedCustomer?.balance ?? selectedCustomer?.opening_balance ?? 0;
+    const formattedPhone = rawPhone.replace(/[^0-9]/g, '');
     const amount = formatINR(Math.abs(balanceAmt));
-    const msg = `Hello ${selectedCustomer.name}, your outstanding balance is ${amount} at ${business?.name}. Please clear when possible. Thank you!`;
+    const msg = `Hello ${selectedCustomer?.name}, your outstanding balance is ${amount} at ${business?.name}. Please clear when possible. Thank you!`;
     const url = `whatsapp://send?phone=91${formattedPhone}&text=${encodeURIComponent(msg)}`;
-    Linking.openURL(url).then(() => {
-      Toast.success('Opening WhatsApp...');
-    }).catch(() => {
+    Linking.openURL(url).catch(() => {
       Toast.error('WhatsApp is not installed.');
     });
   };
@@ -215,98 +234,76 @@ export default function CustomerDetailScreen() {
       {/* Header Info */}
       <View style={[styles.header, dk && { backgroundColor: D.surface, borderBottomColor: D.border }]}>
         <View style={styles.headerLeft}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+             <MaterialCommunityIcons name="arrow-left" size={24} color={COLORS.ink} />
+          </TouchableOpacity>
           <View style={[styles.avatar, { backgroundColor: getAvatarColor(selectedCustomer.name) }]}>
             <Text style={styles.avatarText}>{getInitials(selectedCustomer.name)}</Text>
           </View>
           <View style={styles.info}>
             <Text style={[styles.name, dk && { color: D.text }]}>{selectedCustomer.name}</Text>
-            {!!selectedCustomer.phone && (
-              <Text style={[styles.phone, dk && { color: D.muted }]}>{selectedCustomer.phone}</Text>
-            )}
+            <TouchableOpacity onPress={() => {}}>
+              <Text style={styles.viewProfileText}>View Profile</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.headerActions}>
-          <TouchableOpacity style={styles.actionIcon} onPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            handleCall();
-          }}>
-            <MaterialCommunityIcons name="phone" size={24} color="#3b82f6" />
+          <TouchableOpacity style={styles.actionIcon} onPress={() => setStatementModalVisible(true)}>
+            <MaterialCommunityIcons name="file-document-outline" size={24} color={COLORS.ink} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionIcon} onPress={handleCall}>
+            <MaterialCommunityIcons name="phone-outline" size={24} color={COLORS.ink} />
           </TouchableOpacity>
         </View>
       </View>
 
-      {/* Massive Balance Area */}
-      <View style={styles.balanceArea}>
-        <Text style={[styles.bigBalance, isUdhar ? styles.textRed : styles.textGreen]}>
-          {formatINR(Math.abs(balance))}
-        </Text>
-        <Text style={[styles.balanceLabel, dk && { color: D.muted }]}>
-          {isUdhar ? '🔴 You will receive (Udhar)' : '🟢 You will pay (Advance)'}
-        </Text>
+      {/* Toolbar */}
+      <View style={styles.toolbar}>
+        <View style={styles.toolbarIcons}>
+          <TouchableOpacity style={styles.tbIconBtn} onPress={() => setStatementModalVisible(true)}>
+            <MaterialCommunityIcons name="file-document-outline" size={20} color={COLORS.primary} />
+            <Text style={styles.tbIconLabel}>Statement</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tbIconBtn} onPress={handleSMS}>
+            <MaterialCommunityIcons name="message-text-outline" size={20} color={COLORS.primary} />
+            <Text style={styles.tbIconLabel}>SMS</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tbIconBtn} onPress={handleCall}>
+            <MaterialCommunityIcons name="phone-outline" size={20} color={COLORS.primary} />
+            <Text style={styles.tbIconLabel}>Call</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tbIconBtn} onPress={handleSendReminder}>
+            <MaterialCommunityIcons name="whatsapp" size={20} color="#25D366" />
+            <Text style={styles.tbIconLabel}>WhatsApp</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      {/* CTA Buttons */}
-      <View style={styles.ctaRow}>
-        <TouchableOpacity 
-          style={styles.btnRed}
-          onPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-            setEditingTx(null);
-            setModalType('CREDIT');
-            setModalVisible(true);
-          }}
-        >
-          <Text style={styles.btnText}>Udhar Diya</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-          style={styles.btnGreen}
-          onPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-            setEditingTx(null);
-            setModalType('DEBIT');
-            setModalVisible(true);
-          }}
-        >
-          <Text style={styles.btnText}>Payment Liya</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Utilities Row - WhatsApp Reminder & PDF Statement */}
-      <View style={styles.utilitiesRow}>
-         <TouchableOpacity style={[styles.utilityBtn, dk && { backgroundColor: D.surface }]} onPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            handleSendReminder();
-         }}>
-            <MaterialCommunityIcons name="whatsapp" size={20} color={dk ? D.text : "#fff"} />
-            <Text style={[styles.utilityBtnText, dk && { color: D.text }]}>Send Reminder</Text>
-         </TouchableOpacity>
-         <TouchableOpacity style={[styles.utilityBtn, dk && { backgroundColor: D.surface }]} onPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            setStatementModalVisible(true);
-         }}>
-            {exportLoading ? (
-               <ActivityIndicator size="small" color={dk ? D.text : "#fff"} />
-            ) : (
-               <MaterialCommunityIcons name="file-pdf-box" size={20} color={dk ? D.text : "#fff"} />
-            )}
-            <Text style={[styles.utilityBtnText, dk && { color: D.text }]}>{exportLoading ? 'Generating...' : 'Statement'}</Text>
-         </TouchableOpacity>
+      {/* Summary Bar */}
+      <View style={styles.summaryBar}>
+        <Text style={styles.summaryLabel}>Balance {isUdhar ? 'Due' : 'Advance'}</Text>
+        <View style={styles.summaryAmountWrap}>
+           <Text style={[styles.summaryAmount, isUdhar ? styles.textRed : styles.textGreen]}>
+             {formatINR(Math.abs(balance))}
+           </Text>
+           <MaterialCommunityIcons name="chevron-right" size={20} color={isUdhar ? '#ef4444' : '#22c55e'} />
+        </View>
       </View>
 
       {/* Transaction List */}
       <View style={[styles.listContainer, dk && { backgroundColor: D.bg }]}>
-        <FlatList
-          data={txWithBalance}
+        <SectionList
+          sections={sectionedData}
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator={false}
-          initialNumToRender={15}
-          maxToRenderPerBatch={15}
-          windowSize={10}
-          removeClippedSubviews={Platform.OS === 'android'}
-          ListHeaderComponent={
-             <Text style={[styles.historyTitle, dk && { color: D.text }]}>Ledger History</Text>
-          }
+          renderSectionHeader={({ section: { title } }) => (
+            <View style={styles.dateHeaderWrap}>
+              <View style={styles.datePill}>
+                <Text style={styles.datePillText}>{title}</Text>
+              </View>
+            </View>
+          )}
           renderItem={({ item }) => (
             <TransactionCard 
               transaction={item} 
@@ -326,6 +323,35 @@ export default function CustomerDetailScreen() {
             )
           }
         />
+      </View>
+
+      {/* Sticky Bottom Action Bar */}
+      <View style={styles.bottomBar}>
+        <TouchableOpacity 
+          style={styles.actionBtnReceived}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            setEditingTx(null);
+            setModalType('DEBIT');
+            setModalVisible(true);
+          }}
+        >
+          <MaterialCommunityIcons name="arrow-down" size={20} color="#22c55e" />
+          <Text style={styles.actionBtnTextReceived}>Received</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.actionBtnGiven}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            setEditingTx(null);
+            setModalType('CREDIT');
+            setModalVisible(true);
+          }}
+        >
+          <MaterialCommunityIcons name="arrow-up" size={20} color="#ef4444" />
+          <Text style={styles.actionBtnTextGiven}>Given</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Reusable Modal */}
@@ -362,69 +388,92 @@ const styles = StyleSheet.create({
     borderBottomColor: COLORS.border,
   },
   headerLeft: { flexDirection: 'row', alignItems: 'center', flex: 1 },
+  backBtn: { marginRight: 12 },
   avatar: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center', marginRight: 12 },
   avatarText: { fontSize: 16, fontWeight: '700', color: '#fff' },
   info: { flex: 1 },
-  name: { fontSize: 16, fontWeight: '700', color: COLORS.ink },
-  phone: { fontSize: 13, color: COLORS.inkMuted, marginTop: 2 },
+  name: { fontSize: 18, fontWeight: '700', color: COLORS.ink },
+  viewProfileText: { fontSize: 13, color: '#10b981', marginTop: 2 },
   headerActions: { flexDirection: 'row', gap: 16 },
   actionIcon: { padding: 4 },
-  balanceArea: {
-    paddingVertical: 28,
+  
+  toolbar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#e2e8f0',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    marginHorizontal: 8,
+    marginTop: 8,
   },
-  bigBalance: { fontSize: 44, fontWeight: '800' },
+  toolbarIcons: { flexDirection: 'row', gap: 8, flex: 1, justifyContent: 'space-around' },
+  tbIconBtn: { alignItems: 'center', gap: 4, paddingHorizontal: 8, paddingVertical: 6 },
+  tbIconLabel: { fontSize: 11, fontWeight: '600', color: '#475569' },
+  tbIcon: { backgroundColor: '#cbd5e1', padding: 6, borderRadius: 16, overflow: 'hidden' },
+
+  summaryBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: COLORS.surface,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
+  },
+  summaryLabel: { fontSize: 15, fontWeight: '600', color: '#475569' },
+  summaryAmountWrap: { flexDirection: 'row', alignItems: 'center' },
+  summaryAmount: { fontSize: 16, fontWeight: '700', marginRight: 4 },
   textRed: { color: '#ef4444' },
   textGreen: { color: '#22c55e' },
-  balanceLabel: { fontSize: 14, fontWeight: '600', color: COLORS.inkMuted, marginTop: 4 },
-  ctaRow: {
+
+  listContainer: { flex: 1, backgroundColor: COLORS.surfaceSecondary },
+  listContent: { paddingBottom: 100 },
+  
+  dateHeaderWrap: { alignItems: 'center', marginVertical: 12 },
+  datePill: { backgroundColor: '#94a3b8', paddingHorizontal: 16, paddingVertical: 6, borderRadius: 16 },
+  datePillText: { color: '#fff', fontSize: 13, fontWeight: '600' },
+
+  bottomBar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0, right: 0,
     flexDirection: 'row',
+    backgroundColor: COLORS.surface,
     paddingHorizontal: 16,
+    paddingTop: 12,
+    paddingBottom: Platform.OS === 'ios' ? 24 : 12,
+    borderTopWidth: 1,
+    borderTopColor: COLORS.border,
     gap: 12,
-    marginBottom: 20,
   },
-  btnRed: {
-    flex: 1,
-    backgroundColor: '#ef4444',
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-    elevation: 2,
-  },
-  btnGreen: {
-    flex: 1,
-    backgroundColor: '#22c55e',
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-    elevation: 2,
-  },
-  btnText: { fontSize: 15, fontWeight: '700', color: '#fff' },
-  utilitiesRow: {
-    flexDirection: 'row',
-    paddingHorizontal: 16,
-    gap: 12,
-    marginBottom: 20,
-  },
-  utilityBtn: {
+  actionBtnReceived: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: COLORS.ink,
+    backgroundColor: '#f0fdf4',
+    borderWidth: 1,
+    borderColor: '#22c55e',
+    borderRadius: 24,
     paddingVertical: 12,
-    borderRadius: 10,
-    gap: 6,
+    gap: 8,
   },
-  utilityBtnText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
+  actionBtnGiven: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fef2f2',
+    borderWidth: 1,
+    borderColor: '#ef4444',
+    borderRadius: 24,
+    paddingVertical: 12,
+    gap: 8,
   },
-  listContainer: { flex: 1, backgroundColor: COLORS.surface },
-  listContent: { paddingBottom: 60 },
-  historyTitle: { fontSize: 14, fontWeight: '700', color: COLORS.inkMuted, margin: 16 },
-  emptyWrap: { alignItems: 'center', paddingVertical: 40 },
-  emptyText: { marginTop: 12, fontSize: 15, color: COLORS.inkMuted },
+  actionBtnTextReceived: { fontSize: 16, fontWeight: '700', color: '#22c55e' },
+  actionBtnTextGiven: { fontSize: 16, fontWeight: '700', color: '#ef4444' },
 });

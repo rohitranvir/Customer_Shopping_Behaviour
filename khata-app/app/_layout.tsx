@@ -15,6 +15,7 @@ import { useThemeStore } from '../store/useThemeStore';
 import { COLORS } from '../utils/constants';
 import { ToastHost } from '../components/Toast';
 import * as SplashScreen from 'expo-splash-screen';
+import { getAutoBackup, getToken, setLastBackupTime } from '../security/secureStorage';
 
 // Keep splash visible until DB + user loaded
 SplashScreen.preventAutoHideAsync();
@@ -68,13 +69,13 @@ export default function RootLayout() {
     const handleAppState = async (nextState: AppStateStatus) => {
       if (nextState === 'background' || nextState === 'inactive') {
         try {
-          const auto = await AsyncStorage.getItem('auto_backup');
-          const token = await AsyncStorage.getItem('google_token');
-          if (auto === 'true' && token) {
+          const auto = await getAutoBackup();
+          const token = await getToken();
+          if (auto && token) {
             console.log('Running silent auto-backup...');
             const json = await exportDatabaseAsJSON();
             await uploadBackupToDrive(token, json);
-            await AsyncStorage.setItem('last_backup', new Date().toLocaleString());
+            await setLastBackupTime(new Date().toLocaleString());
           }
         } catch (e) {
           console.log('[AutoBackup Error]:', e);

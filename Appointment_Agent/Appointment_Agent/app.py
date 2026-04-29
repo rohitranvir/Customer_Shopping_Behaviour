@@ -17,19 +17,19 @@ from dotenv import load_dotenv
 
 # --- AUDIO LIBRARY ---
 from gtts import gTTS 
-from google import genai
-from google.genai import types
+import json
+from groq import Groq
 
 load_dotenv() 
 
 # --- CONFIGURATION ---
-MODEL_NAME = 'gemini-2.5-flash'
+MODEL_NAME = 'llama-3.3-70b-versatile'
 DB_NAME = "appointments_poc.db"
 
 if sys.platform.startswith("win"):
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-GEMINI_CLIENT: genai.Client | None = None
+GROQ_CLIENT: Groq | None = None
 
 # --- DATABASE SETUP ---
 def init_db():
@@ -103,11 +103,11 @@ def send_confirmation_email(patient_name: str, patient_email: str, doctor_name: 
             server.login(SMTP_EMAIL, SMTP_PASSWORD)
             server.send_message(msg)
             
-        print(f"✅ Confirmation email sent to {patient_email}")
+        print(f"Confirmation email sent to {patient_email}")
         return True
         
     except Exception as e:
-        print(f"❌ Email Error: {e}")
+        print(f"Email Error: {e}")
         return False
 
 # --- FASTAPI APP INITIALIZATION (FIXED) ---
@@ -153,6 +153,53 @@ TOOL_FUNCTIONS = {
     "book_appointment": book_appointment_tool
 }
 
+GROQ_TOOLS = [
+    {
+        "type": "function",
+        "function": {
+            "name": "list_doctors",
+            "description": "List all available doctors and their specialties",
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": []
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "check_slot",
+            "description": "Check if a specific time slot is available for a doctor",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "doctor_name": {"type": "string", "description": "Name of the doctor"},
+                    "appointment_time": {"type": "string", "description": "Time of the appointment (e.g. 10:00 AM)"}
+                },
+                "required": ["doctor_name", "appointment_time"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "book_appointment",
+            "description": "Book an appointment with a doctor for a patient",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "doctor_name": {"type": "string"},
+                    "appointment_time": {"type": "string"},
+                    "patient_name": {"type": "string"},
+                    "patient_email": {"type": "string"}
+                },
+                "required": ["doctor_name", "appointment_time", "patient_name", "patient_email"]
+            }
+        }
+    }
+]
+
 # --- TEXT SANITIZATION ---
 def clean_text_for_audio(text: str) -> str:
     # 1. Remove Markdown asterisks and hashes
@@ -190,18 +237,31 @@ async def generate_audio_gtts(text: str, lang_code: str) -> str:
         mp3_data = await asyncio.to_thread(_run_gtts)
         return base64.b64encode(mp3_data).decode('utf-8')
     except Exception as e:
-        print(f"❌ TTS Error: {e}")
+        print(f"TTS Error: {e}")
         return None
 
 # --- SYSTEM PROMPT ---
 BASE_PROMPT = """
 You are Sarah, a warm and caring receptionist at Apollo Hospital.
 
+STRICT BOOKING PROTOCOL:
+1. NEVER invent details (like "Dr. Smith"). If the user wants to book an appointment, first use the `list_doctors` tool and present the available doctors.
+2. You MUST explicitly ask the user for the following details before booking:
+   - The name of the doctor they choose from the available list.
+   - The date and time they prefer.
+   - The patient's full name.
+   - The patient's email address (for confirmation).
+3. Ask for these details conversationally, step-by-step. Do not overwhelm the user with all questions at once.
+4. Use `check_slot` to verify availability before booking.
+5. Only use `book_appointment` when you have ALL the required details.
+
 STRICT LANGUAGE POLICY:
 1. Speak ONLY in the language requested by the user.
 2. If the user selects Telugu, your response must be 100% Telugu script. 
 3. DO NOT provide English translations or bracketed text. 
 4. Avoid technical formatting like bolding (**) or bullet points.
+
+IMPORTANT: Do NOT output raw <function> tags or XML in your response. Always use the proper JSON tool calling format.
 """
 
 class AgentMessageRequest(BaseModel):
@@ -212,19 +272,15 @@ class AgentMessageRequest(BaseModel):
 AGENT_SESSIONS = {}
 
 def get_chat_session(session_id=None):
-    global GEMINI_CLIENT
-    if not GEMINI_CLIENT:
-        GEMINI_CLIENT = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
+    global GROQ_CLIENT
+    if not GROQ_CLIENT:
+        GROQ_CLIENT = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
     if not session_id or session_id not in AGENT_SESSIONS:
         session_id = str(uuid.uuid4())
-        AGENT_SESSIONS[session_id] = GEMINI_CLIENT.chats.create(
-            model=MODEL_NAME,
-            config=types.GenerateContentConfig(
-                system_instruction=BASE_PROMPT,
-                tools=list(TOOL_FUNCTIONS.values())
-            )
-        )
+        AGENT_SESSIONS[session_id] = [
+            {"role": "system", "content": BASE_PROMPT}
+        ]
     return session_id, AGENT_SESSIONS[session_id]
 
 @app.get("/")
@@ -238,7 +294,8 @@ def new_session():
 
 @app.post("/agent/message")
 async def agent_message(req: AgentMessageRequest):
-    sid, chat = get_chat_session(req.session_id)
+    global GROQ_CLIENT
+    sid, messages = get_chat_session(req.session_id)
     
     lang_map = {
         "te-IN": "STRICT: Respond in Telugu script only. No English.",
@@ -248,21 +305,67 @@ async def agent_message(req: AgentMessageRequest):
     instruction = lang_map.get(req.language_code, "Respond in English.")
     
     try:
-        response = await asyncio.to_thread(chat.send_message, f"{req.text}\n\n[Instruction: {instruction}]")
+        user_message = f"{req.text}\n\n[Instruction: {instruction}]"
+        messages.append({"role": "user", "content": user_message})
         
-        while getattr(response, "function_calls", None):
-            tool_responses = []
-            for tool_call in response.function_calls:
-                result = TOOL_FUNCTIONS[tool_call.name](**dict(tool_call.args))
-                tool_responses.append(types.Part.from_function_response(name=tool_call.name, response={"result": result}))
-            response = await asyncio.to_thread(chat.send_message, tool_responses)
+        while True:
+            response = await asyncio.to_thread(
+                GROQ_CLIENT.chat.completions.create,
+                model=MODEL_NAME,
+                messages=messages,
+                tools=GROQ_TOOLS,
+                tool_choice="auto"
+            )
             
-        final_text = response.text
+            response_message = response.choices[0].message
+            # Groq returns a specialized object, we need to convert it back to a dict for the messages array
+            message_dict = {"role": response_message.role}
+            if response_message.content is not None:
+                message_dict["content"] = response_message.content
+            if response_message.tool_calls:
+                message_dict["tool_calls"] = [
+                    {
+                        "id": tool_call.id,
+                        "type": "function",
+                        "function": {
+                            "name": tool_call.function.name,
+                            "arguments": tool_call.function.arguments
+                        }
+                    }
+                    for tool_call in response_message.tool_calls
+                ]
+            
+            messages.append(message_dict)
+            
+            tool_calls = response_message.tool_calls
+            if tool_calls:
+                for tool_call in tool_calls:
+                    function_name = tool_call.function.name
+                    function_args = json.loads(tool_call.function.arguments) if tool_call.function.arguments else {}
+                    if not isinstance(function_args, dict):
+                        function_args = {}
+                    result = TOOL_FUNCTIONS[function_name](**function_args)
+                    messages.append(
+                        {
+                            "tool_call_id": tool_call.id,
+                            "role": "tool",
+                            "name": function_name,
+                            "content": json.dumps({"result": result}),
+                        }
+                    )
+            else:
+                final_text = response_message.content or ""
+                # Strip leaked Llama-3 function tags and any XML tags from the visible response
+                final_text = re.sub(r'<function=[^>]+>.*?</function>', '', final_text)
+                final_text = re.sub(r'<[^>]+>', '', final_text)
+                break
+            
         audio_b64 = await generate_audio_gtts(final_text, req.language_code)
         
         return { "session_id": sid, "text": final_text, "audio": audio_b64 }
 
     except Exception as e:
+        print(f"Error in agent_message: {e}")
         return {"session_id": sid, "text": "I apologize, I am having a technical issue.", "audio": None}
 
 if __name__ == "__main__":

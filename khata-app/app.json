@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#1e40af"
+      "backgroundColor": "#ffffff"
     },
     "ios": {
       "supportsTablet": false,
@@ -27,7 +27,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#1e40af"
       },
-      "package": "com.yourname.khatabook",
+      "package": "com.rohit.khatabook",
+      "googleServicesFile": "./google-services.json",
       "versionCode": 1,
       "permissions": [
         "android.permission.RECEIVE_BOOT_COMPLETED",
@@ -44,6 +45,7 @@
     "plugins": [
       "expo-router",
       "expo-sqlite",
+      "@react-native-google-signin/google-signin",
       [
         "expo-image-picker",
         {
@@ -57,7 +59,9 @@
           "color": "#2563eb",
           "sounds": []
         }
-      ]
+      ],
+      "expo-font",
+      "expo-secure-store"
     ],
     "scheme": "khata",
     "experiments": {

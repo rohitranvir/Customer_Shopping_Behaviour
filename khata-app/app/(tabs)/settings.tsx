@@ -14,16 +14,17 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import * as Google from 'expo-auth-session/providers/google';
-import { makeRedirectUri } from 'expo-auth-session';
+import * as FileSystem from 'expo-file-system';
+import * as Sharing from 'expo-sharing';
+import * as DocumentPicker from 'expo-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image } from 'react-native';
 
 import { useAuthStore } from '../../store/useAuthStore';
 import { useBusinessStore } from '../../store/useBusinessStore';
 import { useThemeStore } from '../../store/useThemeStore';
+import { useGoogleDriveStore } from '../../store/useGoogleDriveStore';
 import { exportDatabaseAsJSON, importDatabaseFromJSON } from '../../db/backup';
-import { uploadBackupToDrive, listBackupsFromDrive, downloadBackupFromDrive } from '../../utils/googleDrive';
 import { exportToCSV } from '../../utils/csv';
 import { scheduleDailyReminder, cancelAllReminders, requestNotificationPermission } from '../../utils/notifications';
 import { getDatabase } from '../../db/database';
@@ -92,11 +93,23 @@ export default function SettingsScreen() {
   const { business, businesses, editBusiness, setupBusiness, switchBusiness, loadBusiness } = useBusinessStore();
   const { isDark, colorScheme, setColorScheme } = useThemeStore();
 
-  // Google Drive OAuth
-  const [accessToken, setAccessToken] = useState<string | null>(null);
+  // Google Drive store
+  const {
+    isSignedIn: driveSignedIn,
+    lastBackup: driveLastBackup,
+    backupFiles,
+    isLoading: driveLoading,
+    init: driveInit,
+    signIn: driveSignIn,
+    signOut: driveSignOut,
+    backup: driveBackup,
+    listBackups: driveListBackups,
+    restore: driveRestore,
+  } = useGoogleDriveStore();
+
+  // Local backup state
   const [lastBackup, setLastBackup] = useState<string | null>(null);
-  const [autoBackup, setAutoBackup] = useState(false);
-  const [driveLoading, setDriveLoading] = useState(false);
+  const [localBackupLoading, setLocalBackupLoading] = useState(false);
 
   // Notifications
   const [notifEnabled, setNotifEnabled] = useState(false);
@@ -123,33 +136,17 @@ export default function SettingsScreen() {
   // Generic loading overlay
   const [busyMsg, setBusyMsg] = useState<string | null>(null);
 
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    clientId: process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID ?? '',
-    webClientId: process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID ?? '',
-    iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
-    androidClientId: process.env.EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID,
-    scopes: ['https://www.googleapis.com/auth/drive.file'],
-    redirectUri: makeRedirectUri({ scheme: 'khata-app' }),
-  });
-
-  useEffect(() => { init(); }, []);
-
   useEffect(() => {
-    if (response?.type === 'success' && response.authentication?.accessToken) {
-      handleSetToken(response.authentication.accessToken);
-    }
-  }, [response]);
+    init();
+    driveInit(); // configure Google Sign-In and restore session silently
+  }, []);
 
   const init = async () => {
-    const token = await AsyncStorage.getItem('google_token');
-    const auto = await AsyncStorage.getItem('auto_backup');
-    const last = await AsyncStorage.getItem('last_backup');
+    const last = await AsyncStorage.getItem('last_local_backup');
     const notif = await AsyncStorage.getItem('notif_enabled');
     const overdue = await AsyncStorage.getItem('overdue_notif');
     const hour = await AsyncStorage.getItem('notif_hour');
     const min = await AsyncStorage.getItem('notif_minute');
-    if (token) setAccessToken(token);
-    if (auto === 'true') setAutoBackup(true);
     if (last) setLastBackup(last);
     if (notif === 'true') setNotifEnabled(true);
     if (overdue === 'true') setOverdueNotif(true);
@@ -157,9 +154,75 @@ export default function SettingsScreen() {
     if (min) setReminderMinute(+min);
   };
 
-  const handleSetToken = async (token: string) => {
-    setAccessToken(token);
-    await AsyncStorage.setItem('google_token', token);
+  // ── Google Drive handlers ──────────────────────────────────────────────────
+  const handleDriveSignIn = async () => {
+    try {
+      await driveSignIn();
+      Toast.success('Connected to Google Drive!');
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    } catch (e: any) {
+      Alert.alert('Sign-In Failed', e.message);
+    }
+  };
+
+  const handleDriveBackup = async () => {
+    try {
+      await driveBackup();
+      Toast.success('Backed up to Google Drive!');
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    } catch (e: any) {
+      Alert.alert('Backup Failed', e.message);
+    }
+  };
+
+  const handleDriveRestore = async () => {
+    await driveListBackups();
+    const { backupFiles } = useGoogleDriveStore.getState();
+    if (backupFiles.length === 0) {
+      Alert.alert('No Backups Found', 'No backup files found in your Google Drive KhataBook folder.');
+      return;
+    }
+    const latest = backupFiles[0];
+    const dateLabel = new Date(latest.createdTime).toLocaleString('en-IN', {
+      day: '2-digit', month: 'short', year: 'numeric',
+      hour: '2-digit', minute: '2-digit',
+    });
+    Alert.alert(
+      'Restore from Drive',
+      `Restore latest backup?\n\n📁 ${latest.name}\n🕐 ${dateLabel}\n\nThis will overwrite your current data.`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Restore', style: 'destructive',
+          onPress: async () => {
+            setBusyMsg('Restoring from Google Drive...');
+            try {
+              await driveRestore(latest.id);
+              setBusyMsg(null);
+              Toast.success('Restored! Please restart the app.');
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            } catch (e: any) {
+              setBusyMsg(null);
+              Alert.alert('Restore Failed', e.message);
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  const handleDriveSignOut = () => {
+    Alert.alert(
+      'Disconnect Google Drive',
+      'Are you sure you want to sign out from Google Drive?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Disconnect', style: 'destructive', onPress: async () => {
+          await driveSignOut();
+          Toast.success('Disconnected from Google Drive.');
+        }},
+      ]
+    );
   };
 
   // ── Profile ────────────────────────────────────────────────────────────────
@@ -224,24 +287,73 @@ export default function SettingsScreen() {
 
   const toggleAutoBackup = async (val: boolean) => {
     setAutoBackup(val);
-    await AsyncStorage.setItem('auto_backup', val ? 'true' : 'false');
+    await saveAutoBackup(val);
   };
 
-  // ── Google Drive Backup ────────────────────────────────────────────────────
+  // ── Local Backup ────────────────────────────────────────────────────────────
   const handleBackup = async () => {
-    if (!accessToken) { Alert.alert('Not Connected', 'Connect Google Drive first.'); return; }
-    setDriveLoading(true);
+    setLocalBackupLoading(true);
     try {
-      const json = await exportDatabaseAsJSON();
-      await uploadBackupToDrive(accessToken, json);
-      const dateStr = new Date().toLocaleString();
+      const dbPath = `${FileSystem.documentDirectory}SQLite/khata.db`;
+      const backupName = `KhataBackup_${new Date().toISOString().replace(/[:.]/g, '-')}.db`;
+      const backupPath = `${FileSystem.cacheDirectory}${backupName}`;
+      await FileSystem.copyAsync({ from: dbPath, to: backupPath });
+      const canShare = await Sharing.isAvailableAsync();
+      if (!canShare) {
+        Alert.alert('Sharing Not Available', 'Your device does not support file sharing.');
+        return;
+      }
+      await Sharing.shareAsync(backupPath, { mimeType: 'application/octet-stream', dialogTitle: 'Save your KhataBook backup' });
+      const dateStr = new Date().toLocaleString('en-IN');
       setLastBackup(dateStr);
-      await AsyncStorage.setItem('last_backup', dateStr);
+      await AsyncStorage.setItem('last_local_backup', dateStr);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      Toast.success('Backup Successful');
-    } catch (e: any) { Toast.error(e.message); }
-    finally { setDriveLoading(false); }
+      Toast.success('Backup file shared successfully!');
+    } catch (e: any) {
+      Toast.error('Backup failed: ' + (e.message ?? 'Unknown error'));
+    } finally {
+      setLocalBackupLoading(false);
+    }
   };
+
+
+
+  const handleRestore = async () => {
+    Alert.alert(
+      '⚠️ Restore Backup',
+      'This will REPLACE all your current data with the backup file. Are you sure?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Restore',
+          style: 'destructive',
+          onPress: async () => {
+            setBusyMsg('Restoring backup...');
+            try {
+              const result = await DocumentPicker.getDocumentAsync({
+                type: '*/*',
+                copyToCacheDirectory: true,
+              });
+              if (result.canceled || !result.assets?.[0]) {
+                setBusyMsg(null);
+                return;
+              }
+              const pickedUri = result.assets[0].uri;
+              const dbPath = `${FileSystem.documentDirectory}SQLite/khata.db`;
+              await FileSystem.copyAsync({ from: pickedUri, to: dbPath });
+              setBusyMsg(null);
+              Toast.success('Restore successful! Please restart the app.');
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            } catch (e: any) {
+              setBusyMsg(null);
+              Alert.alert('Restore Failed', e.message ?? 'Could not restore. Make sure the file is a valid .db backup.');
+            }
+          },
+        },
+      ]
+    );
+  };
+
 
   // ── CSV Export ─────────────────────────────────────────────────────────────
   const handleExportCSV = async () => {
@@ -474,60 +586,91 @@ export default function SettingsScreen() {
           />
         </Card>
 
-        {/* ─── 5. DATA ────────────────────────────────────────────────────── */}
-        <SectionHeader icon="database" label="Data & Backup" isDark={isDark} />
+        {/* ─── 5. GOOGLE DRIVE BACKUP ─────────────────────────────────────── */}
+        <SectionHeader icon="google-drive" label="Google Drive Backup" isDark={isDark} />
         <Card isDark={isDark}>
-          {/* Google Drive status */}
-          {accessToken ? (
-            <View style={styles.driveConnectedBox}>
-              <MaterialCommunityIcons name="google-drive" size={22} color="#16a34a" />
-              <View style={{ flex: 1, marginLeft: 10 }}>
-                <Text style={[styles.rowLabel, isDark && styles.dark_text]}>Google Drive Connected</Text>
-                {lastBackup ? <Text style={[styles.rowSub, isDark && styles.dark_sub]}>Last backup: {lastBackup}</Text> : null}
+          {driveSignedIn ? (
+            // ── Connected State ──
+            <>
+              <View style={styles.driveConnectedBox}>
+                <MaterialCommunityIcons name="google" size={22} color="#16a34a" />
+                <View style={{ flex: 1, marginLeft: 10 }}>
+                  <Text style={[styles.rowLabel, isDark && styles.dark_text]}>Google Drive Connected</Text>
+                  {driveLastBackup
+                    ? <Text style={[styles.rowSub, isDark && styles.dark_sub]}>Last backup: {driveLastBackup}</Text>
+                    : <Text style={[styles.rowSub, isDark && styles.dark_sub]}>No backup yet</Text>
+                  }
+                </View>
+                <TouchableOpacity onPress={handleDriveSignOut}>
+                  <Text style={styles.disconnectText}>Disconnect</Text>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity onPress={async () => { setAccessToken(null); await AsyncStorage.removeItem('google_token'); }}>
-                <Text style={styles.disconnectText}>Disconnect</Text>
-              </TouchableOpacity>
-            </View>
+              <View style={[styles.divider, isDark && styles.dark_divider]} />
+              <SettingRow
+                icon="cloud-upload"
+                label="Backup to Google Drive"
+                subtitle="Upload your data to your own Google Drive"
+                isDark={isDark}
+                onPress={handleDriveBackup}
+                right={driveLoading ? <ActivityIndicator size="small" color={COLORS.primary} /> : undefined}
+              />
+              <View style={[styles.divider, isDark && styles.dark_divider]} />
+              <SettingRow
+                icon="cloud-download"
+                label="Restore from Google Drive"
+                subtitle="Download and restore your latest backup"
+                isDark={isDark}
+                onPress={handleDriveRestore}
+              />
+            </>
           ) : (
+            // ── Not Connected State ──
             <SettingRow
-              icon="google-drive"
+              icon="google"
               label="Connect Google Drive"
-              subtitle="Free 15GB cloud backup"
+              subtitle="Sign in to back up to your own Google Drive"
               isDark={isDark}
-              onPress={() => promptAsync()}
+              onPress={handleDriveSignIn}
+              right={driveLoading
+                ? <ActivityIndicator size="small" color={COLORS.primary} />
+                : <MaterialCommunityIcons name="chevron-right" size={20} color={COLORS.primary} />
+              }
             />
           )}
+        </Card>
+
+        {/* ─── 6. LOCAL BACKUP ────────────────────────────────────────────── */}
+        <SectionHeader icon="database" label="Local Backup" isDark={isDark} />
+        <Card isDark={isDark}>
+          {/* Last backup info */}
+          {lastBackup && (
+            <View style={styles.driveConnectedBox}>
+              <MaterialCommunityIcons name="check-circle" size={22} color="#16a34a" />
+              <View style={{ flex: 1, marginLeft: 10 }}>
+                <Text style={[styles.rowLabel, isDark && styles.dark_text]}>Last Backup</Text>
+                <Text style={[styles.rowSub, isDark && styles.dark_sub]}>{lastBackup}</Text>
+              </View>
+            </View>
+          )}
+          {lastBackup && <View style={[styles.divider, isDark && styles.dark_divider]} />}
+
+          <SettingRow
+            icon="database-export"
+            label="Backup Data"
+            subtitle="Save a .db backup file to your device"
+            isDark={isDark}
+            onPress={handleBackup}
+            right={localBackupLoading ? <ActivityIndicator size="small" color={COLORS.primary} /> : undefined}
+          />
 
           <View style={[styles.divider, isDark && styles.dark_divider]} />
           <SettingRow
-            icon="cloud-upload"
-            label="Backup to Google Drive"
-            subtitle={accessToken ? 'Upload current data to Drive' : 'Connect Drive first'}
+            icon="database-import"
+            label="Restore Backup"
+            subtitle="Restore from a previously saved .db file"
             isDark={isDark}
-            onPress={accessToken ? handleBackup : undefined}
-            right={driveLoading ? <ActivityIndicator size="small" color={COLORS.primary} /> : undefined}
+            onPress={handleRestore}
           />
-
-          {accessToken && (
-            <>
-              <View style={[styles.divider, isDark && styles.dark_divider]} />
-              <SettingRow
-                icon="cloud-sync"
-                label="Auto Backup on Close"
-                subtitle="Silently back up whenever you close the app"
-                isDark={isDark}
-                right={
-                  <Switch
-                    value={autoBackup}
-                    onValueChange={toggleAutoBackup}
-                    trackColor={{ false: COLORS.border, true: COLORS.primaryLight }}
-                    thumbColor={autoBackup ? COLORS.primary : '#f4f3f4'}
-                  />
-                }
-              />
-            </>
-          )}
 
           <View style={[styles.divider, isDark && styles.dark_divider]} />
           <SettingRow icon="file-delimited" label="Export as CSV" subtitle="Download all data as a spreadsheet" isDark={isDark} onPress={handleExportCSV} />

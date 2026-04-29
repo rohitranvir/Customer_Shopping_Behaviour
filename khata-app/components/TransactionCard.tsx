@@ -23,12 +23,12 @@ function TransactionCard({ transaction, runningBalance, onLongPress }: Transacti
   const isCredit = transaction.type === 'CREDIT';
 
   const amountColor = isCredit ? '#ef4444' : '#22c55e';
-  const bgColor = isCredit ? '#fef2f2' : '#f0fdf4';
-  const iconName = isCredit ? 'arrow-down' : 'arrow-up';
+  const iconName = isCredit ? 'arrow-up' : 'arrow-down';
+  const alignStyle = isCredit ? { alignSelf: 'flex-start' as const } : { alignSelf: 'flex-end' as const };
 
   return (
     <TouchableOpacity 
-      style={[styles.card, dk && { backgroundColor: D.surface, borderBottomColor: D.border }]}
+      style={[styles.card, alignStyle, dk && { backgroundColor: D.surface, borderColor: D.border }]}
       onLongPress={() => {
         if (onLongPress) {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -38,42 +38,25 @@ function TransactionCard({ transaction, runningBalance, onLongPress }: Transacti
       delayLongPress={300}
       activeOpacity={0.7}
     >
-      <View style={styles.left}>
-        <View style={[styles.iconWrap, { backgroundColor: bgColor }]}>
-          <MaterialCommunityIcons
-            name={iconName}
-            size={20}
-            color={amountColor}
-          />
-        </View>
-        
-        <View style={styles.info}>
-          <Text style={[styles.date, dk && { color: D.text }]}>{formatDate(transaction.date)}</Text>
-          {!!transaction.note && (
-             <Text style={[styles.note, dk && { color: D.muted }]} numberOfLines={1}>{transaction.note}</Text>
-          )}
-          {transaction.due_date && (
-            <View style={[styles.dueBadge, dk && { backgroundColor: D.bgSecondary }]}>
-              <MaterialCommunityIcons name="calendar-clock" size={12} color={dk ? D.muted : COLORS.inkMuted} />
-              <Text style={[styles.dueText, dk && { color: D.muted }]}>Due {formatDate(transaction.due_date)}</Text>
-            </View>
-          )}
-        </View>
-      </View>
-
-      <View style={styles.right}>
-        <Text style={[styles.amount, { color: amountColor }]}>
+      <View style={styles.topRow}>
+        <MaterialCommunityIcons
+          name={iconName}
+          size={16}
+          color={COLORS.ink}
+          style={styles.arrowIcon}
+        />
+        <Text style={[styles.amount, dk && { color: D.text }]}>
           {formatINR(transaction.amount)}
         </Text>
-        
-        {typeof runningBalance === 'number' && (
-          <View style={[styles.runningBalanceWrap, dk && { backgroundColor: D.bgSecondary }]}>
-            <Text style={[styles.runningBalanceText, dk && { color: D.muted }]}>
-              Bal: {formatINR(Math.abs(runningBalance))}
-            </Text>
-          </View>
-        )}
+        <Text style={[styles.time, dk && { color: D.muted }]}>
+          {new Date(transaction.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </Text>
+        <MaterialCommunityIcons name="check" size={16} color={COLORS.inkMuted} style={styles.checkIcon} />
       </View>
+      
+      <Text style={[styles.note, dk && { color: D.muted }]}>
+        {transaction.note || `${formatINR(transaction.amount)} ${isCredit ? 'Advance' : 'Payment'}`}
+      </Text>
     </TouchableOpacity>
   );
 }
@@ -86,74 +69,39 @@ export default React.memo(TransactionCard, (prev, next) => {
 
 const styles = StyleSheet.create({
   card: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     backgroundColor: COLORS.surface,
-    padding: 14,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
+    padding: 12,
+    marginHorizontal: 16,
+    marginBottom: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    minWidth: 160,
   },
-  left: {
+  topRow: {
     flexDirection: 'row',
-    flex: 1,
-  },
-  iconWrap: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
     alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
-  info: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingRight: 10,
-  },
-  date: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: COLORS.ink,
-    marginBottom: 2,
-  },
-  note: {
-    fontSize: 13,
-    color: COLORS.inkMuted,
     marginBottom: 4,
   },
-  dueBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fffbeb',
-    alignSelf: 'flex-start',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 4,
-  },
-  dueText: {
-    fontSize: 11,
-    color: COLORS.inkMuted,
-    marginLeft: 4,
-  },
-  right: {
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start',
+  arrowIcon: {
+    marginRight: 6,
   },
   amount: {
-    fontSize: 16,
-    fontWeight: '800',
-    marginBottom: 4,
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#334155',
+    marginRight: 8,
   },
-  runningBalanceWrap: {
-    backgroundColor: COLORS.surfaceSecondary,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 4,
-    marginTop: 4,
+  time: {
+    fontSize: 12,
+    color: '#94a3b8',
+    marginRight: 4,
   },
-  runningBalanceText: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: COLORS.inkMuted,
+  checkIcon: {
+    marginLeft: 'auto',
+  },
+  note: {
+    fontSize: 14,
+    color: '#64748b',
   },
 });

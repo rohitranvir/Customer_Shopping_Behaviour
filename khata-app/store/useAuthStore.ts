@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { User, getUser, createUser, updateUserPin } from '../db/queries';
+import { User, UserRepository } from '../db/repositories/userRepository';
+import { verifyPin } from '../security/pin';
 
 interface AuthState {
   user: User | null;
@@ -9,7 +10,7 @@ interface AuthState {
   // Actions
   loadUser: () => Promise<void>;
   setupUser: (name: string, phone: string, pin: string) => Promise<number>;
-  verifyPin: (pin: string) => boolean;
+  verifyPin: (pin: string) => Promise<boolean>;
   unlock: () => void;
   lock: () => void;
   changePin: (userId: number, newPin: string) => Promise<void>;
@@ -24,7 +25,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   loadUser: async () => {
     set({ isLoading: true });
     try {
-      const user = await getUser();
+      let user = await UserRepository.getFirst();
+      if (user) {
+        // Run migration if the user is on old plaintext PIN
+        user = await UserRepository.migratePin(user);
+      }
       set({ user, isLoading: false });
     } catch (e) {
       set({ user: null, isLoading: false });
@@ -32,16 +37,16 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   setupUser: async (name, phone, pin) => {
-    const { createUser: dbCreate, createBusiness } = await import('../db/queries');
-    const userId = await dbCreate(name, phone, pin);
-    const user = await getUser();
+    const userId = await UserRepository.create(name, phone, pin);
+    const user = await UserRepository.getFirst();
     set({ user, isAuthenticated: false });
     return userId;
   },
 
-  verifyPin: (pin: string) => {
+  verifyPin: async (pin: string) => {
     const { user } = get();
-    return user?.pin === pin;
+    if (!user) return false;
+    return await verifyPin(pin, user.pin);
   },
 
   unlock: () => set({ isAuthenticated: true }),
@@ -49,8 +54,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   lock: () => set({ isAuthenticated: false }),
 
   changePin: async (userId, newPin) => {
-    await updateUserPin(userId, newPin);
-    const user = await getUser();
+    await UserRepository.updatePin(userId, newPin);
+    const user = await UserRepository.getFirst();
     set({ user });
   },
 

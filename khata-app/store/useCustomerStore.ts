@@ -1,18 +1,6 @@
 import { create } from 'zustand';
-import {
-  Customer,
-  Transaction,
-  getAllCustomers,
-  getCustomerById,
-  createCustomer,
-  updateCustomer,
-  deleteCustomer,
-  createTransaction,
-  deleteTransaction,
-  searchCustomers,
-  updateTransaction,
-  getTransactionsByCustomer,
-} from '../db/queries';
+import { Customer, CustomerRepository } from '../db/repositories/customerRepository';
+import { Transaction, TransactionRepository } from '../db/repositories/transactionRepository';
 
 interface CustomerState {
   customers: Customer[];
@@ -25,12 +13,15 @@ interface CustomerState {
   loadCustomers: (businessId: number) => Promise<void>;
   searchAndFilter: (businessId: number, query: string) => Promise<void>;
   selectCustomer: (id: number) => Promise<void>;
-  addCustomer: (businessId: number, name: string, phone?: string, openingBalance?: number) => Promise<number>;
-  editCustomer: (id: number, name: string, phone?: string) => Promise<void>;
+  addCustomer: (businessId: number, name: string, phone?: string, openingBalance?: number, type?: 'CUSTOMER' | 'SUPPLIER') => Promise<number>;
+  editCustomer: (id: number, name: string, phone?: string, type?: 'CUSTOMER' | 'SUPPLIER') => Promise<void>;
   removeCustomer: (id: number) => Promise<void>;
 
   loadTransactions: (customerId: number) => Promise<void>;
+  
+  // Note: added businessId to avoid inference from customers array
   addTransaction: (
+    businessId: number,
     customerId: number,
     type: 'CREDIT' | 'DEBIT',
     amount: number,
@@ -38,7 +29,9 @@ interface CustomerState {
     date?: string,
     dueDate?: string
   ) => Promise<void>;
+  
   editTransaction: (
+    businessId: number,
     txId: number,
     customerId: number,
     amount: number,
@@ -46,7 +39,12 @@ interface CustomerState {
     date?: string,
     dueDate?: string
   ) => Promise<void>;
-  removeTransaction: (id: number, customerId: number) => Promise<void>;
+  
+  removeTransaction: (
+    businessId: number,
+    id: number, 
+    customerId: number
+  ) => Promise<void>;
 
   setSearchQuery: (q: string) => void;
   clearSelection: () => void;
@@ -62,7 +60,7 @@ export const useCustomerStore = create<CustomerState>((set, get) => ({
   loadCustomers: async (businessId) => {
     set({ isLoading: true });
     try {
-      const customers = await getAllCustomers(businessId);
+      const customers = await CustomerRepository.getAll(businessId);
       set({ customers, isLoading: false });
     } catch {
       set({ isLoading: false });
@@ -75,81 +73,112 @@ export const useCustomerStore = create<CustomerState>((set, get) => ({
       await get().loadCustomers(businessId);
       return;
     }
-    const customers = await searchCustomers(businessId, query);
+    const customers = await CustomerRepository.search(businessId, query);
     set({ customers });
   },
 
   selectCustomer: async (id) => {
-    const customer = await getCustomerById(id);
+    const customer = await CustomerRepository.getById(id);
     set({ selectedCustomer: customer });
   },
 
-  addCustomer: async (businessId, name, phone, openingBalance = 0) => {
-    const id = await createCustomer(businessId, name, phone, openingBalance);
+  addCustomer: async (businessId, name, phone, openingBalance = 0, type = 'CUSTOMER') => {
+    const id = await CustomerRepository.create(businessId, name, phone, openingBalance, type);
+    // Refresh only the list
     await get().loadCustomers(businessId);
+    require('./useBusinessStore').useBusinessStore.getState().refreshSummary();
     return id;
   },
 
-  editCustomer: async (id, name, phone) => {
-    await updateCustomer(id, name, phone);
-    const { selectedCustomer, customers } = get();
-    // Refresh selected customer and list
+  editCustomer: async (id, name, phone, type) => {
+    await CustomerRepository.update(id, name, phone, type);
+    
+    // Optimistic local update to avoid full DB reload
+    const { customers, selectedCustomer } = get();
+    
     if (selectedCustomer?.id === id) {
-      const updated = await getCustomerById(id);
-      set({ selectedCustomer: updated });
+      set({ selectedCustomer: { ...selectedCustomer, name, phone: phone || null, type: type || selectedCustomer.type } });
     }
-    // Re-fetch list
-    const businessId = customers[0]?.business_id;
-    if (businessId) await get().loadCustomers(businessId);
+    
+    set({
+      customers: customers.map((c) => 
+        c.id === id ? { ...c, name, phone: phone || null, type: type || c.type } : c
+      )
+    });
   },
 
   removeCustomer: async (id) => {
-    await deleteCustomer(id);
+    await CustomerRepository.delete(id);
     const { customers } = get();
     const updated = customers.filter((c) => c.id !== id);
     set({ customers: updated, selectedCustomer: null, transactions: [] });
+    require('./useBusinessStore').useBusinessStore.getState().refreshSummary();
   },
 
   loadTransactions: async (customerId) => {
     set({ isLoading: true });
     try {
-      const transactions = await getTransactionsByCustomer(customerId);
+      const transactions = await TransactionRepository.getByCustomer(customerId);
       set({ transactions, isLoading: false });
     } catch {
       set({ isLoading: false });
     }
   },
 
-  addTransaction: async (customerId, type, amount, note, date, dueDate) => {
-    await createTransaction(customerId, type, amount, note, date, dueDate);
-    // Refresh transactions and customer balance
-    await get().loadTransactions(customerId);
-    const updated = await getCustomerById(customerId);
-    set({ selectedCustomer: updated });
-    // Also refresh customers list to update balances
-    const { customers } = get();
-    const businessId = customers[0]?.business_id;
-    if (businessId) await get().loadCustomers(businessId);
+  addTransaction: async (businessId, customerId, type, amount, note, date, dueDate) => {
+    await TransactionRepository.create(customerId, type, amount, note, date, dueDate);
+    
+    // Efficient partial reload:
+    // Only reload the specific customer and their transactions, then patch the state
+    const [updatedTxs, updatedCustomer] = await Promise.all([
+      TransactionRepository.getByCustomer(customerId),
+      CustomerRepository.getById(customerId),
+    ]);
+    
+    set((state) => ({
+      transactions: updatedTxs,
+      selectedCustomer: updatedCustomer,
+      customers: state.customers.map((c) =>
+        c.id === customerId ? { ...c, balance: updatedCustomer?.balance, last_tx_date: updatedCustomer?.last_tx_date, is_overdue: updatedCustomer?.is_overdue } : c
+      ),
+    }));
+    require('./useBusinessStore').useBusinessStore.getState().refreshSummary();
   },
 
-  editTransaction: async (txId, customerId, amount, note, date, dueDate) => {
-    await updateTransaction(txId, amount, note, date, dueDate);
-    await get().loadTransactions(customerId);
-    const updated = await getCustomerById(customerId);
-    set({ selectedCustomer: updated });
-    const { customers } = get();
-    const businessId = customers[0]?.business_id;
-    if (businessId) await get().loadCustomers(businessId);
+  editTransaction: async (businessId, txId, customerId, amount, note, date, dueDate) => {
+    await TransactionRepository.update(txId, amount, note, date, dueDate);
+    
+    const [updatedTxs, updatedCustomer] = await Promise.all([
+      TransactionRepository.getByCustomer(customerId),
+      CustomerRepository.getById(customerId),
+    ]);
+    
+    set((state) => ({
+      transactions: updatedTxs,
+      selectedCustomer: updatedCustomer,
+      customers: state.customers.map((c) =>
+        c.id === customerId ? { ...c, balance: updatedCustomer?.balance, last_tx_date: updatedCustomer?.last_tx_date, is_overdue: updatedCustomer?.is_overdue } : c
+      ),
+    }));
+    require('./useBusinessStore').useBusinessStore.getState().refreshSummary();
   },
 
-  removeTransaction: async (id, customerId) => {
-    await deleteTransaction(id);
-    await get().loadTransactions(customerId);
-    const updated = await getCustomerById(customerId);
-    set({ selectedCustomer: updated });
-    const { customers } = get();
-    const businessId = customers[0]?.business_id;
-    if (businessId) await get().loadCustomers(businessId);
+  removeTransaction: async (businessId, id, customerId) => {
+    await TransactionRepository.delete(id);
+    
+    const [updatedTxs, updatedCustomer] = await Promise.all([
+      TransactionRepository.getByCustomer(customerId),
+      CustomerRepository.getById(customerId),
+    ]);
+    
+    set((state) => ({
+      transactions: updatedTxs,
+      selectedCustomer: updatedCustomer,
+      customers: state.customers.map((c) =>
+        c.id === customerId ? { ...c, balance: updatedCustomer?.balance, last_tx_date: updatedCustomer?.last_tx_date, is_overdue: updatedCustomer?.is_overdue } : c
+      ),
+    }));
+    require('./useBusinessStore').useBusinessStore.getState().refreshSummary();
   },
 
   setSearchQuery: (q) => set({ searchQuery: q }),

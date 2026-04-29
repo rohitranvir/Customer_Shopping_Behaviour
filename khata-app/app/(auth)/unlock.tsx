@@ -27,8 +27,9 @@ export default function UnlockScreen() {
     ]).start();
   };
 
-  const handlePin = (pin: string) => {
-    if (verifyPin(pin)) {
+  const handlePin = async (pin: string) => {
+    const isValid = await verifyPin(pin);
+    if (isValid) {
       setError(null);
       unlock();
       router.replace('/(tabs)');

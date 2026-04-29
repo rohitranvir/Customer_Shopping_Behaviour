@@ -20,8 +20,15 @@ function CustomerCard({ customer, onPress, onDelete }: CustomerCardProps) {
   const { isDark } = useThemeStore();
   const dk = isDark;
   const balance = customer.balance ?? customer.opening_balance;
-  // According to specification: Udhar (they owe me) is Red, Advance (I owe them) is Green
-  const isUdhar = balance >= 0;
+  
+  // Logic based on screenshot:
+  // > 0: Red, "Due"
+  // == 0: Green, "Due"
+  // < 0: Green, "Advance"
+  const isDue = balance >= 0;
+  const isZero = balance === 0;
+  const amountColorStyle = (balance > 0) ? styles.redText : styles.greenText;
+  const amountLabel = isDue ? 'Due' : 'Advance';
   
   const initials = getInitials(customer.name);
   const avatarColor = getAvatarColor(customer.name);
@@ -80,21 +87,20 @@ function CustomerCard({ customer, onPress, onDelete }: CustomerCardProps) {
         <View style={styles.info}>
           <Text style={[styles.name, dk && { color: D.text }]} numberOfLines={1}>{customer.name}</Text>
           <View style={styles.subRow}>
-            {!!customer.phone && <Text style={[styles.phone, dk && { color: D.muted }]}>{customer.phone}</Text>}
-            {!!customer.phone && !!customer.last_tx_date && <Text style={[styles.dotSeparator, dk && { color: D.muted }]}> • </Text>}
-            {!!customer.last_tx_date && (
-              <Text style={[styles.dateText, dk && { color: D.muted }]}>Tx: {formatDate(customer.last_tx_date)}</Text>
-            )}
+            <MaterialCommunityIcons name="check" size={14} color={COLORS.inkMuted} style={{ marginRight: 4 }} />
+            <Text style={[styles.dateText, dk && { color: D.muted }]} numberOfLines={1}>
+              {customer.last_tx_date ? `₹${formatINR(Math.abs(balance))} Payment Added on ${formatDate(customer.last_tx_date)}` : 'No transactions yet'}
+            </Text>
           </View>
         </View>
 
         {/* Balance */}
         <View style={styles.balanceWrap}>
-          <Text style={[styles.balance, isUdhar ? styles.redText : styles.greenText]}>
+          <Text style={[styles.balance, amountColorStyle]}>
             {formatINR(Math.abs(balance))}
           </Text>
-          <Text style={styles.balanceLabel}>
-            {isUdhar ? 'They Owe You' : 'You Owe Them'}
+          <Text style={[styles.balanceLabel, dk && { color: D.muted }]}>
+            {amountLabel}
           </Text>
         </View>
       </TouchableOpacity>
@@ -143,16 +149,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   info: { flex: 1, paddingRight: 8 },
-  name: { fontSize: 16, fontWeight: '700', color: COLORS.ink, marginBottom: 2 },
+  name: { fontSize: 16, fontWeight: '700', color: COLORS.ink, marginBottom: 4 },
   subRow: { flexDirection: 'row', alignItems: 'center' },
-  phone: { fontSize: 13, color: COLORS.inkMuted },
-  dotSeparator: { fontSize: 13, color: COLORS.inkLight },
-  dateText: { fontSize: 13, color: COLORS.inkMuted },
+  dateText: { fontSize: 13, color: COLORS.inkMuted, flexShrink: 1 },
   balanceWrap: { alignItems: 'flex-end', justifyContent: 'center' },
   balance: { fontSize: 16, fontWeight: '800', marginBottom: 2 },
   redText: { color: '#ef4444' },
   greenText: { color: '#22c55e' },
-  balanceLabel: { fontSize: 11, fontWeight: '600', color: COLORS.inkMuted },
+  balanceLabel: { fontSize: 13, fontWeight: '500', color: COLORS.inkMuted },
   deleteButton: {
     backgroundColor: '#ef4444',
     width: 80,

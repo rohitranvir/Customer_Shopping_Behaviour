@@ -36,6 +36,7 @@ export async function initDatabase(): Promise<void> {
       business_id     INTEGER NOT NULL REFERENCES business(id) ON DELETE CASCADE,
       name            TEXT    NOT NULL,
       phone           TEXT,
+      type            TEXT    DEFAULT 'CUSTOMER',
       opening_balance REAL    DEFAULT 0,
       created_at      DATETIME DEFAULT CURRENT_TIMESTAMP
     );
@@ -54,6 +55,13 @@ export async function initDatabase(): Promise<void> {
     CREATE INDEX IF NOT EXISTS idx_transactions_customer ON transactions(customer_id);
     CREATE INDEX IF NOT EXISTS idx_customers_business ON customers(business_id);
   `);
+
+  // Simple migration for existing databases
+  try {
+    await database.execAsync(`ALTER TABLE customers ADD COLUMN type TEXT DEFAULT 'CUSTOMER';`);
+  } catch (e) {
+    // Column already exists
+  }
 }
 
 export async function resetDatabase(): Promise<void> {

@@ -14,22 +14,20 @@ import {
   ScrollView,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useFocusEffect } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useBusinessStore } from '../../store/useBusinessStore';
 import { useCustomerStore } from '../../store/useCustomerStore';
 import { COLORS } from '../../utils/constants';
 import CustomerCard from '../../components/CustomerCard';
-import { Customer } from '../../db/queries';
+import { Customer } from '../../db/repositories/customerRepository';
 import { useThemeStore } from '../../store/useThemeStore';
 import * as Haptics from 'expo-haptics';
 import { CustomerListSkeleton } from '../../components/SkeletonLoader';
 import EmptyState from '../../components/EmptyState';
+import { useDebounce } from '../../hooks/useDebounce';
+import { getThemeColors } from '../../utils/theme';
 import { Toast } from '../../components/Toast';
-
-const D = {
-  bg: '#0f172a', surface: '#1e293b', border: '#334155',
-  text: '#f1f5f9', muted: '#94a3b8', input: '#0f172a',
-};
 
 type FilterTab = 'All' | 'To Receive' | 'To Pay' | 'Overdue';
 const TABS: FilterTab[] = ['All', 'To Receive', 'To Pay', 'Overdue'];
@@ -38,6 +36,7 @@ export default function CustomersScreen() {
   const router = useRouter();
   const { business } = useBusinessStore();
   const { isDark } = useThemeStore();
+  const D = getThemeColors(isDark);
   const dk = isDark;
   const { 
     customers, 
@@ -51,6 +50,7 @@ export default function CustomersScreen() {
 
   const [localQuery, setLocalQuery] = useState('');
   const [filterTab, setFilterTab] = useState<FilterTab>('All');
+  const [segmentType, setSegmentType] = useState<'CUSTOMER' | 'SUPPLIER'>('CUSTOMER');
   const [isModalVisible, setModalVisible] = useState(false);
 
   // Add Customer Form State
@@ -60,18 +60,30 @@ export default function CustomersScreen() {
   const [isUdharGiven, setIsUdharGiven] = useState(true); // true = credit (they owe me), false = debit (i owe them)
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Load on mount and every time business changes
   useEffect(() => {
-    if (business) {
+    if (business?.id) {
       loadCustomers(business.id);
     }
   }, [business?.id]);
 
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      if (business) searchAndFilter(business.id, localQuery);
-    }, 300);
-    return () => clearTimeout(delayDebounceFn);
-  }, [localQuery, business?.id]);
+  // Reload every time this tab is focused (fixes skeleton-forever bug)
+  useFocusEffect(
+    useCallback(() => {
+      if (business?.id) {
+        loadCustomers(business.id);
+      }
+    }, [business?.id])
+  );
+
+  const debouncedSearch = useDebounce((q: string) => {
+    if (business) searchAndFilter(business.id, q);
+  }, 300);
+
+  const handleSearchChange = (q: string) => {
+    setLocalQuery(q);
+    debouncedSearch(q);
+  };
 
   const onRefresh = useCallback(() => {
     if (business) loadCustomers(business.id);
@@ -128,51 +140,76 @@ export default function CustomersScreen() {
 
   const filteredData = useMemo(() => {
     return customers.filter(c => {
+      // Filter by Customer/Supplier toggle first
+      if ((c.type || 'CUSTOMER') !== segmentType) return false;
       const bal = c.balance ?? c.opening_balance;
       if (filterTab === 'To Receive') return bal > 0;
       if (filterTab === 'To Pay') return bal < 0;
       if (filterTab === 'Overdue') return bal > 0 && c.is_overdue;
       return true;
     });
-  }, [customers, filterTab]);
+  }, [customers, filterTab, segmentType]);
 
   return (
     <View style={[styles.container, dk && { backgroundColor: D.bg }]}>
-      {/* Search Header */}
-      <View style={[styles.header, dk && { backgroundColor: D.surface, borderBottomColor: D.border }]}>
-        <View style={[styles.searchBar, dk && { backgroundColor: D.input, borderColor: D.border }]}>
-          <MaterialCommunityIcons name="magnify" size={24} color={dk ? D.muted : COLORS.inkMuted} />
-          <TextInput
-            style={[styles.searchInput, dk && { color: D.text }]}
-            placeholder="Search by Name or Phone"
-            value={localQuery}
-            onChangeText={setLocalQuery}
-            placeholderTextColor={dk ? D.muted : COLORS.inkLight}
-          />
-          {localQuery.length > 0 && (
-            <TouchableOpacity onPress={() => setLocalQuery('')}>
-              <MaterialCommunityIcons name="close-circle" size={20} color={COLORS.inkLight} />
-            </TouchableOpacity>
-          )}
+      {/* App Header (Screenshot 2 style) */}
+      <View style={[styles.appHeader, dk && { backgroundColor: D.surface, borderBottomColor: D.border }]}>
+        <View style={styles.headerAvatar}>
+          <Text style={styles.headerAvatarText}>R</Text>
+          <View style={styles.avatarBadge} />
+        </View>
+        <View style={styles.headerRightIcons}>
+          <TouchableOpacity style={styles.headerIconBtn}>
+            <MaterialCommunityIcons name="share-variant" size={22} color={dk ? D.text : COLORS.ink} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.headerIconBtn}>
+            <MaterialCommunityIcons name="bell-outline" size={22} color={dk ? D.text : COLORS.ink} />
+            <View style={styles.notificationBadge}>
+              <Text style={styles.notificationBadgeText}>2</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.headerIconBtn} onPress={() => setLocalQuery(' ')}>
+            <MaterialCommunityIcons name="magnify" size={24} color={dk ? D.text : COLORS.ink} />
+          </TouchableOpacity>
         </View>
       </View>
 
-      {/* Tabs */}
-      <View>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabsContainer}>
-          {TABS.map(tab => {
-            const isActive = filterTab === tab;
-            return (
-              <TouchableOpacity
-                key={tab}
-                style={[styles.tab, isActive && styles.tabActive, dk && !isActive && { backgroundColor: D.surface, borderColor: D.border }]}
-                onPress={() => setFilterTab(tab)}
-              >
-                <Text style={[styles.tabText, isActive && styles.tabTextActive, dk && !isActive && { color: D.muted }]}>{tab}</Text>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
+      {/* Optional Search Bar - shows if search is activated */}
+      {localQuery !== '' && (
+        <View style={[styles.searchBarContainer, dk && { backgroundColor: D.surface }]}>
+          <View style={[styles.searchBar, dk && { backgroundColor: D.input, borderColor: D.border }]}>
+            <MaterialCommunityIcons name="magnify" size={20} color={dk ? D.muted : COLORS.inkMuted} />
+            <TextInput
+              style={[styles.searchInput, dk && { color: D.text }]}
+              placeholder="Search by Name or Phone"
+              value={localQuery.trim()}
+              onChangeText={handleSearchChange}
+              placeholderTextColor={dk ? D.muted : COLORS.inkLight}
+              autoFocus
+            />
+            <TouchableOpacity onPress={() => { setLocalQuery(''); debouncedSearch(''); }}>
+              <MaterialCommunityIcons name="close-circle" size={20} color={COLORS.inkLight} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+
+      {/* Segmented Control (Customer | Supplier) */}
+      <View style={[styles.segmentedWrap, dk && { backgroundColor: D.surface }]}>
+        <View style={styles.segmentedControl}>
+          <TouchableOpacity
+            style={[styles.segmentBtn, segmentType === 'CUSTOMER' && styles.segmentActive]}
+            onPress={() => setSegmentType('CUSTOMER')}
+          >
+            <Text style={[styles.segmentText, segmentType === 'CUSTOMER' && styles.segmentTextActive]}>Customer</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.segmentBtn, segmentType === 'SUPPLIER' && styles.segmentActive]}
+            onPress={() => setSegmentType('SUPPLIER')}
+          >
+            <Text style={[styles.segmentText, segmentType === 'SUPPLIER' && styles.segmentTextActive]}>Supplier</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* List */}
@@ -207,129 +244,60 @@ export default function CustomersScreen() {
         activeOpacity={0.9}
         onPress={() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          setModalVisible(true);
+          // Go to existing Add Customer screen which now has Contacts Integration
+          router.push('/customer/add');
         }}
       >
-        <MaterialCommunityIcons name="account-plus" size={26} color="#fff" />
+        <MaterialCommunityIcons name="account-plus" size={24} color={COLORS.ink} />
       </TouchableOpacity>
 
-      {/* Add Customer Modal */}
-      <Modal visible={isModalVisible} animationType="slide" transparent>
-        <KeyboardAvoidingView 
-          style={styles.modalOverlay} 
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        >
-          <View style={[styles.modalContent, dk && { backgroundColor: D.surface }]}>
-            <View style={styles.modalHeader}>
-              <Text style={[styles.modalTitle, dk && { color: D.text }]}>Add New Customer</Text>
-              <TouchableOpacity onPress={() => setModalVisible(false)} disabled={isSubmitting}>
-                <MaterialCommunityIcons name="close" size={24} color={dk ? D.muted : COLORS.ink} />
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.formGroup}>
-              <Text style={[styles.label, dk && { color: D.muted }]}>Customer Name *</Text>
-              <TextInput
-                style={[styles.input, dk && { backgroundColor: D.input, borderColor: D.border, color: D.text }]}
-                placeholder="Enter name"
-                placeholderTextColor={dk ? D.muted : COLORS.inkLight}
-                value={newName}
-                onChangeText={setNewName}
-              />
-            </View>
-
-            <View style={styles.formGroup}>
-              <Text style={[styles.label, dk && { color: D.muted }]}>Phone Number</Text>
-              <TextInput
-                style={[styles.input, dk && { backgroundColor: D.input, borderColor: D.border, color: D.text }]}
-                placeholder="Enter 10-digit number"
-                placeholderTextColor={dk ? D.muted : COLORS.inkLight}
-                keyboardType="phone-pad"
-                value={newPhone}
-                onChangeText={setNewPhone}
-              />
-            </View>
-
-            <View style={styles.formGroup}>
-              <Text style={styles.label}>Opening Balance (Optional)</Text>
-              <View style={styles.balanceInputWrap}>
-                <Text style={styles.rupeeSymbol}>₹</Text>
-                <TextInput
-                  style={styles.balanceInput}
-                  placeholder="0"
-                  keyboardType="numeric"
-                  value={newAmount}
-                  onChangeText={setNewAmount}
-                />
-              </View>
-            </View>
-
-            {/* Toggle Balance Type */}
-            {parseFloat(newAmount) > 0 && (
-              <View style={styles.toggleRow}>
-                <TouchableOpacity 
-                  style={[styles.toggleBtn, isUdharGiven && styles.toggleBtnActiveRed]}
-                  onPress={() => setIsUdharGiven(true)}
-                >
-                  <Text style={[styles.toggleText, isUdharGiven && styles.toggleTextActiveRed]}>They Owe You</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                  style={[styles.toggleBtn, !isUdharGiven && styles.toggleBtnActiveGreen]}
-                  onPress={() => setIsUdharGiven(false)}
-                >
-                  <Text style={[styles.toggleText, !isUdharGiven && styles.toggleTextActiveGreen]}>You Owe Them</Text>
-                </TouchableOpacity>
-              </View>
-            )}
-
-            <TouchableOpacity 
-              style={[styles.submitBtn, isSubmitting && styles.submitBtnDisabled]}
-              onPress={handleAddSubmit}
-              disabled={isSubmitting}
-            >
-              <Text style={styles.submitBtnText}>{isSubmitting ? 'Adding...' : 'Save Customer'}</Text>
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-      </Modal>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.surfaceSecondary },
-  header: {
-    backgroundColor: COLORS.surface,
+  container: { flex: 1, backgroundColor: '#f8fafc' },
+  appHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16,
     paddingTop: 54,
     paddingBottom: 12,
-    paddingHorizontal: 16,
-    elevation: 2,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
+    backgroundColor: '#fff',
   },
-  searchBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: COLORS.surfaceSecondary,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    height: 48,
+  headerAvatar: {
+    width: 36, height: 36, borderRadius: 18,
+    backgroundColor: '#fbbf24', // yellow background
+    justifyContent: 'center', alignItems: 'center',
+    position: 'relative',
   },
-  searchInput: { flex: 1, marginLeft: 8, fontSize: 15, color: COLORS.ink },
-  tabsContainer: { paddingHorizontal: 16, paddingVertical: 12, gap: 8 },
-  tab: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    backgroundColor: COLORS.surface,
-    borderWidth: 1,
-    borderColor: COLORS.border,
+  headerAvatarText: { color: '#fff', fontWeight: '700', fontSize: 16 },
+  avatarBadge: {
+    position: 'absolute', right: -2, bottom: -2,
+    width: 14, height: 14, borderRadius: 7,
+    backgroundColor: '#22c55e', borderWidth: 2, borderColor: '#fff'
   },
-  tabActive: { backgroundColor: COLORS.primary, borderColor: COLORS.primary },
-  tabText: { fontSize: 13, fontWeight: '600', color: COLORS.inkMuted },
-  tabTextActive: { color: '#fff' },
+  headerRightIcons: { flexDirection: 'row', alignItems: 'center', gap: 16 },
+  headerIconBtn: { position: 'relative', backgroundColor: '#e2e8f0', padding: 8, borderRadius: 20 },
+  notificationBadge: {
+    position: 'absolute', top: 0, right: 0,
+    backgroundColor: '#ef4444', width: 16, height: 16, borderRadius: 8,
+    justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#fff'
+  },
+  notificationBadgeText: { color: '#fff', fontSize: 9, fontWeight: '700' },
+  
+  searchBarContainer: { paddingHorizontal: 16, paddingBottom: 12, backgroundColor: '#fff' },
+  searchBar: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#f1f5f9', borderRadius: 12, paddingHorizontal: 12, height: 44 },
+  searchInput: { flex: 1, marginLeft: 8, fontSize: 15, color: '#334155' },
+
+  segmentedWrap: { backgroundColor: '#fff', paddingHorizontal: 16, paddingBottom: 12, borderBottomWidth: 1, borderBottomColor: '#e2e8f0' },
+  segmentedControl: { flexDirection: 'row', backgroundColor: '#f1f5f9', borderRadius: 24, padding: 4 },
+  segmentBtn: { flex: 1, paddingVertical: 8, alignItems: 'center', borderRadius: 20 },
+  segmentActive: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#10b981', elevation: 1 },
+  segmentText: { fontSize: 14, fontWeight: '600', color: '#64748b' },
+  segmentTextActive: { color: '#0f172a' },
+  
   listContainer: { paddingBottom: 100 },
   emptyState: { alignItems: 'center', justifyContent: 'center', padding: 40, marginTop: 40 },
   emptyTitle: { fontSize: 18, fontWeight: '700', color: COLORS.ink, marginTop: 16 },
@@ -338,81 +306,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 24,
     right: 24,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: COLORS.primary,
+    width: 64,
+    height: 64,
+    borderRadius: 16,
+    backgroundColor: '#bbf7d0',
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 4,
-    shadowColor: COLORS.primary,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.15,
     shadowRadius: 6,
   },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalContent: {
-    backgroundColor: COLORS.surface,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    padding: 24,
-    paddingBottom: Platform.OS === 'ios' ? 40 : 24,
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 24,
-  },
-  modalTitle: { fontSize: 20, fontWeight: '800', color: COLORS.ink },
-  formGroup: { marginBottom: 16 },
-  label: { fontSize: 13, fontWeight: '600', color: COLORS.inkMuted, marginBottom: 8 },
-  input: {
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    borderRadius: 8,
-    paddingHorizontal: 14,
-    height: 48,
-    fontSize: 16,
-    color: COLORS.ink,
-  },
-  balanceInputWrap: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    borderRadius: 8,
-    paddingHorizontal: 14,
-    height: 48,
-  },
-  rupeeSymbol: { fontSize: 18, color: COLORS.ink, marginRight: 8, fontWeight: '600' },
-  balanceInput: { flex: 1, fontSize: 18, color: COLORS.ink, fontWeight: '700' },
-  toggleRow: { flexDirection: 'row', gap: 12, marginBottom: 24 },
-  toggleBtn: {
-    flex: 1,
-    paddingVertical: 12,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    borderRadius: 8,
-  },
-  toggleBtnActiveRed: { backgroundColor: '#fee2e2', borderColor: '#ef4444' },
-  toggleBtnActiveGreen: { backgroundColor: '#dcfce7', borderColor: '#22c55e' },
-  toggleText: { fontSize: 14, fontWeight: '600', color: COLORS.inkMuted },
-  toggleTextActiveRed: { color: '#ef4444' },
-  toggleTextActiveGreen: { color: '#22c55e' },
-  submitBtn: {
-    backgroundColor: COLORS.primary,
-    height: 52,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 8,
-  },
-  submitBtnDisabled: { opacity: 0.7 },
-  submitBtnText: { color: '#fff', fontSize: 16, fontWeight: '700' },
 });
