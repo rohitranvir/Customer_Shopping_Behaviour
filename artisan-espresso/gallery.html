@@ -1,0 +1,439 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery | Tea3 Café Hyderabad</title>
+  <meta name="description" content="A feast for the eyes — browse photos of our food, coffee, ambience and events at Tea3, Banjara Hills, Hyderabad.">
+  <meta property="og:title" content="Gallery | Tea3"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root{
+      --esp:#1C0A00;--cream:#F5E6C8;--gold:#C9A84C;--gold-h:#d9bc66;
+      --char:#2C2C2C;--muted:rgba(245,230,200,.62);
+      --f-h:'Playfair Display',serif;--f-b:'DM Sans',sans-serif;
+      --t:.28s ease;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--f-b);background:var(--esp);color:var(--cream);overflow-x:hidden;}
+    img{display:block;max-width:100%;}
+    a{text-decoration:none;color:inherit;transition:color var(--t);}
+    ul{list-style:none;}
+    button{font-family:var(--f-b);cursor:pointer;border:none;background:none;}
+    .container{width:92%;max-width:1280px;margin:0 auto;}
+    .eyebrow{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:3px;color:var(--gold);margin-bottom:.8rem;}
+
+    /* NAV */
+    .navbar{position:fixed;top:0;left:0;width:100%;z-index:900;background:rgba(28,10,0,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(201,168,76,.1);padding:.9rem 0;transition:.28s;}
+    .navbar.scrolled{padding:.6rem 0;box-shadow:0 4px 24px rgba(0,0,0,.5);}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;}
+    .nav-logo{font-family:var(--f-h);font-size:1.55rem;color:var(--gold);display:flex;align-items:center;gap:.4rem;font-weight:700;}
+    .nav-links{display:flex;gap:2rem;}
+    .nav-links a{font-size:.82rem;font-weight:500;text-transform:uppercase;letter-spacing:1px;color:var(--cream);position:relative;padding-bottom:3px;}
+    .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:.28s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold);}
+    .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+    .btn-reserve{background:var(--gold);color:var(--esp);font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:.55rem 1.4rem;border-radius:999px;transition:.28s;}
+    .btn-reserve:hover{background:var(--gold-h);transform:translateY(-1px);color:var(--esp);}
+    .nav-right{display:flex;align-items:center;gap:1rem;}
+    .nav-toggle{display:none;font-size:1.3rem;color:var(--gold);cursor:pointer;}
+    @media(max-width:768px){.nav-links{display:none;}.nav-toggle{display:block;}.btn-reserve{display:none;}}
+
+    /* §1 HERO */
+    .gallery-hero{
+      height:42vh;min-height:260px;
+      display:flex;align-items:center;justify-content:center;text-align:center;
+      position:relative;overflow:hidden;padding-top:72px;
+      background:linear-gradient(135deg,#0d0300,#2a1000,var(--esp));
+    }
+    .gallery-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 100%,rgba(201,168,76,.09),transparent);}
+    .gh-content{position:relative;z-index:2;}
+    .gallery-hero h1{font-family:var(--f-h);font-size:clamp(2rem,5vw,3.8rem);color:var(--cream);font-weight:700;line-height:1.1;}
+    .gallery-hero p{font-family:var(--f-h);font-style:italic;color:var(--muted);margin-top:.6rem;font-size:1.05rem;}
+    .h-line{width:48px;height:2px;background:var(--gold);margin:.9rem auto;}
+
+    /* §2 FILTER PILLS */
+    .gallery-filter{background:rgba(28,10,0,.98);border-bottom:1px solid rgba(201,168,76,.15);padding:.9rem 0;}
+    .pills-wrap{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;}
+    .gpill{padding:.38rem 1.1rem;border-radius:999px;border:1px solid rgba(201,168,76,.22);color:rgba(245,230,200,.65);font-size:.8rem;font-weight:500;cursor:pointer;transition:.25s;background:transparent;}
+    .gpill:hover{border-color:var(--gold);color:var(--gold);}
+    .gpill.active{background:var(--gold);border-color:var(--gold);color:var(--esp);font-weight:700;}
+
+    /* §3 MASONRY GRID */
+    .gallery-section{padding:3rem 0 6rem;background:var(--esp);}
+    .masonry{columns:3;column-gap:1rem;}
+    .g-item{
+      break-inside:avoid;margin-bottom:1rem;
+      position:relative;overflow:hidden;border-radius:6px;
+      cursor:pointer;border:1px solid rgba(201,168,76,.07);
+    }
+    .g-item img{width:100%;display:block;transition:transform .5s ease;}
+    .g-item.hidden{display:none;}
+    .g-overlay{
+      position:absolute;inset:0;
+      background:rgba(28,10,0,.65);
+      opacity:0;transition:opacity .35s ease;
+      display:flex;align-items:center;justify-content:center;
+      flex-direction:column;gap:.5rem;
+    }
+    .g-overlay span{font-size:1.1rem;color:var(--gold);font-weight:600;letter-spacing:.5px;}
+    .g-overlay i{font-size:1.5rem;color:var(--gold);}
+    .g-item:hover img{transform:scale(1.1);}
+    .g-item:hover .g-overlay{opacity:1;}
+    .g-cap{
+      position:absolute;bottom:0;left:0;right:0;
+      padding:.6rem .9rem;font-size:.78rem;
+      background:linear-gradient(transparent,rgba(28,10,0,.8));
+      color:var(--cream);opacity:0;transition:opacity .35s;
+    }
+    .g-item:hover .g-cap{opacity:1;}
+    @media(max-width:768px){.masonry{columns:2;}}
+    @media(max-width:480px){.masonry{columns:1;}}
+
+    /* LIGHTBOX */
+    .lightbox{
+      position:fixed;inset:0;z-index:2000;
+      background:rgba(0,0,0,.92);
+      display:none;align-items:center;justify-content:center;
+      padding:2rem;
+    }
+    .lightbox.open{display:flex;}
+    .lb-inner{position:relative;max-width:90vw;max-height:90vh;}
+    .lb-inner img{max-width:100%;max-height:85vh;object-fit:contain;border-radius:6px;box-shadow:0 0 60px rgba(0,0,0,.8);}
+    .lb-close{
+      position:absolute;top:-2.5rem;right:0;
+      font-size:1.8rem;color:var(--gold);
+      cursor:pointer;background:none;border:none;
+      transition:transform .25s;
+    }
+    .lb-close:hover{transform:scale(1.2);}
+    .lb-prev,.lb-next{
+      position:absolute;top:50%;transform:translateY(-50%);
+      font-size:1.4rem;color:var(--gold);cursor:pointer;
+      background:rgba(28,10,0,.7);border:none;padding:.55rem .8rem;
+      border-radius:4px;transition:.25s;z-index:10;
+    }
+    .lb-prev{left:-3.5rem;} .lb-next{right:-3.5rem;}
+    .lb-prev:hover,.lb-next:hover{background:rgba(201,168,76,.2);}
+    .lb-cap{text-align:center;color:var(--muted);font-size:.82rem;margin-top:.75rem;font-style:italic;}
+    @media(max-width:620px){.lb-prev{left:.2rem;}.lb-next{right:.2rem;}}
+
+    /* CTA */
+    .gallery-cta{background:linear-gradient(135deg,#0d0300,var(--char));text-align:center;padding:5rem 0;border-top:1px solid rgba(201,168,76,.1);}
+    .gallery-cta h2{font-family:var(--f-h);font-size:2.5rem;color:var(--cream);margin-bottom:1rem;}
+    .gallery-cta p{color:var(--muted);margin-bottom:2rem;}
+    .btn-primary{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2.2rem;background:var(--gold);color:var(--esp);border-radius:999px;font-size:.9rem;font-weight:700;transition:.28s;border:none;cursor:pointer;}
+    .btn-primary:hover{background:var(--gold-h);transform:translateY(-2px);color:var(--esp);}
+
+    /* FOOTER */
+    .footer{background:var(--char);border-top:1px solid rgba(201,168,76,.08);padding:4rem 0 2rem;font-size:.88rem;}
+    .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
+    .fg-title{font-family:var(--f-h);font-size:1.05rem;color:var(--gold);margin-bottom:1.2rem;}
+    .footer-grid p,.footer-grid li{color:rgba(245,230,200,.6);line-height:1.7;margin-bottom:.55rem;}
+    .footer-grid a{color:rgba(245,230,200,.6);transition:.25s;} .footer-grid a:hover{color:var(--gold);}
+    .footer-grid li i{color:var(--gold);margin-right:.45rem;width:14px;}
+    .social-row{display:flex;gap:.6rem;margin-top:1rem;}
+    .social-row a{width:34px;height:34px;border-radius:50%;border:1px solid rgba(201,168,76,.22);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:.25s;}
+    .social-row a:hover{background:var(--gold);color:var(--esp);}
+    .footer-bottom{border-top:1px solid rgba(201,168,76,.07);padding-top:1.5rem;text-align:center;color:rgba(245,230,200,.3);font-size:.76rem;}
+    @media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;}}
+    @media(max-width:480px){.footer-grid{grid-template-columns:1fr;}}
+      /* ── Page Loader ───────────────────────────── */
+    #page-loader {
+      position:fixed; inset:0; background:#1C0A00;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      z-index:99999; transition:opacity .5s ease;
+    }
+    #page-loader.hiding { opacity:0; pointer-events:none; }
+    .loader-cup { font-size:3.5rem; animation:loaderBounce .75s infinite alternate; }
+    .loader-text {
+      font-family:'DM Sans',sans-serif; color:rgba(245,230,200,.5);
+      font-size:.82rem; letter-spacing:2px; text-transform:uppercase; margin-top:1rem;
+    }
+    @keyframes loaderBounce { to { transform:translateY(-18px); } }
+    .skip-link {
+      position:fixed; top:-100%; left:1rem; z-index:99999;
+      background:#C9A84C; color:#1C0A00; padding:.6rem 1.2rem;
+      border-radius:6px; font-weight:700; font-size:.85rem;
+      transition:top .2s; text-decoration:none;
+    }
+    .skip-link:focus { top:1rem; }
+    .whatsapp-float { animation:waPulse 2.4s ease infinite; }
+    @keyframes waPulse {
+      0%,100% { box-shadow:0 4px 20px rgba(37,211,102,.4); }
+      50%      { box-shadow:0 4px 40px rgba(37,211,102,.75); }
+    }
+  </style>
+  <meta name="keywords" content="café hyderabad, coffee shop hyderabad, tea3, banjara hills café, best coffee hyderabad">
+  <meta name="robots" content="index, follow">
+  <meta property="og:image" content="assets/images/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://tea3cafe.in/gallery.html">
+</head>
+<body>
+<!-- Skip to main content (accessibility) -->
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<!-- Page Loader -->
+<div id="page-loader" role="status" aria-label="Loading Tea3">
+  <div class="loader-cup" aria-hidden="true">&#x2615;</div>
+  <p class="loader-text">Brewing something special...</p>
+</div>
+
+
+<!-- NAVBAR -->
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo"><i class="fa-solid fa-mug-hot"></i> Tea3</a>
+    <nav><ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li><li><a href="menu.html">Menu</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="booking.html">Book a Table</a></li><li><a href="contact.html">Contact</a></li>
+    </ul></nav>
+    <div class="nav-right">
+      <a href="booking.html" class="btn-reserve">Reserve Now</a>
+      <div class="nav-toggle" id="nav-toggle"><i class="fa-solid fa-bars" id="nav-icon"></i></div>
+    </div>
+  </div>
+</header>
+
+<!-- §1 HERO -->
+<section class="gallery-hero">
+  <div class="gh-content" data-aos="fade-up">
+    <nav style="font-size:.74rem;text-transform:uppercase;letter-spacing:2px;color:rgba(245,230,200,.4);margin-bottom:1rem;">
+      <a href="index.html" style="color:var(--gold)">Home</a><span style="margin:0 .5rem">›</span><span>Gallery</span>
+    </nav>
+    <h1>Gallery</h1>
+    <div class="h-line"></div>
+    <p>A feast for the eyes</p>
+  </div>
+</section>
+
+<!-- §2 FILTER PILLS -->
+<div class="gallery-filter" id="gallery-filter">
+  <div class="container pills-wrap">
+    <button class="gpill active" data-gcat="all"      id="gp-all">All</button>
+    <button class="gpill"        data-gcat="food"     id="gp-food">🍽️ Food</button>
+    <button class="gpill"        data-gcat="coffee"   id="gp-coffee">☕ Coffee</button>
+    <button class="gpill"        data-gcat="ambience" id="gp-ambience">🏠 Ambience</button>
+    <button class="gpill"        data-gcat="events"   id="gp-events">🎵 Events</button>
+  </div>
+</div>
+
+<!-- §3 MASONRY GRID -->
+<section class="gallery-section">
+  <div class="container">
+    <div class="masonry" id="masonry-grid">
+
+      <!-- FOOD (3) -->
+      <div class="g-item" data-gcat="food" onclick="openLB(0)"
+        data-aos="fade-up" data-aos-delay="0">
+        <img src="https://placehold.co/600x750/2C1500/C9A84C?text=Truffle+Croissant" alt="Truffle Croissant" loading="lazy">
+        <div class="g-overlay"><i class="fa-solid fa-expand"></i><span>🔍 View</span></div>
+        <span class="g-cap">Truffle Croissant — Freshly Laminated Daily</span>
+      </div>
+      <div class="g-item" data-gcat="food" onclick="openLB(1)"
+        data-aos="fade-up" data-aos-delay="50">
+        <img src="https://placehold.co/600x480/2C1500/C9A84C?text=Avocado+Toast" alt="Avocado Toast" loading="lazy">
+        <div class="g-overlay"><i class="fa-solid fa-expand"></i><span>🔍 View</span></div>
+        <span class="g-cap">Avocado Toast — Smashed Hass on Sourdough</span>
+      </div>
+      <div class="g-item" data-gcat="food" onclick="openLB(2)"
+        data-aos="fade-up" data-aos-delay="100">
+        <img src="https://placehold.co/600x680/2C1500/C9A84C?text=Dark+Choco+Tart" alt="Dark Choco Tart" loading="lazy">
+        <div class="g-overlay"><i class="fa-solid fa-expand"></i><span>🔍 View</span></div>
+        <span class="g-cap">Dark Chocolate Tart — 70% Valrhona</span>
+      </div>
+
+      <!-- COFFEE (3) -->
+      <div class="g-item" data-gcat="coffee" onclick="openLB(3)"
+        data-aos="fade-up" data-aos-delay="0">
+        <img src="https://placehold.co/600x600/1C0A00/C9A84C?text=Signature+Espresso" alt="Signature Espresso" loading="lazy">
+        <div class="g-overlay"><i class="fa-solid fa-expand"></i><span>🔍 View</span></div>
+        <span class="g-cap">Signature Espresso — The Double Ristretto</span>
+      </div>
+      <div class="g-item" data-gcat="coffee" onclick="openLB(4)"
+        data-aos="fade-up" data-aos-delay="50">
+        <img src="https://placehold.co/600x800/1C0A00/C9A84C?text=Latte+Art" alt="Latte Art" loading="lazy">
+        <div class="g-overlay"><i class="fa-solid fa-expand"></i><span>🔍 View</span></div>
+        <span class="g-cap">Latte Art — A Study in Precision</span>
+      </div>
+      <div class="g-item" data-gcat="coffee" onclick="openLB(5)"
+        data-aos="fade-up" data-aos-delay="100">
+        <img src="https://placehold.co/600x500/1C0A00/C9A84C?text=Cold+Brew" alt="Cold Brew" loading="lazy">
+        <div class="g-overlay"><i class="fa-solid fa-expand"></i><span>🔍 View</span></div>
+        <span class="g-cap">Cold Brew — 18-Hour Steep</span>
+      </div>
+
+      <!-- AMBIENCE (3) -->
+      <div class="g-item" data-gcat="ambience" onclick="openLB(6)"
+        data-aos="fade-up" data-aos-delay="0">
+        <img src="https://placehold.co/600x700/3a1a00/C9A84C?text=Main+Hall" alt="Café Main Hall" loading="lazy">
+        <div class="g-overlay"><i class="fa-solid fa-expand"></i><span>🔍 View</span></div>
+        <span class="g-cap">Main Hall — Heritage Warm Wood Design</span>
+      </div>
+      <div class="g-item" data-gcat="ambience" onclick="openLB(7)"
+        data-aos="fade-up" data-aos-delay="50">
+        <img src="https://placehold.co/600x450/3a1a00/C9A84C?text=Morning+Light" alt="Morning Light" loading="lazy">
+        <div class="g-overlay"><i class="fa-solid fa-expand"></i><span>🔍 View</span></div>
+        <span class="g-cap">Morning Light — 7AM Quiet</span>
+      </div>
+      <div class="g-item" data-gcat="ambience" onclick="openLB(8)"
+        data-aos="fade-up" data-aos-delay="100">
+        <img src="https://placehold.co/600x760/3a1a00/C9A84C?text=Courtyard+Table" alt="Courtyard Table" loading="lazy">
+        <div class="g-overlay"><i class="fa-solid fa-expand"></i><span>🔍 View</span></div>
+        <span class="g-cap">Courtyard — Golden Hour Seating</span>
+      </div>
+
+      <!-- EVENTS (3) -->
+      <div class="g-item" data-gcat="events" onclick="openLB(9)"
+        data-aos="fade-up" data-aos-delay="0">
+        <img src="https://placehold.co/600x540/0d0300/C9A84C?text=Live+Music+Night" alt="Live Music Night" loading="lazy">
+        <div class="g-overlay"><i class="fa-solid fa-expand"></i><span>🔍 View</span></div>
+        <span class="g-cap">Live Music Fridays — 7PM Every Week</span>
+      </div>
+      <div class="g-item" data-gcat="events" onclick="openLB(10)"
+        data-aos="fade-up" data-aos-delay="50">
+        <img src="https://placehold.co/600x700/0d0300/C9A84C?text=Art+Exhibition" alt="Art Exhibition" loading="lazy">
+        <div class="g-overlay"><i class="fa-solid fa-expand"></i><span>🔍 View</span></div>
+        <span class="g-cap">Monthly Artist Showcase</span>
+      </div>
+      <div class="g-item" data-gcat="events" onclick="openLB(11)"
+        data-aos="fade-up" data-aos-delay="100">
+        <img src="https://placehold.co/600x480/0d0300/C9A84C?text=Coffee+Cupping" alt="Coffee Cupping" loading="lazy">
+        <div class="g-overlay"><i class="fa-solid fa-expand"></i><span>🔍 View</span></div>
+        <span class="g-cap">Coffee Cupping Sessions — Saturday Mornings</span>
+      </div>
+
+    </div><!-- /.masonry -->
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <div class="lb-inner">
+    <button class="lb-close" id="lb-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    <button class="lb-prev"  id="lb-prev"  aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+    <img src="" alt="" id="lb-img" loading="lazy">
+    <button class="lb-next"  id="lb-next"  aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+    <p class="lb-cap" id="lb-cap"></p>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="gallery-cta" data-aos="zoom-in">
+  <div class="container">
+    <h2>Experience it in person</h2>
+    <p>No image captures the aroma, the warmth, or the moment a perfect cup meets your hands.</p>
+    <a href="booking.html" class="btn-primary">Reserve a Table <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <p class="fg-title"><i class="fa-solid fa-mug-hot" style="margin-right:.5rem"></i>Tea3</p>
+        <p>Handcrafted coffee, soulful bites, timeless moments.</p>
+        <div class="social-row">
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        </div>
+      </div>
+      <div>
+        <p class="fg-title">Quick Links</p>
+        <ul><li><a href="index.html">Home</a></li><li><a href="menu.html">Menu</a></li><li><a href="about.html">About</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="booking.html">Book</a></li><li><a href="contact.html">Contact</a></li></ul>
+      </div>
+      <div>
+        <p class="fg-title">Visit Us</p>
+        <ul><li><i class="fa-solid fa-location-dot"></i>123 Heritage Row, Jubilee Hills</li><li><i class="fa-solid fa-phone"></i>+91-XXXXXXXXXX</li></ul>
+      </div>
+      <div>
+        <p class="fg-title">Hours</p>
+        <ul>
+          <li style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid rgba(201,168,76,.07)"><span>Mon–Fri</span><span style="color:var(--gold)">7AM–9PM</span></li>
+          <li style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid rgba(201,168,76,.07)"><span>Saturday</span><span style="color:var(--gold)">8AM–10PM</span></li>
+          <li style="display:flex;justify-content:space-between;padding:.3rem 0"><span>Sunday</span><span style="color:var(--gold)">8AM–8PM</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; <span id="yr"></span> Tea3. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<a href="https://wa.me/91XXXXXXXXXX" style="position:fixed;bottom:30px;right:28px;z-index:700;width:58px;height:58px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.75rem;color:#fff;box-shadow:0 4px 18px rgba(0,0,0,.3);transition:.25s;" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="whatsapp-float"><i class="fa-brands fa-whatsapp"></i></a>
+
+<script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+AOS.init({duration:700,easing:'ease-out',once:true,offset:50});
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',scrollY>80),{passive:true});
+const toggle=document.getElementById('nav-toggle'),icon=document.getElementById('nav-icon'),navLinks=document.getElementById('nav-links');
+toggle.addEventListener('click',()=>{const o=navLinks.classList.toggle('open');icon.className=o?'fa-solid fa-xmark':'fa-solid fa-bars';});
+const mobileNavStyle=document.createElement('style');
+mobileNavStyle.textContent=`.nav-links.open{display:flex!important;flex-direction:column;position:fixed;top:0;right:0;width:72vw;max-width:300px;height:100vh;background:rgba(28,10,0,.99);justify-content:center;align-items:flex-start;padding:3rem 2.5rem;gap:2rem;border-left:1px solid rgba(201,168,76,.12);}`;
+document.head.appendChild(mobileNavStyle);
+
+/* ── Category Filter ─────────────────── */
+const items=[...document.querySelectorAll('.g-item')];
+const gpills=[...document.querySelectorAll('.gpill')];
+gpills.forEach(p=>p.addEventListener('click',()=>{
+  gpills.forEach(x=>x.classList.remove('active'));p.classList.add('active');
+  const cat=p.dataset.gcat;
+  items.forEach(i=>i.classList.toggle('hidden',cat!=='all'&&i.dataset.gcat!==cat));
+}));
+
+/* ── Lightbox ────────────────────────── */
+const imgs=[...document.querySelectorAll('.g-item img')];
+const caps=[...document.querySelectorAll('.g-item .g-cap')];
+let cur=0;
+function openLB(idx){
+  // Only open if item is visible
+  if(items[idx].classList.contains('hidden')) return;
+  cur=idx;
+  document.getElementById('lb-img').src=imgs[idx].src;
+  document.getElementById('lb-img').alt=imgs[idx].alt;
+  document.getElementById('lb-cap').textContent=caps[idx]?.textContent||'';
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLB(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+function nextVisible(dir){
+  const vis=items.filter(i=>!i.classList.contains('hidden'));
+  if(!vis.length)return;
+  // find current visible index
+  const curEl=items[cur];
+  let vi=vis.indexOf(curEl);
+  vi=(vi+dir+vis.length)%vis.length;
+  openLB(items.indexOf(vis[vi]));
+}
+document.getElementById('lb-close').onclick=closeLB;
+document.getElementById('lb-prev').onclick=()=>nextVisible(-1);
+document.getElementById('lb-next').onclick=()=>nextVisible(1);
+document.getElementById('lightbox').addEventListener('click',e=>{
+  if(e.target===document.getElementById('lightbox'))closeLB();
+});
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('lightbox').classList.contains('open'))return;
+  if(e.key==='Escape') closeLB();
+  if(e.key==='ArrowLeft') nextVisible(-1);
+  if(e.key==='ArrowRight') nextVisible(1);
+});
+</script>
+
+<script defer src="js/main.js"></script>
+</body>
+</html>

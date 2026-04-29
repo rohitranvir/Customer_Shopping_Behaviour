@@ -1,0 +1,6 @@
+data_dir: "data"
+models_dir: "ml"
+logs_dir: "logs"
+retraining_interval_days: 7
+forecast_horizon_days: 7
+log_level: "INFO"

@@ -1,0 +1,1562 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu | Tea3 Café Hyderabad</title>
+  <meta name="description" content="Explore our full menu — specialty coffees, teas, snacks, desserts &amp; specials. Starting from &#8377;120. Order via WhatsApp." />  <meta property="og:title"       content="Menu | Tea3" />
+  <meta property="og:description" content="Every item crafted with intention. Order from Hyderabad's finest luxury café." />
+  <meta property="og:type"        content="website" />
+  <meta property="og:image"       content="assets/images/og-image.jpg" />
+  <meta name="twitter:card"       content="summary_large_image" />
+  <meta name="keywords" content="café hyderabad, coffee shop hyderabad, tea3, banjara hills café, best coffee hyderabad" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://tea3cafe.in/menu.html" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet" />
+
+  <!-- AOS + FA -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* ═══════════════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════════════ */
+    :root {
+      --espresso : #1C0A00;
+      --cream    : #F5E6C8;
+      --gold     : #C9A84C;
+      --gold-h   : #d9bc66;
+      --offwhite : #FAF7F0;
+      --charcoal : #2C2C2C;
+      --mid      : #3a1a00;
+      --muted    : rgba(245,230,200,.6);
+
+      --f-head   : 'Playfair Display', serif;
+      --f-body   : 'DM Sans', sans-serif;
+
+      --r-card   : 8px;
+      --r-pill   : 999px;
+      --t-fast   : .25s ease;
+      --t-smooth : .45s cubic-bezier(.4,0,.2,1);
+      --shadow-card : 0 4px 20px rgba(0,0,0,.35);
+      --shadow-gold : 0 12px 36px rgba(201,168,76,.2);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; font-size:16px; }
+    body {
+      font-family: var(--f-body);
+      background: var(--espresso);
+      color: var(--cream);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    img  { display:block; max-width:100%; }
+    a    { text-decoration:none; color:inherit; transition:color var(--t-fast); }
+    ul   { list-style:none; }
+    button { font-family:var(--f-body); cursor:pointer; border:none; background:none; }
+
+    .container { width:92%; max-width:1280px; margin:0 auto; }
+
+    /* ═══════════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════════ */
+    .navbar {
+      position: fixed; top:0; left:0; width:100%; z-index:900;
+      background: rgba(28,10,0,.97);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,168,76,.12);
+      padding: .9rem 0;
+      transition: padding var(--t-fast), box-shadow var(--t-fast);
+    }
+    .navbar.scrolled { padding:.65rem 0; box-shadow:0 4px 24px rgba(0,0,0,.5); }
+    .nav-inner { display:flex; align-items:center; justify-content:space-between; }
+    .nav-logo {
+      font-family: var(--f-head); font-size:1.6rem; color:var(--gold);
+      display:flex; align-items:center; gap:.4rem; font-weight:700;
+    }
+    .nav-logo i { font-size:1.2rem; }
+    .nav-links {
+      display:flex; gap:2rem; align-items:center;
+    }
+    .nav-links a {
+      font-size:.82rem; font-weight:500; text-transform:uppercase;
+      letter-spacing:1px; color:var(--cream); position:relative; padding-bottom:3px;
+    }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:0; left:0;
+      width:0; height:1px; background:var(--gold); transition:width var(--t-fast);
+    }
+    .nav-links a:hover, .nav-links a.active { color:var(--gold); }
+    .nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+    .btn-reserve {
+      background:var(--gold); color:var(--espresso);
+      font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.8px;
+      padding:.55rem 1.4rem; border-radius:var(--r-pill); transition:all var(--t-fast);
+    }
+    .btn-reserve:hover { background:var(--gold-h); transform:translateY(-1px); }
+    .nav-right { display:flex; align-items:center; gap:1rem; }
+
+    /* Cart nav icon */
+    .nav-cart-wrap { position:relative; cursor:pointer; }
+    .nav-cart-wrap i { font-size:1.2rem; color:var(--cream); transition:color var(--t-fast); }
+    .nav-cart-wrap:hover i { color:var(--gold); }
+    .nav-badge {
+      position:absolute; top:-7px; right:-9px;
+      background:var(--gold); color:var(--espresso);
+      font-size:.6rem; font-weight:800; min-width:17px; height:17px;
+      border-radius:var(--r-pill); display:none;
+      align-items:center; justify-content:center; padding:0 3px;
+    }
+    .nav-badge.show { display:flex; }
+
+    /* Hamburger */
+    .nav-toggle { display:none; font-size:1.3rem; color:var(--gold); cursor:pointer; }
+
+    /* ═══════════════════════════════════════════
+       SECTION 1 — SHORT HERO (40vh)
+    ═══════════════════════════════════════════ */
+    .menu-hero {
+      height: 40vh;
+      min-height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 72px; /* navbar offset */
+      background: var(--espresso);
+      position: relative;
+      overflow: hidden;
+    }
+    .menu-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,168,76,.09) 0%, transparent 70%),
+        linear-gradient(180deg, rgba(28,10,0,.4) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    /* decorative rings */
+    .menu-hero::after {
+      content: '';
+      position: absolute; bottom:-120px; left:50%;
+      transform: translateX(-50%);
+      width: 700px; height: 700px; border-radius: 50%;
+      border: 1px solid rgba(201,168,76,.06);
+      pointer-events: none;
+    }
+    .hero-content { position:relative; z-index:2; }
+    .breadcrumb {
+      font-size:.75rem; text-transform:uppercase; letter-spacing:2.5px;
+      color:rgba(245,230,200,.45); margin-bottom:1rem;
+    }
+    .breadcrumb a { color:var(--gold); }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .breadcrumb span { margin:0 .45rem; }
+    .menu-hero h1 {
+      font-family: var(--f-head);
+      font-size: clamp(2rem,5vw,3.8rem);
+      color: var(--cream);
+      line-height: 1.1;
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+    .hero-rule {
+      width: 50px; height: 2px;
+      background: var(--gold); border-radius:2px;
+      margin: 1rem auto;
+    }
+    .menu-hero p {
+      font-family: var(--f-head);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--muted);
+      letter-spacing: .3px;
+    }
+
+    /* ═══════════════════════════════════════════
+       SECTION 2 — STICKY FILTER BAR
+    ═══════════════════════════════════════════ */
+    .filter-bar {
+      position: sticky;
+      top: 0;
+      z-index: 800;
+      background: rgba(28,10,0,.98);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,168,76,.18);
+      padding: .85rem 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,.35);
+    }
+    .filter-inner { display:flex; flex-direction:column; gap:.7rem; }
+
+    .search-row { display:flex; align-items:center; gap:.9rem; flex-wrap:wrap; }
+    .search-wrap { position:relative; flex:1; max-width:460px; }
+    .search-wrap i {
+      position:absolute; left:1rem; top:50%; transform:translateY(-50%);
+      color:var(--gold); font-size:.85rem; pointer-events:none;
+    }
+    #menu-search {
+      width:100%; padding:.65rem 1rem .65rem 2.7rem;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(201,168,76,.2);
+      border-radius:var(--r-pill);
+      color:var(--cream); font-family:var(--f-body); font-size:.88rem;
+      outline:none; transition:border-color var(--t-fast), box-shadow var(--t-fast);
+    }
+    #menu-search::placeholder { color:rgba(245,230,200,.3); }
+    #menu-search:focus {
+      border-color:var(--gold);
+      box-shadow:0 0 0 3px rgba(201,168,76,.12);
+    }
+    .result-count { font-size:.76rem; color:rgba(245,230,200,.4); white-space:nowrap; }
+
+    .pills { display:flex; gap:.5rem; flex-wrap:wrap; }
+    .pill {
+      padding:.38rem 1.05rem; border-radius:var(--r-pill);
+      border:1px solid rgba(201,168,76,.22);
+      color:rgba(245,230,200,.65); font-size:.78rem; font-weight:500;
+      cursor:pointer; transition:all var(--t-fast); white-space:nowrap;
+      background:transparent;
+    }
+    .pill:hover { border-color:var(--gold); color:var(--gold); }
+    .pill.active {
+      background:var(--gold); border-color:var(--gold);
+      color:var(--espresso); font-weight:700;
+    }
+
+    /* ═══════════════════════════════════════════
+       SECTION 3 — MENU GRID
+    ═══════════════════════════════════════════ */
+    .menu-section {
+      padding: 3.5rem 0 6rem;
+      background: var(--espresso);
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 1.5rem;
+    }
+
+    /* CARD */
+    .menu-card {
+      background: var(--charcoal);
+      border-radius: var(--r-card);
+      border: 1px solid rgba(201,168,76,.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--t-fast), box-shadow var(--t-fast),
+                  border-color var(--t-fast), opacity .3s ease;
+    }
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-gold);
+      border-color: rgba(201,168,76,.3);
+    }
+    .menu-card.hidden {
+      display: none;
+    }
+
+    /* Image */
+    .card-img-wrap { position:relative; overflow:hidden; }
+    .card-img-wrap img {
+      width:100%; height:190px; object-fit:cover;
+      display:block; transition:transform .5s ease;
+    }
+    .menu-card:hover .card-img-wrap img { transform:scale(1.06); }
+
+    /* Badge */
+    .cat-badge {
+      position:absolute; top:10px; left:10px;
+      background:rgba(201,168,76,.92); color:var(--espresso);
+      font-size:.65rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:.5px; padding:.22rem .75rem;
+      border-radius:var(--r-pill); z-index:2;
+    }
+
+    /* Body */
+    .card-body {
+      padding:1.1rem 1.2rem 1.3rem;
+      display:flex; flex-direction:column; flex:1;
+    }
+    .card-name {
+      font-family:var(--f-head); font-size:1.05rem;
+      color:var(--cream); font-weight:600;
+      margin-bottom:.35rem; line-height:1.3;
+    }
+    .card-desc {
+      font-size:.82rem; color:rgba(245,230,200,.55);
+      line-height:1.55; flex:1; margin-bottom:1rem;
+      display:-webkit-box; -webkit-line-clamp:2;
+      -webkit-box-orient:vertical; overflow:hidden;
+    }
+    .card-footer {
+      display:flex; align-items:center;
+      justify-content:space-between; gap:.5rem; margin-top:auto;
+    }
+    .card-price {
+      font-family:var(--f-head); font-size:1.15rem;
+      color:var(--gold); font-weight:700;
+    }
+    .btn-add {
+      padding:.42rem 1rem;
+      border:1.5px solid var(--gold); border-radius:var(--r-pill);
+      color:var(--gold); font-size:.78rem; font-weight:600;
+      background:transparent; cursor:pointer;
+      transition:all var(--t-fast); white-space:nowrap;
+      display:flex; align-items:center; gap:.35rem;
+    }
+    .btn-add:hover, .btn-add:focus {
+      background:var(--gold); color:var(--espresso);
+    }
+
+    /* No results */
+    .no-results {
+      display:none; text-align:center; font-family:var(--f-head);
+      font-size:1.3rem; color:rgba(245,230,200,.35);
+      padding:4rem 1rem; grid-column:1/-1;
+      flex-direction:column; align-items:center; gap:.75rem;
+    }
+    .no-results i { font-size:3rem; display:block; margin-bottom:.5rem; }
+
+    /* ═══════════════════════════════════════════
+       SECTION 4 — FLOATING CART BUTTON
+    ═══════════════════════════════════════════ */
+    .cart-float {
+      position:fixed; bottom:106px; right:28px; z-index:700;
+      width:58px; height:58px; border-radius:50%;
+      background:var(--gold);
+      border:none; cursor:pointer; color:var(--espresso);
+      font-size:1.4rem;
+      box-shadow:0 6px 22px rgba(0,0,0,.4);
+      transition:transform var(--t-fast), box-shadow var(--t-fast);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .cart-float:hover { transform:scale(1.1); box-shadow:0 10px 30px rgba(0,0,0,.5); }
+    .cart-float-badge {
+      position:absolute; top:-5px; right:-5px;
+      background:var(--espresso); color:var(--gold);
+      font-size:.62rem; font-weight:800;
+      min-width:19px; height:19px; border-radius:var(--r-pill);
+      display:none; align-items:center; justify-content:center;
+      padding:0 4px; border:2px solid var(--charcoal);
+    }
+    .cart-float-badge.show { display:flex; }
+
+    /* WhatsApp float */
+    .wa-float {
+      position:fixed; bottom:30px; right:28px; z-index:700;
+      width:58px; height:58px; background:#25d366; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.75rem; color:#fff;
+      box-shadow:0 4px 18px rgba(0,0,0,.3); transition:transform var(--t-fast);
+    }
+    .wa-float:hover { transform:scale(1.1); color:#fff; }
+
+    /* ═══════════════════════════════════════════
+       CART OVERLAY + PANEL
+    ═══════════════════════════════════════════ */
+    .cart-overlay {
+      position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:1100;
+      opacity:0; pointer-events:none; transition:opacity var(--t-smooth);
+    }
+    .cart-overlay.open { opacity:1; pointer-events:all; }
+
+    .cart-panel {
+      position:fixed; top:0; right:-420px; width:100%; max-width:400px;
+      height:100vh; background:var(--charcoal);
+      z-index:1200; display:flex; flex-direction:column;
+      transition:right var(--t-smooth);
+      box-shadow:-8px 0 32px rgba(0,0,0,.5);
+      border-left:1px solid rgba(201,168,76,.1);
+    }
+    .cart-panel.open { right:0; }
+
+    /* Panel header */
+    .cp-header {
+      padding:1.3rem 1.5rem;
+      background:rgba(28,10,0,.9);
+      border-bottom:1px solid rgba(201,168,76,.12);
+      display:flex; align-items:center; justify-content:space-between;
+      flex-shrink:0;
+    }
+    .cp-header h3 {
+      font-family:var(--f-head); font-size:1.15rem; color:var(--gold); font-weight:600;
+    }
+    .cp-close {
+      font-size:1.35rem; color:var(--cream); cursor:pointer;
+      background:none; border:none; transition:color var(--t-fast); line-height:1;
+    }
+    .cp-close:hover { color:var(--gold); }
+
+    /* Panel body */
+    .cp-body {
+      flex:1; overflow-y:auto; padding:1.2rem 1.5rem;
+      scrollbar-width:thin; scrollbar-color:rgba(201,168,76,.3) transparent;
+    }
+    .cart-empty {
+      display:flex; flex-direction:column; align-items:center;
+      justify-content:center; height:250px;
+      color:rgba(245,230,200,.35); font-family:var(--f-head);
+      font-size:1rem; text-align:center; gap:.5rem;
+    }
+    .cart-empty i { font-size:2.8rem; margin-bottom:.5rem; }
+
+    /* Cart item row */
+    .cart-item {
+      display:flex; align-items:center; gap:.75rem;
+      padding:.85rem 0;
+      border-bottom:1px solid rgba(201,168,76,.07);
+    }
+    .ci-name {
+      flex:1; font-size:.88rem; color:var(--cream);
+      line-height:1.3; font-weight:500;
+    }
+    .ci-name span { display:block; font-size:.72rem; color:rgba(245,230,200,.4); font-weight:400; }
+    .qty-ctrl { display:flex; align-items:center; gap:.35rem; }
+    .qbtn {
+      width:25px; height:25px; border-radius:50%;
+      border:1.5px solid rgba(201,168,76,.3); color:var(--gold);
+      background:transparent; cursor:pointer; font-size:.9rem; font-weight:700;
+      display:flex; align-items:center; justify-content:center;
+      transition:all var(--t-fast); line-height:1;
+    }
+    .qbtn:hover { background:var(--gold); color:var(--espresso); border-color:var(--gold); }
+    .qnum {
+      font-size:.9rem; font-weight:700; min-width:22px;
+      text-align:center; color:var(--cream);
+    }
+    .ci-price {
+      font-family:var(--f-head); font-size:.95rem; font-weight:700;
+      color:var(--gold); min-width:58px; text-align:right;
+    }
+
+    /* Panel footer */
+    .cp-footer {
+      padding:1.2rem 1.5rem;
+      border-top:1px solid rgba(201,168,76,.1);
+      background:rgba(28,10,0,.5);
+      flex-shrink:0;
+    }
+    .subtotal-row {
+      display:flex; justify-content:space-between; align-items:center;
+      margin-bottom:1.2rem;
+    }
+    .subtotal-row span:first-child {
+      font-size:.8rem; text-transform:uppercase; letter-spacing:1px;
+      color:rgba(245,230,200,.45);
+    }
+    .subtotal-val {
+      font-family:var(--f-head); font-size:1.35rem; font-weight:700; color:var(--gold);
+    }
+    .cp-actions { display:flex; flex-direction:column; gap:.65rem; }
+    .btn-wa {
+      width:100%; padding:.85rem; background:var(--gold); color:var(--espresso);
+      border:none; border-radius:var(--r-pill); font-size:.88rem; font-weight:700;
+      cursor:pointer; transition:all var(--t-fast);
+      display:flex; align-items:center; justify-content:center; gap:.5rem;
+    }
+    .btn-wa:hover { background:var(--gold-h); transform:translateY(-1px); }
+    .btn-clear {
+      width:100%; padding:.72rem; background:transparent;
+      border:1.5px solid rgba(192,57,43,.5); color:#e05c4a;
+      border-radius:var(--r-pill); font-size:.84rem; font-weight:600;
+      cursor:pointer; transition:all var(--t-fast);
+      display:flex; align-items:center; justify-content:center; gap:.5rem;
+    }
+    .btn-clear:hover { background:#c0392b; border-color:#c0392b; color:#fff; }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    .footer {
+      background: var(--charcoal);
+      border-top:1px solid rgba(201,168,76,.08);
+      padding:4rem 0 2rem;
+      font-size:.88rem;
+    }
+    .footer-grid {
+      display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:3rem;
+      margin-bottom:3rem;
+    }
+    .fg-title {
+      font-family:var(--f-head); font-size:1.1rem; color:var(--gold);
+      margin-bottom:1.2rem; font-weight:600;
+    }
+    .footer-grid p { color:rgba(245,230,200,.6); line-height:1.7; margin-bottom:.5rem; }
+    .footer-grid ul li { margin-bottom:.6rem; }
+    .footer-grid ul li a { color:rgba(245,230,200,.6); transition:color var(--t-fast); }
+    .footer-grid ul li a:hover { color:var(--gold); }
+    .footer-grid ul li i { color:var(--gold); margin-right:.45rem; width:14px; }
+    .social-row { display:flex; gap:.65rem; margin-top:1rem; }
+    .social-row a {
+      width:36px; height:36px; border-radius:50%;
+      border:1px solid rgba(201,168,76,.25); color:var(--gold);
+      display:flex; align-items:center; justify-content:center;
+      font-size:.9rem; transition:all var(--t-fast);
+    }
+    .social-row a:hover { background:var(--gold); color:var(--espresso); }
+    .footer-bottom {
+      border-top:1px solid rgba(201,168,76,.08); padding-top:1.5rem;
+      text-align:center; color:rgba(245,230,200,.35); font-size:.78rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media(max-width:1100px){
+      .menu-grid { grid-template-columns:repeat(3,1fr); }
+    }
+    @media(max-width:768px){
+      .nav-links { display:none; }
+      .nav-links.open {
+        display:flex; flex-direction:column;
+        position:fixed; top:0; right:0;
+        width:72vw; max-width:300px; height:100vh;
+        background:rgba(28,10,0,.99);
+        justify-content:center; align-items:flex-start;
+        padding:3rem 2.5rem; gap:2rem;
+        border-left:1px solid rgba(201,168,76,.12);
+      }
+      .nav-toggle { display:block; }
+      .btn-reserve { display:none; }
+      .menu-grid { grid-template-columns:repeat(2,1fr); }
+      .footer-grid { grid-template-columns:1fr 1fr; gap:2rem; }
+    }
+    @media(max-width:480px){
+      .menu-grid { grid-template-columns:1fr; }
+      .cart-panel { max-width:100%; }
+      .footer-grid { grid-template-columns:1fr; }
+    }
+      /* ── Page Loader ───────────────────────────── */
+    #page-loader {
+      position:fixed; inset:0; background:#1C0A00;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      z-index:99999; transition:opacity .5s ease;
+    }
+    #page-loader.hiding { opacity:0; pointer-events:none; }
+    .loader-cup { font-size:3.5rem; animation:loaderBounce .75s infinite alternate; }
+    .loader-text {
+      font-family:'DM Sans',sans-serif; color:rgba(245,230,200,.5);
+      font-size:.82rem; letter-spacing:2px; text-transform:uppercase; margin-top:1rem;
+    }
+    @keyframes loaderBounce { to { transform:translateY(-18px); } }
+    .skip-link {
+      position:fixed; top:-100%; left:1rem; z-index:99999;
+      background:#C9A84C; color:#1C0A00; padding:.6rem 1.2rem;
+      border-radius:6px; font-weight:700; font-size:.85rem;
+      transition:top .2s; text-decoration:none;
+    }
+    .skip-link:focus { top:1rem; }
+    .whatsapp-float { animation:waPulse 2.4s ease infinite; }
+    @keyframes waPulse {
+      0%,100% { box-shadow:0 4px 20px rgba(37,211,102,.4); }
+      50%      { box-shadow:0 4px 40px rgba(37,211,102,.75); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Skip to main content (accessibility) -->
+<a href="#menu-section" class="skip-link">Skip to content</a>
+
+<!-- Page Loader -->
+<div id="page-loader" role="status" aria-label="Loading Tea3">
+  <div class="loader-cup" aria-hidden="true">☕</div>
+  <p class="loader-text">Brewing something special...</p>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════ -->
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+
+    <a href="index.html" class="nav-logo" id="logo">
+      <i class="fa-solid fa-mug-hot"></i>
+      Tea3
+    </a>
+
+    <nav>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html"   id="nl-home">Home</a></li>
+        <li><a href="menu.html"    id="nl-menu" class="active">Menu</a></li>
+        <li><a href="about.html"   id="nl-about">About</a></li>
+        <li><a href="gallery.html" id="nl-gallery">Gallery</a></li>
+        <li><a href="booking.html" id="nl-book">Book a Table</a></li>
+        <li><a href="contact.html" id="nl-contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-right">
+      <!-- Cart icon in nav -->
+      <div class="nav-cart-wrap" id="nav-cart-icon" title="View cart" aria-label="Open cart">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span class="nav-badge" id="nav-badge">0</span>
+      </div>
+      <a href="booking.html" class="btn-reserve" id="btn-reserve">Reserve Now</a>
+      <div class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars" id="nav-icon"></i>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════════════
+     SECTION 1 — SHORT HERO
+═══════════════════════════════════════════ -->
+<section class="menu-hero" aria-label="Menu page hero">
+  <div class="hero-content" data-aos="fade-up" data-aos-duration="900">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span style="color:rgba(245,230,200,.75);">Menu</span>
+    </nav>
+    <h1>Our Menu</h1>
+    <div class="hero-rule"></div>
+    <p>Every item crafted with intention</p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SECTION 2 — STICKY SEARCH + FILTER BAR
+═══════════════════════════════════════════ -->
+<div class="filter-bar" id="filter-bar" role="search" aria-label="Menu search and filter">
+  <div class="container filter-inner">
+
+    <div class="search-row">
+      <div class="search-wrap">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input
+          type="search"
+          id="menu-search"
+          placeholder="Search menu items..."
+          autocomplete="off"
+          aria-label="Search menu items">
+      </div>
+      <span class="result-count" id="result-count" aria-live="polite">25 items</span>
+    </div>
+
+    <div class="pills" role="group" aria-label="Filter by category">
+      <button class="pill active" data-cat="all"      id="pill-all">All</button>
+      <button class="pill"        data-cat="coffee"   id="pill-coffee">☕ Coffee</button>
+      <button class="pill"        data-cat="tea"      id="pill-tea">🍵 Tea</button>
+      <button class="pill"        data-cat="snacks"   id="pill-snacks">🥐 Snacks</button>
+      <button class="pill"        data-cat="desserts" id="pill-desserts">🍰 Desserts</button>
+      <button class="pill"        data-cat="specials" id="pill-specials">🥤 Specials</button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     SECTION 3 — MENU GRID (25 items)
+═══════════════════════════════════════════ -->
+<section class="menu-section" id="menu-section" aria-label="Full menu">
+  <div class="container">
+    <div class="menu-grid" id="menu-grid">
+
+      <!-- ── COFFEE (5) ─────────────────────── -->
+
+      <article class="menu-card" data-category="coffee" data-name="Signature Espresso"
+        data-aos="fade-up" data-aos-delay="0">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/1C0A00/C9A84C?text=Signature+Espresso"
+               alt="Signature Espresso" loading="lazy" width="400" height="300">
+          <span class="cat-badge">☕ Coffee</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Signature Espresso</h3>
+          <p class="card-desc">Bold, rich single-origin shot. Dark cocoa finish, stone fruit notes.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 180</span>
+            <button class="btn-add" id="add-sig-esp"
+              onclick="Cart.add('Signature Espresso', 180)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="coffee" data-name="Hazelnut Latte"
+        data-aos="fade-up" data-aos-delay="50">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/1C0A00/C9A84C?text=Hazelnut+Latte"
+               alt="Hazelnut Latte" loading="lazy" width="400" height="300">
+          <span class="cat-badge">☕ Coffee</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Hazelnut Latte</h3>
+          <p class="card-desc">Creamy latte with house-roasted hazelnut syrup and velvety steamed milk.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 220</span>
+            <button class="btn-add" id="add-hazelnut"
+              onclick="Cart.add('Hazelnut Latte', 220)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="coffee" data-name="Cold Brew"
+        data-aos="fade-up" data-aos-delay="100">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/1C0A00/C9A84C?text=Cold+Brew"
+               alt="Cold Brew" loading="lazy" width="400" height="300">
+          <span class="cat-badge">☕ Coffee</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Cold Brew</h3>
+          <p class="card-desc">18-hour steeped, smooth & strong. Zero bitterness, served over ice.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 200</span>
+            <button class="btn-add" id="add-cold-brew"
+              onclick="Cart.add('Cold Brew', 200)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="coffee" data-name="Flat White"
+        data-aos="fade-up" data-aos-delay="150">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/1C0A00/C9A84C?text=Flat+White"
+               alt="Flat White" loading="lazy" width="400" height="300">
+          <span class="cat-badge">☕ Coffee</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Flat White</h3>
+          <p class="card-desc">Velvety microfoam over a double ristretto. The purist's daily driver.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 190</span>
+            <button class="btn-add" id="add-flat-white"
+              onclick="Cart.add('Flat White', 190)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="coffee" data-name="Cappuccino"
+        data-aos="fade-up" data-aos-delay="200">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/1C0A00/C9A84C?text=Cappuccino"
+               alt="Cappuccino" loading="lazy" width="400" height="300">
+          <span class="cat-badge">☕ Coffee</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Cappuccino</h3>
+          <p class="card-desc">Classic Italian with perfect 1:1:1 foam ratio. Dust of Valrhona cocoa.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 170</span>
+            <button class="btn-add" id="add-cappuccino"
+              onclick="Cart.add('Cappuccino', 170)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── TEA (5) ─────────────────────────── -->
+
+      <article class="menu-card" data-category="tea" data-name="Masala Chai"
+        data-aos="fade-up" data-aos-delay="0">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/2C1500/C9A84C?text=Masala+Chai"
+               alt="Masala Chai" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:rgba(180,100,20,.9);">🍵 Tea</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Masala Chai</h3>
+          <p class="card-desc">Spiced Indian tea made fresh — ginger, clove, cardamom, cinnamon, black pepper.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 120</span>
+            <button class="btn-add" id="add-masala-chai"
+              onclick="Cart.add('Masala Chai', 120)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="tea" data-name="Matcha Latte"
+        data-aos="fade-up" data-aos-delay="50">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/2C1500/C9A84C?text=Matcha+Latte"
+               alt="Matcha Latte" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:rgba(180,100,20,.9);">🍵 Tea</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Matcha Latte</h3>
+          <p class="card-desc">Ceremonial-grade matcha, whisked smooth with warm oat milk. Earthy and serene.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 210</span>
+            <button class="btn-add" id="add-matcha-latte"
+              onclick="Cart.add('Matcha Latte', 210)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="tea" data-name="Earl Grey"
+        data-aos="fade-up" data-aos-delay="100">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/2C1500/C9A84C?text=Earl+Grey"
+               alt="Earl Grey" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:rgba(180,100,20,.9);">🍵 Tea</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Earl Grey</h3>
+          <p class="card-desc">Bergamot-infused black tea, loose leaf, served in a silver pot with lemon wheel.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 150</span>
+            <button class="btn-add" id="add-earl-grey"
+              onclick="Cart.add('Earl Grey', 150)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="tea" data-name="Chamomile Honey"
+        data-aos="fade-up" data-aos-delay="150">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/2C1500/C9A84C?text=Chamomile+Honey"
+               alt="Chamomile Honey" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:rgba(180,100,20,.9);">🍵 Tea</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Chamomile Honey</h3>
+          <p class="card-desc">Calming floral blend with raw Himalayan honey. The perfect evening ritual.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 160</span>
+            <button class="btn-add" id="add-chamomile"
+              onclick="Cart.add('Chamomile Honey', 160)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="tea" data-name="Kashmiri Kahwa"
+        data-aos="fade-up" data-aos-delay="200">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/2C1500/C9A84C?text=Kashmiri+Kahwa"
+               alt="Kashmiri Kahwa" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:rgba(180,100,20,.9);">🍵 Tea</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Kashmiri Kahwa</h3>
+          <p class="card-desc">Saffron strands, whole almonds, green tea, dried rose petals — a valley in a cup.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 180</span>
+            <button class="btn-add" id="add-kahwa"
+              onclick="Cart.add('Kashmiri Kahwa', 180)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── SNACKS (5) ──────────────────────── -->
+
+      <article class="menu-card" data-category="snacks" data-name="Truffle Croissant"
+        data-aos="fade-up" data-aos-delay="0">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/3a1a00/C9A84C?text=Truffle+Croissant"
+               alt="Truffle Croissant" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:rgba(100,60,10,.9);">🥐 Snack</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Truffle Croissant</h3>
+          <p class="card-desc">Buttery hand-laminated croissant filled with black truffle butter and herb salt.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 240</span>
+            <button class="btn-add" id="add-truffle-cr"
+              onclick="Cart.add('Truffle Croissant', 240)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="snacks" data-name="Avocado Toast"
+        data-aos="fade-up" data-aos-delay="50">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/3a1a00/C9A84C?text=Avocado+Toast"
+               alt="Avocado Toast" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:rgba(100,60,10,.9);">🥐 Snack</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Avocado Toast</h3>
+          <p class="card-desc">Thick-cut sourdough, smashed Hass avocado, chili flakes, lemon zest, microgreens.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 280</span>
+            <button class="btn-add" id="add-avo-toast"
+              onclick="Cart.add('Avocado Toast', 280)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="snacks" data-name="Bruschetta"
+        data-aos="fade-up" data-aos-delay="100">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/3a1a00/C9A84C?text=Bruschetta"
+               alt="Bruschetta" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:rgba(100,60,10,.9);">🥐 Snack</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Bruschetta</h3>
+          <p class="card-desc">Heirloom tomato, fresh basil, garlic-rubbed toasted ciabatta, aged balsamic.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 220</span>
+            <button class="btn-add" id="add-bruschetta"
+              onclick="Cart.add('Bruschetta', 220)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="snacks" data-name="Cheese Sandwich"
+        data-aos="fade-up" data-aos-delay="150">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/3a1a00/C9A84C?text=Cheese+Sandwich"
+               alt="Cheese Sandwich" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:rgba(100,60,10,.9);">🥐 Snack</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Cheese Sandwich</h3>
+          <p class="card-desc">Triple cheese (cheddar, mozzarella, gouda), toasted golden on brioche loaf.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 200</span>
+            <button class="btn-add" id="add-cheese-sand"
+              onclick="Cart.add('Cheese Sandwich', 200)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="snacks" data-name="Loaded Fries"
+        data-aos="fade-up" data-aos-delay="200">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/3a1a00/C9A84C?text=Loaded+Fries"
+               alt="Loaded Fries" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:rgba(100,60,10,.9);">🥐 Snack</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Loaded Fries</h3>
+          <p class="card-desc">Seasoned thin-cut fries, house cheese sauce, pickled jalapeños, spring onion.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 250</span>
+            <button class="btn-add" id="add-loaded-fries"
+              onclick="Cart.add('Loaded Fries', 250)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── DESSERTS (5) ────────────────────── -->
+
+      <article class="menu-card" data-category="desserts" data-name="Dark Choco Tart"
+        data-aos="fade-up" data-aos-delay="0">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/1C0A00/C9A84C?text=Dark+Choco+Tart"
+               alt="Dark Choco Tart" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:rgba(80,30,0,.95);">🍰 Dessert</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Dark Choco Tart</h3>
+          <p class="card-desc">70% dark chocolate ganache in a crisp butter shell. Maldon salt, edible gold dust.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 290</span>
+            <button class="btn-add" id="add-choco-tart"
+              onclick="Cart.add('Dark Choco Tart', 290)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="desserts" data-name="Tiramisu"
+        data-aos="fade-up" data-aos-delay="50">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/1C0A00/C9A84C?text=Tiramisu"
+               alt="Tiramisu" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:rgba(80,30,0,.95);">🍰 Dessert</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Tiramisu</h3>
+          <p class="card-desc">Classic Italian with espresso-soaked savoiardi layers, mascarpone cream, Valrhona cocoa.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 310</span>
+            <button class="btn-add" id="add-tiramisu"
+              onclick="Cart.add('Tiramisu', 310)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="desserts" data-name="NY Cheesecake"
+        data-aos="fade-up" data-aos-delay="100">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/1C0A00/C9A84C?text=NY+Cheesecake"
+               alt="NY Cheesecake" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:rgba(80,30,0,.95);">🍰 Dessert</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">NY Cheesecake</h3>
+          <p class="card-desc">Dense, creamy Philadelphia-style with a golden digestive biscuit base and berry coulis.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 320</span>
+            <button class="btn-add" id="add-cheesecake"
+              onclick="Cart.add('NY Cheesecake', 320)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="desserts" data-name="Brownie Sundae"
+        data-aos="fade-up" data-aos-delay="150">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/1C0A00/C9A84C?text=Brownie+Sundae"
+               alt="Brownie Sundae" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:rgba(80,30,0,.95);">🍰 Dessert</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Brownie Sundae</h3>
+          <p class="card-desc">Warm fudge brownie, two scoops of Madagascar vanilla gelato, hot caramel drizzle.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 270</span>
+            <button class="btn-add" id="add-brownie"
+              onclick="Cart.add('Brownie Sundae', 270)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="desserts" data-name="Crème Brûlée"
+        data-aos="fade-up" data-aos-delay="200">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/1C0A00/C9A84C?text=Creme+Brulee"
+               alt="Crème Brûlée" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:rgba(80,30,0,.95);">🍰 Dessert</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Crème Brûlée</h3>
+          <p class="card-desc">Classic French-baked vanilla custard, torched caramel sugar crust. Served warm.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 300</span>
+            <button class="btn-add" id="add-creme-brulee"
+              onclick="Cart.add('Crème Brûlée', 300)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── SPECIALS (5) ────────────────────── -->
+
+      <article class="menu-card" data-category="specials" data-name="Espresso Martini"
+        data-aos="fade-up" data-aos-delay="0">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/0d0500/C9A84C?text=Espresso+Martini"
+               alt="Espresso Martini" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:var(--gold);color:var(--espresso);">🥤 Special</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Espresso Martini</h3>
+          <p class="card-desc">Coffee cocktail (non-alcoholic) — shaken espresso, vanilla, arabica foam crown.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 350</span>
+            <button class="btn-add" id="add-esp-martini"
+              onclick="Cart.add('Espresso Martini', 350)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="specials" data-name="Rose Cardamom Latte"
+        data-aos="fade-up" data-aos-delay="50">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/0d0500/C9A84C?text=Rose+Cardamom+Latte"
+               alt="Rose Cardamom Latte" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:var(--gold);color:var(--espresso);">🥤 Special</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Rose Cardamom Latte</h3>
+          <p class="card-desc">Floral, spiced, instantly Instagram-worthy. House rose syrup, green cardamom, oat milk.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 260</span>
+            <button class="btn-add" id="add-rose-latte"
+              onclick="Cart.add('Rose Cardamom Latte', 260)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="specials" data-name="Saffron Cold Brew"
+        data-aos="fade-up" data-aos-delay="100">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/0d0500/C9A84C?text=Saffron+Cold+Brew"
+               alt="Saffron Cold Brew" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:var(--gold);color:var(--espresso);">🥤 Special</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Saffron Cold Brew</h3>
+          <p class="card-desc">Kesar-infused cold brew — saffron strands steeped overnight, served over ice crystal.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 280</span>
+            <button class="btn-add" id="add-saffron-cb"
+              onclick="Cart.add('Saffron Cold Brew', 280)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="specials" data-name="Blue Pea Lemonade"
+        data-aos="fade-up" data-aos-delay="150">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/0d0500/C9A84C?text=Blue+Pea+Lemonade"
+               alt="Blue Pea Lemonade" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:var(--gold);color:var(--espresso);">🥤 Special</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Blue Pea Lemonade</h3>
+          <p class="card-desc">Colour-changing butterfly pea flower base — add lemon and watch it turn violet.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 230</span>
+            <button class="btn-add" id="add-bluepea"
+              onclick="Cart.add('Blue Pea Lemonade', 230)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <article class="menu-card" data-category="specials" data-name="Affogato"
+        data-aos="fade-up" data-aos-delay="200">
+        <div class="card-img-wrap">
+          <img src="https://placehold.co/400x300/0d0500/C9A84C?text=Affogato"
+               alt="Affogato" loading="lazy" width="400" height="300">
+          <span class="cat-badge" style="background:var(--gold);color:var(--espresso);">🥤 Special</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-name">Affogato</h3>
+          <p class="card-desc">Vanilla gelato drowned in a hot double espresso shot. Simple. Perfect. Italian.</p>
+          <div class="card-footer">
+            <span class="card-price">₹ 240</span>
+            <button class="btn-add" id="add-affogato"
+              onclick="Cart.add('Affogato', 240)">
+              <i class="fa-solid fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- No results message -->
+      <div class="no-results" id="no-results" role="status">
+        <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+        Nothing matched your search. Try a different term or category.
+      </div>
+
+    </div><!-- /.menu-grid -->
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SECTION 4 — FLOATING CART BUTTON
+═══════════════════════════════════════════ -->
+<button class="cart-float" id="cart-float" aria-label="Open cart" title="View your order">
+  <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+  <span class="cart-float-badge" id="float-badge">0</span>
+</button>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" id="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+  <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+</a>
+
+
+<!-- ═══════════════════════════════════════════
+     CART OVERLAY + SIDE PANEL
+═══════════════════════════════════════════ -->
+<div class="cart-overlay" id="cart-overlay" role="presentation"></div>
+
+<aside class="cart-panel" id="cart-panel"
+  role="dialog" aria-modal="true" aria-label="Your order">
+
+  <div class="cp-header">
+    <h3>☕ Your Order</h3>
+    <button class="cp-close" id="cart-close" aria-label="Close cart">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <div class="cp-body" id="cart-body">
+    <div class="cart-empty">
+      <i class="fa-solid fa-mug-hot"></i>
+      <span>Your cart is empty ☕</span>
+      <small style="font-size:.8rem;opacity:.6;">Add something delicious above!</small>
+    </div>
+  </div>
+
+  <div class="cp-footer">
+    <div class="subtotal-row">
+      <span>Order Total</span>
+      <span class="subtotal-val" id="cart-total">₹ 0</span>
+    </div>
+    <div class="cp-actions">
+      <button class="btn-wa" id="btn-send-wa">
+        <i class="fa-brands fa-whatsapp"></i>
+        Send via WhatsApp
+      </button>
+      <button class="btn-clear" id="btn-clear-cart">
+        <i class="fa-solid fa-trash-can"></i>
+        Clear Cart
+      </button>
+    </div>
+  </div>
+
+</aside>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4 class="fg-title"><i class="fa-solid fa-mug-hot" style="margin-right:.5rem"></i>Tea3</h4>
+        <p>Where every sip tells a story. Handcrafted coffee, soulful bites, timeless moments.</p>
+        <div class="social-row">
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="X/Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="fg-title">Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="booking.html">Book a Table</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="fg-title">Visit Us</h4>
+        <ul>
+          <li><i class="fa-solid fa-location-dot"></i>123 Heritage Row, Jubilee Hills, Hyderabad</li>
+          <li><i class="fa-solid fa-phone"></i>+91-XXXXXXXXXX</li>
+          <li><i class="fa-solid fa-envelope"></i>hello@tea3cafe.com</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="fg-title">Hours</h4>
+        <ul>
+          <li style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid rgba(201,168,76,.07)">
+            <span>Mon–Fri</span><span style="color:var(--gold)">7AM–9PM</span></li>
+          <li style="display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px solid rgba(201,168,76,.07)">
+            <span>Saturday</span><span style="color:var(--gold)">8AM–10PM</span></li>
+          <li style="display:flex;justify-content:space-between;padding:.3rem 0">
+            <span>Sunday</span><span style="color:var(--gold)">8AM–8PM</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; <span id="year"></span> Tea3. All Rights Reserved.
+      Crafted with <i class="fa-solid fa-heart" style="color:var(--gold)"></i> in Hyderabad.
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════ -->
+<script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+/* ═══════════════════════════════════════════
+   BOOT
+═══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // AOS
+  AOS.init({ duration: 650, easing: 'ease-out', once: true, offset: 50 });
+
+  // Navbar scroll tint
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 80);
+  }, { passive: true });
+
+  // Mobile hamburger
+  const toggle  = document.getElementById('nav-toggle');
+  const navIcon = document.getElementById('nav-icon');
+  const navLinks = document.getElementById('nav-links');
+  toggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navIcon.className = open ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+
+  // Cart init
+  Cart.render();
+
+  // Cart panel open → float + nav icon
+  document.getElementById('cart-float').addEventListener('click',     () => Cart.openPanel());
+  document.getElementById('nav-cart-icon').addEventListener('click',  () => Cart.openPanel());
+  document.getElementById('cart-close').addEventListener('click',     () => Cart.closePanel());
+  document.getElementById('cart-overlay').addEventListener('click',   () => Cart.closePanel());
+
+  // Cart actions
+  document.getElementById('btn-send-wa').addEventListener('click',    () => Cart.sendWhatsApp());
+  document.getElementById('btn-clear-cart').addEventListener('click', () => {
+    if (confirm('Clear your entire order?')) Cart.clear();
+  });
+
+  /* ── Filter + Search ────────────────────── */
+  const allCards  = Array.from(document.querySelectorAll('.menu-card'));
+  const pillEls   = Array.from(document.querySelectorAll('.pill'));
+  const searchEl  = document.getElementById('menu-search');
+  const countEl   = document.getElementById('result-count');
+  const noRes     = document.getElementById('no-results');
+
+  let activeCat   = 'all';
+  let searchQuery = '';
+
+  function applyFilters() {
+    let visible = 0;
+
+    allCards.forEach(card => {
+      const catMatch  = activeCat === 'all' || card.dataset.category === activeCat;
+      const name      = card.dataset.name.toLowerCase();
+      const desc      = card.querySelector('.card-desc').textContent.toLowerCase();
+      const termMatch = searchQuery === '' || name.includes(searchQuery) || desc.includes(searchQuery);
+      const show      = catMatch && termMatch;
+
+      card.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+
+    // No results
+    if (visible === 0) {
+      noRes.style.display = 'flex';
+      noRes.style.flexDirection = 'column';
+      noRes.style.alignItems = 'center';
+    } else {
+      noRes.style.display = 'none';
+    }
+
+    countEl.textContent = `${visible} item${visible !== 1 ? 's' : ''}`;
+  }
+
+  // Pill clicks
+  pillEls.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pillEls.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      activeCat = pill.dataset.cat;
+      applyFilters();
+    });
+  });
+
+  // Search — debounced 200ms
+  let debouncer;
+  searchEl.addEventListener('input', () => {
+    clearTimeout(debouncer);
+    debouncer = setTimeout(() => {
+      searchQuery = searchEl.value.trim().toLowerCase();
+      applyFilters();
+    }, 200);
+  });
+
+  // Clear search on Escape
+  searchEl.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { searchEl.value = ''; searchQuery = ''; applyFilters(); }
+  });
+
+  // Close mobile nav on link click
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navIcon.className = 'fa-solid fa-bars';
+    });
+  });
+
+}); // end DOMContentLoaded
+
+
+/* ═══════════════════════════════════════════
+   CART SYSTEM  — localStorage key: ae_cart
+═══════════════════════════════════════════ */
+const Cart = {
+  KEY: 'ae_cart',
+
+  /* ── Data ─────────────────────────────── */
+  get() {
+    try { return JSON.parse(localStorage.getItem(this.KEY)) || []; }
+    catch { return []; }
+  },
+  save(cart) {
+    localStorage.setItem(this.KEY, JSON.stringify(cart));
+  },
+
+  /* ── Mutations ─────────────────────────── */
+  add(name, price) {
+    const cart = this.get();
+    const idx  = cart.findIndex(i => i.name === name);
+    if (idx > -1) {
+      cart[idx].qty++;
+    } else {
+      cart.push({ name, price: Number(price), qty: 1 });
+    }
+    this.save(cart);
+    this.render();
+    this.openPanel();
+  },
+
+  updateQty(name, delta) {
+    let cart = this.get();
+    const idx = cart.findIndex(i => i.name === name);
+    if (idx === -1) return;
+    cart[idx].qty += delta;
+    if (cart[idx].qty <= 0) cart.splice(idx, 1);
+    this.save(cart);
+    this.render();
+  },
+
+  clear() {
+    this.save([]);
+    this.render();
+  },
+
+  /* ── Computed ──────────────────────────── */
+  total() {
+    return this.get().reduce((sum, i) => sum + i.price * i.qty, 0);
+  },
+  count() {
+    return this.get().reduce((sum, i) => sum + i.qty, 0);
+  },
+
+  /* ── Render UI ─────────────────────────── */
+  render() {
+    const cart      = this.get();
+    const body      = document.getElementById('cart-body');
+    const floatBadge= document.getElementById('float-badge');
+    const navBadge  = document.getElementById('nav-badge');
+    const totalEl   = document.getElementById('cart-total');
+
+    const cnt = this.count();
+
+    // Badges
+    [floatBadge, navBadge].forEach(el => {
+      if (!el) return;
+      el.textContent = cnt;
+      if (el.id === 'float-badge') el.classList.toggle('show', cnt > 0);
+      else { el.style.display = cnt > 0 ? 'flex' : 'none'; }
+    });
+
+    // Total
+    if (totalEl) totalEl.textContent = `₹ ${this.total().toLocaleString('en-IN')}`;
+
+    // Items
+    if (!body) return;
+    if (cart.length === 0) {
+      body.innerHTML = `
+        <div class="cart-empty">
+          <i class="fa-solid fa-mug-hot"></i>
+          <span>Your cart is empty ☕</span>
+          <small>Add something delicious above!</small>
+        </div>`;
+      return;
+    }
+
+    body.innerHTML = cart.map(item => `
+      <div class="cart-item" data-item="${item.name}">
+        <div class="ci-name">
+          ${item.name}
+          <span>₹ ${item.price.toLocaleString('en-IN')} each</span>
+        </div>
+        <div class="qty-ctrl">
+          <button class="qbtn" onclick="Cart.updateQty('${item.name.replace(/'/g,"\\'")}', -1)" aria-label="Remove one">−</button>
+          <span class="qnum">${item.qty}</span>
+          <button class="qbtn" onclick="Cart.updateQty('${item.name.replace(/'/g,"\\'")}', 1)" aria-label="Add one">+</button>
+        </div>
+        <div class="ci-price">₹ ${(item.price * item.qty).toLocaleString('en-IN')}</div>
+      </div>
+    `).join('');
+  },
+
+  /* ── Panel ─────────────────────────────── */
+  openPanel() {
+    document.getElementById('cart-panel').classList.add('open');
+    document.getElementById('cart-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  },
+  closePanel() {
+    document.getElementById('cart-panel').classList.remove('open');
+    document.getElementById('cart-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  },
+
+  /* ── WhatsApp ──────────────────────────── */
+  sendWhatsApp() {
+    const cart = this.get();
+    if (cart.length === 0) {
+      alert('Your cart is empty! Add some items first.');
+      return;
+    }
+
+    const lines = cart
+      .map(i => `- ${i.name} x${i.qty} = ₹${(i.price * i.qty).toLocaleString('en-IN')}`)
+      .join('\n');
+
+    const message =
+      `Hi Tea3! My order:\n` +
+      `━━━━━━━━━━━━━━━━━\n` +
+      `${lines}\n` +
+      `━━━━━━━━━━━━━━━━━\n` +
+      `Total: ₹${this.total().toLocaleString('en-IN')}\n` +
+      `\nPlease confirm! Thank you ☕`;
+
+    const url = `https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+};
+</script>
+
+
+<script defer src="js/main.js"></script>
+</body>
+</html>

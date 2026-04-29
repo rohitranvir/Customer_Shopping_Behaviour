@@ -1,0 +1,77 @@
+/* Standard Media Queries for Responsive Design */
+
+@media (max-width: 1024px) {
+  .hero h1 {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Navbar */
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    height: 100vh;
+    background-color: var(--c-espresso);
+    flex-direction: column;
+    justify-content: center;
+    transition: right var(--transition-smooth);
+    border-left: 1px solid rgba(201, 168, 76, 0.2);
+    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+    z-index: 1001;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .nav-links li {
+    margin: 1.5rem 0;
+  }
+  
+  .nav-links a {
+    font-size: 1.2rem;
+  }
+
+  .nav-toggle {
+    display: block;
+    z-index: 1002;
+    position: relative;
+  }
+
+  /* Typography */
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .section-padding {
+    padding: 3.5rem 0;
+  }
+
+  /* Float Button */
+  .whatsapp-float {
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+  }
+  
+  .btn {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}

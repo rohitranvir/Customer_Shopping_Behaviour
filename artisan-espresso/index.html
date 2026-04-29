@@ -1,0 +1,702 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tea3 | Premium Tea & Coffee Café in Hyderabad</title>
+    <meta name="description"
+        content="Tea3 — Hyderabad's premium café serving handcrafted coffee, fresh bites &amp; unforgettable experiences in Banjara Hills.">
+    <meta name="keywords"
+        content="café hyderabad, coffee shop hyderabad, tea3, banjara hills café, best coffee hyderabad">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://tea3cafe.in/index.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Tea3 | Premium Tea &amp; Coffee Café in Hyderabad">
+    <meta property="og:description"
+        content="Handcrafted coffee. Soulful bites. Timeless moments. Experience Hyderabad's finest café.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tea3cafe.in/">
+    <meta property="og:image" content="assets/images/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Google Fonts (preload for performance) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&family=Playfair+Display:wght@600;700&display=swap"
+        as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link
+            href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&family=Playfair+Display:wght@600;700&display=swap"
+            rel="stylesheet">
+    </noscript>
+
+    <!-- AOS Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+    <!-- Skip to main content (accessibility) -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <!-- Page Loader -->
+    <div id="page-loader" role="status" aria-label="Loading Tea3">
+        <div class="loader-cup" aria-hidden="true">☕</div>
+        <p class="loader-text">Brewing something special...</p>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════
+         STICKY NAVBAR
+    ═══════════════════════════════════════ -->
+    <header class="navbar" id="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fa-solid fa-mug-hot"></i>
+                    <span>TEA3</span>
+                </a>
+            </div>
+
+            <nav aria-label="Main Navigation">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="booking.html">Book a Table</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div style="display:flex; align-items:center; gap:1rem;">
+                <!-- Cart Icon with Badge -->
+                <div class="cart-nav-btn">
+                    <a href="#" aria-label="Shopping cart" style="color: var(--c-cream); font-size: 1.2rem;">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                    </a>
+                    <span id="cart-badge">0</span>
+                </div>
+
+                <a href="booking.html" class="btn btn-primary" id="cta-reserve-nav">Reserve Now</a>
+
+                <button class="nav-toggle" id="nav-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                    <i class="fa-solid fa-bars" id="nav-icon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+
+        <!-- ═══════════════════════════════════════
+             1. HERO SECTION
+        ═══════════════════════════════════════ -->
+        <section class="hero" id="hero"
+            style="background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1920&q=80');">
+
+            <div class="hero-content container">
+                <span class="hero-subtitle" data-aos="fade-down" data-aos-duration="800">
+                    Hyderabad's Finest — Est. 2024
+                </span>
+                <h1 data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+                    Where Every Sip<br>Tells a Story
+                </h1>
+                <p class="hero-text" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
+                    Handcrafted coffee. Soulful bites. Timeless moments.
+                </p>
+                <div class="hero-buttons" data-aos="fade-up" data-aos-delay="600" data-aos-duration="1000">
+                    <a href="menu.html" class="btn btn-outline" id="hero-explore-menu">
+                        <i class="fa-solid fa-utensils" style="margin-right: 0.5rem;"></i>
+                        Explore Menu
+                    </a>
+                    <a href="booking.html" class="btn btn-primary" id="hero-book-table">
+                        <i class="fa-regular fa-calendar-check" style="margin-right: 0.5rem;"></i>
+                        Book a Table
+                    </a>
+                </div>
+            </div>
+
+            <!-- Animated Scroll Down Arrow -->
+            <a href="#marquee" class="scroll-arrow" aria-label="Scroll down">
+                <span>Scroll</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </a>
+        </section>
+
+
+        <!-- ═══════════════════════════════════════
+             2. MARQUEE TICKER
+        ═══════════════════════════════════════ -->
+        <div class="marquee-section" id="marquee">
+            <div class="marquee-track">
+                <!-- First copy -->
+                <div class="marquee-content">
+                    <span>Single Origin Espresso</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                    <span>Fresh Baked Daily</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                    <span>Live Music Fridays</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                    <span>Open 8AM – 10PM</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                    <span>Hyderabad's Finest</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                    <span>Reserve Your Table Today</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                    <span>TEA3al Cold Brew</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                    <span>Chef's Special Pastries</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                </div>
+                <!-- Duplicate for seamless loop -->
+                <div class="marquee-content" aria-hidden="true">
+                    <span>Single Origin Espresso</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                    <span>Fresh Baked Daily</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                    <span>Live Music Fridays</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                    <span>Open 8AM – 10PM</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                    <span>Hyderabad's Finest</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                    <span>Reserve Your Table Today</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                    <span>TEA3al Cold Brew</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                    <span>Chef's Special Pastries</span>
+                    <i class="fa-solid fa-circle marquee-dot"></i>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ═══════════════════════════════════════
+             3. POPULAR ITEMS — FEATURED MENU
+        ═══════════════════════════════════════ -->
+        <section class="section-padding menu-section-home" id="featured-menu">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <span class="eyebrow">Our Bestsellers</span>
+                    <h2>Crafted to Perfection</h2>
+                    <p>Four icons of the Tea3 experience — each made with obsessive precision and seasonal
+                        ingredients.</p>
+                </div>
+
+                <div class="menu-cards-grid">
+
+                    <!-- Card 1 -->
+                    <article class="menu-card-home" data-aos="fade-up" data-aos-delay="100">
+                        <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=600&q=80"
+                            alt="Signature Espresso" class="menu-card-img" loading="lazy">
+                        <div class="menu-card-body">
+                            <h3 class="menu-card-name">Signature Espresso</h3>
+                            <p class="menu-card-desc">A double ristretto of our rotating seasonal single-origin,
+                                revealing notes of dark cocoa, stone fruit, and toasted hazelnut.</p>
+                            <div class="menu-card-footer">
+                                <span class="menu-card-price">₹ 450</span>
+                                <button class="btn-cart" id="cart-btn-espresso"
+                                    onclick="Cart.add({ id: 'espresso-01', name: 'Signature Espresso', price: 450 })">
+                                    <i class="fa-solid fa-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 2 -->
+                    <article class="menu-card-home" data-aos="fade-up" data-aos-delay="200">
+                        <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=600&q=80"
+                            alt="Hazelnut Latte" class="menu-card-img" loading="lazy">
+                        <div class="menu-card-body">
+                            <h3 class="menu-card-name">Hazelnut Latte</h3>
+                            <p class="menu-card-desc">Velvet-steamed oat milk draped over a bold espresso with our
+                                house-made cold-pressed hazelnut syrup.</p>
+                            <div class="menu-card-footer">
+                                <span class="menu-card-price">₹ 620</span>
+                                <button class="btn-cart" id="cart-btn-latte"
+                                    onclick="Cart.add({ id: 'latte-02', name: 'Hazelnut Latte', price: 620 })">
+                                    <i class="fa-solid fa-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 3 -->
+                    <article class="menu-card-home" data-aos="fade-up" data-aos-delay="300">
+                        <img src="https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=80"
+                            alt="Truffle Croissant" class="menu-card-img" loading="lazy">
+                        <div class="menu-card-body">
+                            <h3 class="menu-card-name">Truffle Croissant</h3>
+                            <p class="menu-card-desc">Hand-laminated puff pastry filled with imported black truffle
+                                cream cheese and finished with herb sea salt.</p>
+                            <div class="menu-card-footer">
+                                <span class="menu-card-price">₹ 780</span>
+                                <button class="btn-cart" id="cart-btn-croissant"
+                                    onclick="Cart.add({ id: 'croissant-03', name: 'Truffle Croissant', price: 780 })">
+                                    <i class="fa-solid fa-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 4 -->
+                    <article class="menu-card-home" data-aos="fade-up" data-aos-delay="400">
+                        <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80"
+                            alt="Dark Chocolate Tart" class="menu-card-img" loading="lazy">
+                        <div class="menu-card-body">
+                            <h3 class="menu-card-name">Dark Chocolate Tart</h3>
+                            <p class="menu-card-desc">72% Valrhona ganache set in a burnt butter pastry shell with a
+                                sprinkle of Maldon salt and edible gold leaf.</p>
+                            <div class="menu-card-footer">
+                                <span class="menu-card-price">₹ 850</span>
+                                <button class="btn-cart" id="cart-btn-tart"
+                                    onclick="Cart.add({ id: 'tart-04', name: 'Dark Chocolate Tart', price: 850 })">
+                                    <i class="fa-solid fa-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+                <div class="text-center" style="margin-top: 3rem;" data-aos="fade-up">
+                    <a href="menu.html" class="btn btn-outline" id="see-full-menu">View Full Menu <i
+                            class="fa-solid fa-arrow-right" style="margin-left: 0.5rem;"></i></a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ═══════════════════════════════════════
+             4. ABOUT TEASER
+        ═══════════════════════════════════════ -->
+        <section class="section-padding about-teaser" id="about-teaser">
+            <div class="container">
+                <div class="about-split">
+
+                    <div class="about-img-wrap" data-aos="fade-right" data-aos-duration="1000">
+                        <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=900&q=80"
+                            alt="Our barista at work" loading="lazy">
+                    </div>
+
+                    <div class="about-text" data-aos="fade-left" data-aos-duration="1000">
+                        <span class="eyebrow"
+                            style="display:block; font-size:0.8rem; text-transform:uppercase; letter-spacing:3px; color:var(--c-gold); margin-bottom:0.75rem;">Our
+                            Philosophy</span>
+                        <h2>Born from a Love of Coffee</h2>
+                        <p>
+                            What began as a single-person obsession with the perfect extraction has grown into
+                            Hyderabad's most celebrated coffee destination. We source exclusively from small-batch,
+                            high-altitude estates where farmers are paid a living wage and the land is tended with
+                            reverence. Every cup is a direct expression of that chain of care.
+                        </p>
+
+                        <div class="stats-row">
+                            <div class="stat-item">
+                                <span class="stat-number">500+</span>
+                                <span class="stat-label">Happy Guests<br>Weekly</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">12</span>
+                                <span class="stat-label">Signature<br>Drinks</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">2024</span>
+                                <span class="stat-label">Year<br>Established</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">100%</span>
+                                <span class="stat-label">Fresh<br>Daily</span>
+                            </div>
+                        </div>
+
+                        <a href="about.html" class="btn btn-primary" id="about-full-story">
+                            Our Full Story &nbsp;<i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ═══════════════════════════════════════
+             5. TODAY'S SPECIALS / OFFERS
+             Admin-managed: edit via admin.html → Offers tab.
+             Active offers from localStorage render automatically.
+        ═══════════════════════════════════════ -->
+        <section class="section-padding offers-section" id="offers">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <span class="eyebrow">Limited Time</span>
+                    <h2>Today's Specials</h2>
+                    <p>Curated offers as exclusive as the beans we brew. Available while they last.</p>
+                </div>
+
+                <!-- Offers are managed via admin panel at admin.html -->
+                <div class="offers-grid" id="offers-container" data-aos="fade-up" data-aos-delay="100">
+
+                    <!-- Static fallback offers (shown when no admin offers exist) -->
+                    <div class="offer-card static-offer">
+                        <div class="offer-ribbon">Special</div>
+                        <div class="offer-icon"><i class="fa-solid fa-sun"></i></div>
+                        <h3>Happy Hours</h3>
+                        <p>Enjoy 20% off all espresso-based drinks and pastries every afternoon.</p>
+                        <div class="offer-validity"><i class="fa-regular fa-clock"></i> 3:00 PM – 5:00 PM Daily</div>
+                    </div>
+                    <div class="offer-card static-offer">
+                        <div class="offer-ribbon">Weekend</div>
+                        <div class="offer-icon"><i class="fa-solid fa-music"></i></div>
+                        <h3>Live Music Fridays</h3>
+                        <p>Live acoustic sets + exclusive after-dark menu. Complimentary welcome drink with reservation.
+                        </p>
+                        <div class="offer-validity"><i class="fa-regular fa-clock"></i> Every Friday, 7:00 PM – 10:00 PM
+                        </div>
+                    </div>
+                    <div class="offer-card static-offer">
+                        <div class="offer-ribbon">Loyalty</div>
+                        <div class="offer-icon"><i class="fa-solid fa-crown"></i></div>
+                        <h3>TEA3 Members</h3>
+                        <p>Your 10th visit earns a Barista's Choice experience — a bespoke tasting crafted just for you.
+                        </p>
+                        <div class="offer-validity"><i class="fa-regular fa-clock"></i> Ongoing — Ask at the Counter
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ═══════════════════════════════════════
+             6. TESTIMONIALS — SWIPER CAROUSEL
+        ═══════════════════════════════════════ -->
+        <section class="section-padding testimonials-section" id="testimonials">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <span class="eyebrow">Guest Voices</span>
+                    <h2>What Our Guests Say</h2>
+                    <p>Authentic stories from the people who make Tea3 what it is.</p>
+                </div>
+
+                <div class="swiper testimonials-swiper" data-aos="fade-up" data-aos-delay="200">
+                    <div class="swiper-wrapper">
+
+                        <!-- Review 1 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <div class="testimonial-stars">★★★★★</div>
+                                <p class="testimonial-quote">"The pour-over here is an event in itself. Watching the
+                                    barista work, the aroma, the ritual — it's the most I'll ever pay for coffee, and
+                                    it'll always be worth it."</p>
+                                <div class="testimonial-author">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80"
+                                        alt="Rahul Mehta" class="testimonial-avatar" loading="lazy">
+                                    <div>
+                                        <p class="testimonial-name">Rahul Mehta</p>
+                                        <span class="testimonial-tag">Coffee Connoisseur, Mumbai</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Review 2 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <div class="testimonial-stars">★★★★★</div>
+                                <p class="testimonial-quote">"From the truffle croissant to the signature latte, every
+                                    single thing I ordered made me close my eyes and just… breathe. This is what luxury
+                                    actually means."</p>
+                                <div class="testimonial-author">
+                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80"
+                                        alt="Ananya Krishnan" class="testimonial-avatar" loading="lazy">
+                                    <div>
+                                        <p class="testimonial-name">Ananya Krishnan</p>
+                                        <span class="testimonial-tag">Food Writer, Hyderabad</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Review 3 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <div class="testimonial-stars">★★★★★</div>
+                                <p class="testimonial-quote">"I brought a client here on a whim and it became the best
+                                    business meeting I've ever had. The ambiance alone closes deals. Tea3 is
+                                    my new office."</p>
+                                <div class="testimonial-author">
+                                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80"
+                                        alt="Vikram Joshi" class="testimonial-avatar" loading="lazy">
+                                    <div>
+                                        <p class="testimonial-name">Vikram Joshi</p>
+                                        <span class="testimonial-tag">Entrepreneur, Bangalore</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Review 4 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <div class="testimonial-stars">★★★★★</div>
+                                <p class="testimonial-quote">"I've been to cafés across Tokyo and Milan. TEA3
+                                    Espresso sits comfortably alongside them. The dark chocolate tart is, without
+                                    exaggeration, world-class."</p>
+                                <div class="testimonial-author">
+                                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80"
+                                        alt="Priya Nair" class="testimonial-avatar" loading="lazy">
+                                    <div>
+                                        <p class="testimonial-name">Priya Nair</p>
+                                        <span class="testimonial-tag">Travel Blogger, Kochi</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ═══════════════════════════════════════
+             7. INSTAGRAM / GALLERY TEASER
+        ═══════════════════════════════════════ -->
+        <section class="section-padding gallery-teaser" id="gallery-teaser">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <span class="eyebrow">@tea3cafe</span>
+                    <h2>A Feast for the Eyes</h2>
+                    <p>Follow us on Instagram for daily captures of our craft, our space, and our people.</p>
+                </div>
+
+                <div class="gallery-masonry" data-aos="fade-up" data-aos-delay="150">
+
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=600&q=80"
+                            alt="Coffee beans" loading="lazy">
+                        <div class="gallery-overlay"><i class="fa-brands fa-instagram"></i></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=600&q=80"
+                            alt="Café interior" loading="lazy">
+                        <div class="gallery-overlay"><i class="fa-brands fa-instagram"></i></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1521302080334-4bebac2763a6?auto=format&fit=crop&w=600&q=80"
+                            alt="Latte art" loading="lazy">
+                        <div class="gallery-overlay"><i class="fa-brands fa-instagram"></i></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?auto=format&fit=crop&w=600&q=80"
+                            alt="Espresso shot" loading="lazy">
+                        <div class="gallery-overlay"><i class="fa-brands fa-instagram"></i></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"
+                            alt="Pastry display" loading="lazy">
+                        <div class="gallery-overlay"><i class="fa-brands fa-instagram"></i></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=600&q=80"
+                            alt="Morning coffee" loading="lazy">
+                        <div class="gallery-overlay"><i class="fa-brands fa-instagram"></i></div>
+                    </div>
+
+                </div>
+
+                <div class="text-center" style="margin-top: 3rem;" data-aos="fade-up">
+                    <a href="gallery.html" class="btn btn-outline" id="view-full-gallery">
+                        <i class="fa-brands fa-instagram" style="margin-right: 0.5rem;"></i>
+                        View Full Gallery
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ═══════════════════════════════════════
+             8. CALL TO ACTION BANNER
+        ═══════════════════════════════════════ -->
+        <section class="cta-banner" id="cta-banner">
+            <div class="container" data-aos="zoom-in" data-aos-duration="800">
+                <span class="eyebrow"
+                    style="display:block; font-size:0.8rem; text-transform:uppercase; letter-spacing:3px; color:var(--c-gold); margin-bottom:1rem;">Don't
+                    Wait</span>
+                <h2>Ready for an Unforgettable<br>Experience?</h2>
+                <p>Secure your table at Tea3 and let us craft a memory that lingers long after the last sip.
+                </p>
+                <a href="booking.html" class="btn btn-primary" id="cta-reserve-btn">
+                    <i class="fa-regular fa-calendar-check" style="margin-right: 0.6rem;"></i>
+                    Reserve Your Table
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- ═══════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+
+                <div class="footer-col" data-aos="fade-up">
+                    <h3><i class="fa-solid fa-mug-hot" style="margin-right: 0.5rem;"></i> Tea3</h3>
+                    <p>Elevating the coffee ritual to an art form. A destination for those who believe that the finest
+                        things in life deserve to be savoured, not rushed.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col" data-aos="fade-up" data-aos-delay="100">
+                    <h3>Navigate</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fa-solid fa-chevron-right"
+                                    style="font-size:0.7rem; margin-right:0.5rem;"></i>Home</a></li>
+                        <li><a href="menu.html"><i class="fa-solid fa-chevron-right"
+                                    style="font-size:0.7rem; margin-right:0.5rem;"></i>Our Menu</a></li>
+                        <li><a href="about.html"><i class="fa-solid fa-chevron-right"
+                                    style="font-size:0.7rem; margin-right:0.5rem;"></i>The Story</a></li>
+                        <li><a href="gallery.html"><i class="fa-solid fa-chevron-right"
+                                    style="font-size:0.7rem; margin-right:0.5rem;"></i>Gallery</a></li>
+                        <li><a href="booking.html"><i class="fa-solid fa-chevron-right"
+                                    style="font-size:0.7rem; margin-right:0.5rem;"></i>Book a Table</a></li>
+                        <li><a href="contact.html"><i class="fa-solid fa-chevron-right"
+                                    style="font-size:0.7rem; margin-right:0.5rem;"></i>Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col" data-aos="fade-up" data-aos-delay="200">
+                    <h3>Visit Us</h3>
+                    <ul>
+                        <li>
+                            <i class="fa-solid fa-location-dot" style="color:var(--c-gold); margin-right:0.6rem;"></i>
+                            123 Heritage Row, Jubilee Hills<br>
+                            <span style="padding-left: 1.5rem;">Hyderabad – 500 033</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-phone" style="color:var(--c-gold); margin-right:0.6rem;"></i>
+                            +91-XXXXXXXXXX
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope" style="color:var(--c-gold); margin-right:0.6rem;"></i>
+                            hello@tea3cafe.com
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-col" data-aos="fade-up" data-aos-delay="300">
+                    <h3>Opening Hours</h3>
+                    <ul>
+                        <li style="display:flex; justify-content:space-between;"><span>Mon – Fri</span><span
+                                style="color:var(--c-gold);">7:00 AM – 9:00 PM</span></li>
+                        <li style="display:flex; justify-content:space-between;"><span>Saturday</span><span
+                                style="color:var(--c-gold);">8:00 AM – 10:00 PM</span></li>
+                        <li style="display:flex; justify-content:space-between;"><span>Sunday</span><span
+                                style="color:var(--c-gold);">8:00 AM – 8:00 PM</span></li>
+                    </ul>
+                    <a href="booking.html" class="btn btn-primary"
+                        style="margin-top: 1.5rem; font-size: 0.85rem; padding: 0.7rem 1.5rem;">Reserve Now</a>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; <span id="year"></span> Tea3. All Rights Reserved. &nbsp;|&nbsp; Crafted with <i
+                        class="fa-solid fa-heart" style="color:var(--c-gold);"></i> in Hyderabad.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ═══════════════════════════════════════
+         FLOATING WHATSAPP BUTTON
+    ═══════════════════════════════════════ -->
+    <a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank" rel="noopener noreferrer"
+        aria-label="Chat with us on WhatsApp" id="whatsapp-float">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+
+    <!-- ═══════════════════════════════════════
+         SCRIPTS
+    ═══════════════════════════════════════ -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js" defer></script>
+    <script src="js/cart.js" defer></script>
+    <script src="js/main.js" defer></script>
+
+    <script>
+        // ─── Admin Offers Integration ───────────────
+        // Offers are managed via admin.html → Offers tab.
+        // Active offers from localStorage replace the static fallback cards.
+        (function loadAdminOffers() {
+            try {
+                const stored = JSON.parse(localStorage.getItem('tea3_offers') || '[]');
+                const active = stored.filter(o => o.active && (!o.till || o.till >= new Date().toISOString().slice(0, 10)));
+                if (active.length === 0) return; // keep static fallback
+                const container = document.getElementById('offers-container');
+                // Remove static fallback cards
+                container.querySelectorAll('.static-offer').forEach(el => el.remove());
+                active.forEach((o, i) => {
+                    const card = document.createElement('div');
+                    card.className = 'offer-card';
+                    card.setAttribute('data-aos', 'fade-up');
+                    card.setAttribute('data-aos-delay', String((i + 1) * 100));
+                    card.innerHTML = `
+              <div class="offer-ribbon">${o.discount ? o.discount + '% OFF' : 'Special'}</div>
+              <div class="offer-icon"><i class="fa-solid fa-tag"></i></div>
+              <h3>${o.title}</h3>
+              <p>${o.desc || ''}</p>
+              ${o.till ? `<div class="offer-validity"><i class="fa-regular fa-clock"></i> Valid till ${new Date(o.till + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</div>` : ''}
+            `;
+                    container.appendChild(card);
+                });
+            } catch (e) { /* keep static fallback on error */ }
+        })();
+
+        // ─── Footer Year ───────────────────────────
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // ─── Testimonials Swiper ───────────────────
+        const testimonialSwiper = new Swiper('.testimonials-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: { delay: 4500, disableOnInteraction: false, pauseOnMouseEnter: true },
+            pagination: { el: '.swiper-pagination', clickable: true },
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+            breakpoints: {
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
