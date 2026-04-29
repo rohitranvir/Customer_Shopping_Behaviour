@@ -46,9 +46,9 @@ export async function scheduleDailyReminder(hour: number, minute: number): Promi
       sound: true,
     },
     trigger: {
-      type: Notifications.SchedulableTriggerInputTypes.DAILY,
       hour,
       minute,
+      repeats: true,
     },
   });
 }

@@ -9,10 +9,21 @@
       "client_info": {
         "mobilesdk_app_id": "1:599231181375:android:aaf424388ec0dcc385be8a",
         "android_client_info": {
-          "package_name": "com.rohit.khatabook"
+          "package_name": "com.rohit.khatabook",
+          "certificate_hash": [
+            "d561badbe74b103e7ca8ad98c943a33b3463bacc"
+          ]
         }
       },
       "oauth_client": [
+        {
+          "client_id": "599231181375-androidclientdummy.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rohit.khatabook",
+            "certificate_hash": "d561badbe74b103e7ca8ad98c943a33b3463bacc"
+          }
+        },
         {
           "client_id": "599231181375-cnnhc737baviiciegelg9q34s58oe529.apps.googleusercontent.com",
           "client_type": 3

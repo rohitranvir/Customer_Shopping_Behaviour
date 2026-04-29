@@ -17,6 +17,14 @@ export interface Customer {
 export const CustomerRepository = {
   async create(businessId: number, name: string, phone?: string, openingBalance: number = 0, type: 'CUSTOMER' | 'SUPPLIER' = 'CUSTOMER'): Promise<number> {
     const db = await getDatabase();
+    
+    // Explicitly verify business exists to prevent foreign key constraint errors
+    // when Zustand state is out of sync with SQLite database
+    const businessExists = await db.getFirstAsync('SELECT id FROM business WHERE id = ?', [businessId]);
+    if (!businessExists) {
+      throw new Error('Business profile not found in database. Please log out and log in again to sync your profile.');
+    }
+
     try {
       const result = await db.runAsync(
         'INSERT INTO customers (business_id, name, phone, opening_balance, type) VALUES (?, ?, ?, ?, ?)',
@@ -24,7 +32,7 @@ export const CustomerRepository = {
       );
       return result.lastInsertRowId;
     } catch (error: any) {
-      if (error.message.includes('FOREIGN KEY')) {
+      if (error.message?.includes('FOREIGN KEY')) {
         throw new Error('Business reference is invalid or missing. Please restart the app.');
       }
       throw error;
@@ -36,8 +44,8 @@ export const CustomerRepository = {
     return await db.getAllAsync<Customer>(
       `SELECT c.*,
          (c.opening_balance +
-          COALESCE(SUM(CASE WHEN t.type = 'CREDIT' THEN t.amount
-                            WHEN t.type = 'DEBIT'  THEN -t.amount ELSE 0 END), 0)
+          COALESCE(SUM(CASE WHEN t.type = 'DEBIT' THEN t.amount
+                            WHEN t.type = 'CREDIT' THEN -t.amount ELSE 0 END), 0)
          ) AS balance,
          MAX(t.date) AS last_tx_date,
          MAX(CASE WHEN t.due_date IS NOT NULL AND t.due_date < date('now') THEN 1 ELSE 0 END) AS is_overdue
@@ -55,8 +63,8 @@ export const CustomerRepository = {
     const row = await db.getFirstAsync<Customer>(
       `SELECT c.*,
          (c.opening_balance +
-          COALESCE(SUM(CASE WHEN t.type = 'CREDIT' THEN t.amount
-                            WHEN t.type = 'DEBIT'  THEN -t.amount ELSE 0 END), 0)
+          COALESCE(SUM(CASE WHEN t.type = 'DEBIT' THEN t.amount
+                            WHEN t.type = 'CREDIT' THEN -t.amount ELSE 0 END), 0)
          ) AS balance
        FROM customers c
        LEFT JOIN transactions t ON t.customer_id = c.id
@@ -97,8 +105,8 @@ export const CustomerRepository = {
       return await db.getAllAsync<Customer>(
         `SELECT c.*,
            (c.opening_balance +
-            COALESCE(SUM(CASE WHEN t.type = 'CREDIT' THEN t.amount
-                              WHEN t.type = 'DEBIT'  THEN -t.amount ELSE 0 END), 0)
+            COALESCE(SUM(CASE WHEN t.type = 'DEBIT' THEN t.amount
+                              WHEN t.type = 'CREDIT' THEN -t.amount ELSE 0 END), 0)
            ) AS balance,
            MAX(t.date) AS last_tx_date,
            MAX(CASE WHEN t.due_date IS NOT NULL AND t.due_date < date('now') THEN 1 ELSE 0 END) AS is_overdue
@@ -113,8 +121,8 @@ export const CustomerRepository = {
     return await db.getAllAsync<Customer>(
       `SELECT c.*,
          (c.opening_balance +
-          COALESCE(SUM(CASE WHEN t.type = 'CREDIT' THEN t.amount
-                            WHEN t.type = 'DEBIT'  THEN -t.amount ELSE 0 END), 0)
+          COALESCE(SUM(CASE WHEN t.type = 'DEBIT' THEN t.amount
+                            WHEN t.type = 'CREDIT' THEN -t.amount ELSE 0 END), 0)
          ) AS balance,
          MAX(t.date) AS last_tx_date,
          MAX(CASE WHEN t.due_date IS NOT NULL AND t.due_date < date('now') THEN 1 ELSE 0 END) AS is_overdue

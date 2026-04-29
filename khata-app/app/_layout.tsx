@@ -16,6 +16,7 @@ import { COLORS } from '../utils/constants';
 import { ToastHost } from '../components/Toast';
 import * as SplashScreen from 'expo-splash-screen';
 import { getAutoBackup, getToken, setLastBackupTime } from '../security/secureStorage';
+import { requestNotificationPermission } from '../utils/notifications';
 
 // Keep splash visible until DB + user loaded
 SplashScreen.preventAutoHideAsync();
@@ -54,6 +55,7 @@ export default function RootLayout() {
       await initDatabase();
       await loadUser();
       await loadTheme();
+      await requestNotificationPermission();
       // Safe to hide splash now
       await SplashScreen.hideAsync();
     })();

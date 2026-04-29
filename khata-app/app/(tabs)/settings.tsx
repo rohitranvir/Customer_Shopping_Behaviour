@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
 import * as DocumentPicker from 'expo-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -285,10 +285,6 @@ export default function SettingsScreen() {
     await AsyncStorage.setItem('notif_enabled', val ? 'true' : 'false');
   };
 
-  const toggleAutoBackup = async (val: boolean) => {
-    setAutoBackup(val);
-    await saveAutoBackup(val);
-  };
 
   // ── Local Backup ────────────────────────────────────────────────────────────
   const handleBackup = async () => {
@@ -683,6 +679,12 @@ export default function SettingsScreen() {
         <Card isDark={isDark}>
           <SettingRow icon="information" label={`${APP_NAME} v${APP_VERSION}`} subtitle="Made for Indian shopkeepers 🇮🇳" isDark={isDark} />
         </Card>
+
+        <View style={{ alignItems: 'center', marginTop: 12 }}>
+          <Text style={[{ fontSize: 12, color: COLORS.inkMuted }, isDark && { color: '#64748b' }]}>
+            Developed by Rohit Ranvir
+          </Text>
+        </View>
 
         <View style={{ height: 40 }} />
       </ScrollView>
