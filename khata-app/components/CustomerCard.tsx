@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Customer } from '../db/queries';
+import { Customer } from '../db/repositories/customerRepository';
 import { formatINR, getInitials, getAvatarColor, formatDate } from '../utils/formatters';
 import { COLORS } from '../utils/constants';
 import { useThemeStore } from '../store/useThemeStore';

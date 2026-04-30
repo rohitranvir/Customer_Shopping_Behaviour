@@ -3,6 +3,7 @@ import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuthStore } from '../store/useAuthStore';
 import { COLORS } from '../utils/constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
  * Entry point — decides where to redirect:
@@ -17,13 +18,28 @@ export default function Index() {
 
   useEffect(() => {
     if (isLoading) return;
-    if (!user) {
-      router.replace('/(auth)/setup');
-    } else if (!isAuthenticated) {
-      router.replace('/(auth)/unlock');
-    } else {
-      router.replace('/(tabs)');
-    }
+
+    const checkAuthMethodAndRoute = async () => {
+      if (!user) {
+        router.replace('/(auth)/setup');
+        return;
+      }
+
+      if (!isAuthenticated) {
+        const authMethod = await AsyncStorage.getItem('auth_method');
+        if (authMethod === 'google') {
+          // Bypass unlock and trust the persistent Google session
+          useAuthStore.getState().unlock();
+          router.replace('/(tabs)');
+        } else {
+          router.replace('/(auth)/unlock');
+        }
+      } else {
+        router.replace('/(tabs)');
+      }
+    };
+
+    checkAuthMethodAndRoute();
   }, [isLoading, user, isAuthenticated]);
 
   return (

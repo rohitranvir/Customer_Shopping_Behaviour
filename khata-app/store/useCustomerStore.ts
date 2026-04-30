@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { Customer, CustomerRepository } from '../db/repositories/customerRepository';
 import { Transaction, TransactionRepository } from '../db/repositories/transactionRepository';
+import { useGoogleDriveStore } from './useGoogleDriveStore';
 
 interface CustomerState {
   customers: Customer[];
@@ -143,6 +144,12 @@ export const useCustomerStore = create<CustomerState>((set, get) => ({
       ),
     }));
     require('./useBusinessStore').useBusinessStore.getState().refreshSummary();
+    
+    // Trigger silent background backup
+    const driveStore = useGoogleDriveStore.getState();
+    if (driveStore.isSignedIn && driveStore.isAutoBackupEnabled && driveStore.backupFrequency === 'TRANSACTION') {
+      driveStore.backup(true).catch(console.error);
+    }
   },
 
   editTransaction: async (businessId, txId, customerId, amount, note, date, dueDate) => {
@@ -161,6 +168,12 @@ export const useCustomerStore = create<CustomerState>((set, get) => ({
       ),
     }));
     require('./useBusinessStore').useBusinessStore.getState().refreshSummary();
+
+    // Trigger silent background backup
+    const driveStore = useGoogleDriveStore.getState();
+    if (driveStore.isSignedIn && driveStore.isAutoBackupEnabled && driveStore.backupFrequency === 'TRANSACTION') {
+      driveStore.backup(true).catch(console.error);
+    }
   },
 
   removeTransaction: async (businessId, id, customerId) => {
@@ -179,6 +192,12 @@ export const useCustomerStore = create<CustomerState>((set, get) => ({
       ),
     }));
     require('./useBusinessStore').useBusinessStore.getState().refreshSummary();
+
+    // Trigger silent background backup
+    const driveStore = useGoogleDriveStore.getState();
+    if (driveStore.isSignedIn && driveStore.isAutoBackupEnabled && driveStore.backupFrequency === 'TRANSACTION') {
+      driveStore.backup(true).catch(console.error);
+    }
   },
 
   setSearchQuery: (q) => set({ searchQuery: q }),

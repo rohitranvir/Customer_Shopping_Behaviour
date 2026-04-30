@@ -25,6 +25,7 @@ import { useBusinessStore } from '../../store/useBusinessStore';
 import { useThemeStore } from '../../store/useThemeStore';
 import { useGoogleDriveStore } from '../../store/useGoogleDriveStore';
 import { exportDatabaseAsJSON, importDatabaseFromJSON } from '../../db/backup';
+import { seedTestData } from '../../db/seed';
 import { exportToCSV } from '../../utils/csv';
 import { scheduleDailyReminder, cancelAllReminders, requestNotificationPermission } from '../../utils/notifications';
 import { getDatabase } from '../../db/database';
@@ -99,12 +100,16 @@ export default function SettingsScreen() {
     lastBackup: driveLastBackup,
     backupFiles,
     isLoading: driveLoading,
+    isAutoBackupEnabled,
+    backupFrequency,
     init: driveInit,
     signIn: driveSignIn,
     signOut: driveSignOut,
     backup: driveBackup,
     listBackups: driveListBackups,
     restore: driveRestore,
+    setAutoBackupEnabled,
+    setBackupFrequency,
   } = useGoogleDriveStore();
 
   // Local backup state
@@ -132,6 +137,9 @@ export default function SettingsScreen() {
   const [newBizModal, setNewBizModal] = useState(false);
   const [newBizName, setNewBizName] = useState('');
   const [newBizAddress, setNewBizAddress] = useState('');
+
+  // Seed test data
+  const [seedLoading, setSeedLoading] = useState(false);
 
   // Generic loading overlay
   const [busyMsg, setBusyMsg] = useState<string | null>(null);
@@ -198,8 +206,13 @@ export default function SettingsScreen() {
             setBusyMsg('Restoring from Google Drive...');
             try {
               await driveRestore(latest.id);
+              await loadUser();
+              const refreshedUser = useAuthStore.getState().user;
+              if (refreshedUser) {
+                await loadBusiness(refreshedUser.id);
+              }
               setBusyMsg(null);
-              Toast.success('Restored! Please restart the app.');
+              Toast.success('Restored successfully! Data updated.');
               Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             } catch (e: any) {
               setBusyMsg(null);
@@ -223,6 +236,15 @@ export default function SettingsScreen() {
         }},
       ]
     );
+  };
+
+  const handleChangeBackupFreq = () => {
+    Alert.alert('Backup Frequency', 'Choose how often to auto-backup to Google Drive', [
+      { text: 'Every Transaction', onPress: () => setBackupFrequency('TRANSACTION') },
+      { text: 'Daily', onPress: () => setBackupFrequency('DAILY') },
+      { text: 'Weekly', onPress: () => setBackupFrequency('WEEKLY') },
+      { text: 'Cancel', style: 'cancel' },
+    ]);
   };
 
   // ── Profile ────────────────────────────────────────────────────────────────
@@ -337,8 +359,13 @@ export default function SettingsScreen() {
               const pickedUri = result.assets[0].uri;
               const dbPath = `${FileSystem.documentDirectory}SQLite/khata.db`;
               await FileSystem.copyAsync({ from: pickedUri, to: dbPath });
+              await loadUser();
+              const refreshedUser = useAuthStore.getState().user;
+              if (refreshedUser) {
+                await loadBusiness(refreshedUser.id);
+              }
               setBusyMsg(null);
-              Toast.success('Restore successful! Please restart the app.');
+              Toast.success('Restore successful! Data updated.');
               Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             } catch (e: any) {
               setBusyMsg(null);
@@ -350,6 +377,40 @@ export default function SettingsScreen() {
     );
   };
 
+
+  // ── Seed Test Data ──────────────────────────────────────────────────────────
+  const handleSeedData = async () => {
+    if (!business) {
+      Alert.alert('No Business', 'Please set up a business profile first.');
+      return;
+    }
+    Alert.alert(
+      'Load Test Data',
+      'This will add 4 sample customers with transactions. Existing customers with the same phone number will be skipped.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Load',
+          onPress: async () => {
+            setSeedLoading(true);
+            try {
+              const count = await seedTestData(business.id);
+              if (count === 0) {
+                Toast.success('Test data already loaded — no duplicates added.');
+              } else {
+                Toast.success(`Added ${count} test customer${count > 1 ? 's' : ''} with transactions!`);
+              }
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            } catch (e: any) {
+              Alert.alert('Seed Failed', e.message ?? 'Could not insert test data.');
+            } finally {
+              setSeedLoading(false);
+            }
+          },
+        },
+      ]
+    );
+  };
 
   // ── CSV Export ─────────────────────────────────────────────────────────────
   const handleExportCSV = async () => {
@@ -602,10 +663,40 @@ export default function SettingsScreen() {
                 </TouchableOpacity>
               </View>
               <View style={[styles.divider, isDark && styles.dark_divider]} />
+              
+              <SettingRow
+                icon="cloud-sync"
+                label="Auto Backup"
+                subtitle="Automatically upload data to Drive"
+                isDark={isDark}
+                right={
+                  <Switch
+                    value={isAutoBackupEnabled}
+                    onValueChange={setAutoBackupEnabled}
+                    trackColor={{ false: COLORS.border, true: COLORS.primaryLight }}
+                    thumbColor={isAutoBackupEnabled ? COLORS.primary : '#f4f3f4'}
+                  />
+                }
+              />
+              
+              {isAutoBackupEnabled && (
+                <>
+                  <View style={[styles.divider, isDark && styles.dark_divider]} />
+                  <SettingRow
+                    icon="clock-outline"
+                    label="Backup Frequency"
+                    subtitle={`Current: ${backupFrequency === 'TRANSACTION' ? 'Every transaction' : backupFrequency === 'DAILY' ? 'Daily' : 'Weekly'}`}
+                    isDark={isDark}
+                    onPress={handleChangeBackupFreq}
+                  />
+                </>
+              )}
+
+              <View style={[styles.divider, isDark && styles.dark_divider]} />
               <SettingRow
                 icon="cloud-upload"
-                label="Backup to Google Drive"
-                subtitle="Upload your data to your own Google Drive"
+                label="Backup Now"
+                subtitle="Manually upload data to Google Drive"
                 isDark={isDark}
                 onPress={handleDriveBackup}
                 right={driveLoading ? <ActivityIndicator size="small" color={COLORS.primary} /> : undefined}
@@ -669,6 +760,16 @@ export default function SettingsScreen() {
           />
 
           <View style={[styles.divider, isDark && styles.dark_divider]} />
+          <SettingRow 
+            icon="database-plus" 
+            label="Load Test Data" 
+            subtitle="Add fake customers & transactions" 
+            isDark={isDark} 
+            onPress={handleSeedData}
+            right={seedLoading ? <ActivityIndicator size="small" color={COLORS.primary} /> : undefined}
+          />
+
+          <View style={[styles.divider, isDark && styles.dark_divider]} />
           <SettingRow icon="file-delimited" label="Export as CSV" subtitle="Download all data as a spreadsheet" isDark={isDark} onPress={handleExportCSV} />
 
           <View style={[styles.divider, isDark && styles.dark_divider]} />
@@ -680,10 +781,21 @@ export default function SettingsScreen() {
           <SettingRow icon="information" label={`${APP_NAME} v${APP_VERSION}`} subtitle="Made for Indian shopkeepers 🇮🇳" isDark={isDark} />
         </Card>
 
-        <View style={{ alignItems: 'center', marginTop: 12 }}>
-          <Text style={[{ fontSize: 12, color: COLORS.inkMuted }, isDark && { color: '#64748b' }]}>
-            Developed by Rohit Ranvir
-          </Text>
+        {/* ─── DEVELOPER CREDIT ───────────────────────────────────────────── */}
+        <View style={[
+          styles.devCard,
+          isDark && { backgroundColor: '#1e293b', borderColor: '#334155' },
+        ]}>
+          <View style={styles.devCardInner}>
+            <View style={[styles.devIconWrap, isDark && { backgroundColor: '#0f172a' }]}>
+              <MaterialCommunityIcons name="code-braces" size={20} color={COLORS.primary} />
+            </View>
+            <View style={{ flex: 1, marginLeft: 12 }}>
+              <Text style={[styles.devName, isDark && { color: '#f1f5f9' }]}>Rohit Ranvir</Text>
+              <Text style={[styles.devTitle, isDark && { color: '#64748b' }]}>App Developer</Text>
+            </View>
+            <MaterialCommunityIcons name="heart" size={16} color="#f43f5e" />
+          </View>
         </View>
 
         <View style={{ height: 40 }} />
@@ -953,4 +1065,40 @@ const styles = StyleSheet.create({
   dark_row: { backgroundColor: '#1e293b' },
   dark_divider: { backgroundColor: '#334155' },
   dark_input: { backgroundColor: '#0f172a', borderColor: '#334155', color: '#f1f5f9' },
+
+  // ── Developer Credit Card ──────────────────────────────────────────────────
+  devCard: {
+    marginHorizontal: 0,
+    marginTop: 8,
+    marginBottom: 4,
+    backgroundColor: COLORS.surface,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    overflow: 'hidden',
+    elevation: 1,
+  },
+  devCardInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 14,
+  },
+  devIconWrap: {
+    width: 38,
+    height: 38,
+    borderRadius: 10,
+    backgroundColor: COLORS.primaryLight,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  devName: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: COLORS.ink,
+  },
+  devTitle: {
+    fontSize: 12,
+    color: COLORS.inkMuted,
+    marginTop: 2,
+  },
 });

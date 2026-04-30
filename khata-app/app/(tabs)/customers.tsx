@@ -12,6 +12,7 @@ import {
   Platform,
   RefreshControl,
   ScrollView,
+  Share,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
@@ -159,10 +160,24 @@ export default function CustomersScreen() {
           <View style={styles.avatarBadge} />
         </View>
         <View style={styles.headerRightIcons}>
-          <TouchableOpacity style={styles.headerIconBtn}>
+          <TouchableOpacity 
+            style={styles.headerIconBtn}
+            onPress={async () => {
+              try {
+                await Share.share({
+                  message: 'Manage your daily ledger, Udhar, and payments easily with Khata Book! Download now.',
+                });
+              } catch (error: any) {
+                Alert.alert('Error', error.message);
+              }
+            }}
+          >
             <MaterialCommunityIcons name="share-variant" size={22} color={dk ? D.text : COLORS.ink} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.headerIconBtn}>
+          <TouchableOpacity 
+            style={styles.headerIconBtn}
+            onPress={() => Toast.info('No new notifications')}
+          >
             <MaterialCommunityIcons name="bell-outline" size={22} color={dk ? D.text : COLORS.ink} />
             <View style={styles.notificationBadge}>
               <Text style={styles.notificationBadgeText}>2</Text>

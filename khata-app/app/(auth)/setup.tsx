@@ -15,6 +15,9 @@ import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useBusinessStore } from '../../store/useBusinessStore';
+import { useGoogleDriveStore } from '../../store/useGoogleDriveStore';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import PinPad from '../../components/PinPad';
 import { COLORS, PIN_LENGTH } from '../../utils/constants';
 
@@ -27,6 +30,7 @@ export default function SetupScreen() {
 
   const [step, setStep] = useState<Step>('profile');
   const [loading, setLoading] = useState(false);
+  const { signIn, listBackups, backupFiles, restore } = useGoogleDriveStore();
 
   // Step 1 – Profile
   const [name, setName] = useState('');
@@ -84,6 +88,77 @@ export default function SetupScreen() {
     } catch (e: any) {
       Alert.alert('Setup Failed', e?.message ?? 'Could not complete setup. Please try again.');
       setTempPin('');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    try {
+      await signIn();
+      const currentUser = await GoogleSignin.getCurrentUser();
+      if (!currentUser?.user) throw new Error('Could not get Google user info');
+
+      const gName = currentUser.user.name ?? 'My Shop';
+      const gEmail = currentUser.user.email;
+
+      // Check if backup exists
+      await listBackups();
+      const backups = useGoogleDriveStore.getState().backupFiles;
+      
+      if (backups.length > 0) {
+        const latest = backups[0];
+        Alert.alert(
+          'Backup Found',
+          `We found your previous backup from Google Drive. Restore it?`,
+          [
+            { 
+              text: 'Skip & Start Fresh', 
+              onPress: () => finishGoogleSetup(gName, gEmail)
+            },
+            {
+              text: 'Restore Data',
+              onPress: async () => {
+                try {
+                  setLoading(true);
+                  await restore(latest.id);
+                  await AsyncStorage.setItem('auth_method', 'google');
+                  
+                  // Refresh global app state
+                  await useAuthStore.getState().loadUser();
+                  const refreshedUser = useAuthStore.getState().user;
+                  if (refreshedUser) {
+                    await useBusinessStore.getState().loadBusiness(refreshedUser.id);
+                  }
+                  
+                  router.replace('/(tabs)');
+                } catch (e) {
+                  Alert.alert('Restore Failed', 'Could not restore backup.');
+                  setLoading(false);
+                }
+              }
+            }
+          ]
+        );
+      } else {
+        await finishGoogleSetup(gName, gEmail);
+      }
+    } catch (e: any) {
+      Alert.alert('Google Sign-In Failed', e.message ?? 'Please try again.');
+      setLoading(false);
+    }
+  };
+
+  const finishGoogleSetup = async (gName: string, gEmail: string) => {
+    try {
+      setLoading(true);
+      const userId = await setupUser(gName, gEmail, '0000');
+      await setupBusiness(userId, `${gName}'s Business`);
+      await AsyncStorage.setItem('auth_method', 'google');
+      router.replace('/(tabs)');
+    } catch (e: any) {
+      Alert.alert('Setup Failed', e.message ?? 'Could not set up account.');
     } finally {
       setLoading(false);
     }
@@ -202,10 +277,31 @@ export default function SetupScreen() {
 
         {/* CTA */}
         {step !== 'pin' && (
-          <TouchableOpacity style={styles.btn} onPress={nextStep}>
-            <Text style={styles.btnText}>Continue</Text>
-            <MaterialCommunityIcons name="arrow-right" size={20} color="#fff" />
-          </TouchableOpacity>
+          <View>
+            <TouchableOpacity style={styles.btn} onPress={nextStep}>
+              <Text style={styles.btnText}>Continue</Text>
+              <MaterialCommunityIcons name="arrow-right" size={20} color="#fff" />
+            </TouchableOpacity>
+
+            {step === 'profile' && (
+              <>
+                <View style={styles.orDivider}>
+                  <View style={styles.orLine} />
+                  <Text style={styles.orText}>OR</Text>
+                  <View style={styles.orLine} />
+                </View>
+
+                <TouchableOpacity 
+                  style={styles.googleBtn} 
+                  onPress={handleGoogleSignIn}
+                  disabled={loading}
+                >
+                  <MaterialCommunityIcons name="google" size={20} color={COLORS.ink} />
+                  <Text style={styles.googleBtnText}>Continue with Google</Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </View>
         )}
 
         {step !== 'profile' && !loading && (
@@ -305,4 +401,25 @@ const styles = StyleSheet.create({
   btnText: { fontSize: 16, fontWeight: '700', color: '#fff' },
   backBtn: { alignItems: 'center', padding: 8 },
   backText: { fontSize: 14, color: COLORS.inkMuted },
+  orDivider: { flexDirection: 'row', alignItems: 'center', marginVertical: 20 },
+  orLine: { flex: 1, height: 1, backgroundColor: COLORS.border },
+  orText: { marginHorizontal: 10, color: COLORS.inkMuted, fontWeight: '600', fontSize: 12 },
+  googleBtn: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: 14,
+    padding: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    marginBottom: 12,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+  },
+  googleBtnText: { fontSize: 15, fontWeight: '700', color: COLORS.ink },
 });

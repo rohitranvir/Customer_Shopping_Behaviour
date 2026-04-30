@@ -83,11 +83,15 @@ export const useBusinessStore = create<BusinessState>((set, get) => ({
   refreshSummary: async () => {
     const { business } = get();
     if (!business) return;
-    const [summary, recentTransactions, overdueCustomers] = await Promise.all([
-      ReportRepository.getBusinessSummary(business.id),
-      ReportRepository.getRecentTransactions(business.id),
-      ReportRepository.getOverdueCustomers(business.id)
-    ]);
-    set({ summary, recentTransactions, overdueCustomers });
+    try {
+      const [summary, recentTransactions, overdueCustomers] = await Promise.all([
+        ReportRepository.getBusinessSummary(business.id),
+        ReportRepository.getRecentTransactions(business.id),
+        ReportRepository.getOverdueCustomers(business.id)
+      ]);
+      set({ summary, recentTransactions, overdueCustomers });
+    } catch (error) {
+      console.error("Failed to refresh summary:", error);
+    }
   },
 }));

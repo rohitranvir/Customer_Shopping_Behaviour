@@ -48,7 +48,7 @@ export const ReportRepository = {
        FROM transactions t
        JOIN customers c ON t.customer_id = c.id
        WHERE c.business_id = ?
-       ORDER BY t.date DESC, t.created_at DESC
+       ORDER BY t.date DESC, t.id DESC
        LIMIT ?`,
       [businessId, limit]
     );

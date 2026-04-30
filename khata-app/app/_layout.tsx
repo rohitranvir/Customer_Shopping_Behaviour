@@ -17,6 +17,7 @@ import { ToastHost } from '../components/Toast';
 import * as SplashScreen from 'expo-splash-screen';
 import { getAutoBackup, getToken, setLastBackupTime } from '../security/secureStorage';
 import { requestNotificationPermission } from '../utils/notifications';
+import { useGoogleDriveStore } from '../store/useGoogleDriveStore';
 
 // Keep splash visible until DB + user loaded
 SplashScreen.preventAutoHideAsync();
@@ -56,6 +57,7 @@ export default function RootLayout() {
       await loadUser();
       await loadTheme();
       await requestNotificationPermission();
+      await useGoogleDriveStore.getState().init();
       // Safe to hide splash now
       await SplashScreen.hideAsync();
     })();

@@ -13,6 +13,10 @@ import {
 import { exportDatabaseAsJSON, importDatabaseFromJSON } from '../db/backup';
 
 const LAST_BACKUP_KEY = 'last_drive_backup_time';
+const AUTO_BACKUP_ENABLED_KEY = 'auto_backup_enabled';
+const BACKUP_FREQUENCY_KEY = 'backup_frequency';
+
+export type BackupFrequency = 'TRANSACTION' | 'DAILY' | 'WEEKLY';
 
 // ─── State Shape ──────────────────────────────────────────────────────────────
 interface GoogleDriveState {
@@ -23,14 +27,19 @@ interface GoogleDriveState {
   isLoading: boolean;
   error: string | null;
 
+  isAutoBackupEnabled: boolean;
+  backupFrequency: BackupFrequency;
+
   // Actions
   init: () => Promise<void>;
   signIn: () => Promise<void>;
   signOut: () => Promise<void>;
-  backup: () => Promise<void>;
+  backup: (silent?: boolean) => Promise<void>;
   listBackups: () => Promise<void>;
   restore: (fileId: string) => Promise<void>;
   clearError: () => void;
+  setAutoBackupEnabled: (enabled: boolean) => Promise<void>;
+  setBackupFrequency: (freq: BackupFrequency) => Promise<void>;
 }
 
 // ─── Store ────────────────────────────────────────────────────────────────────
@@ -42,12 +51,23 @@ export const useGoogleDriveStore = create<GoogleDriveState>((set, get) => ({
   isLoading: false,
   error: null,
 
+  isAutoBackupEnabled: false,
+  backupFrequency: 'TRANSACTION',
+
   // ── Init: configure GoogleSignin + check if user is already signed in ────────
   init: async () => {
     configureGoogleSignIn();
     try {
       const token = await getGoogleAccessToken();
       const lastBackup = await AsyncStorage.getItem(LAST_BACKUP_KEY);
+      const autoEnabled = await AsyncStorage.getItem(AUTO_BACKUP_ENABLED_KEY);
+      const freq = await AsyncStorage.getItem(BACKUP_FREQUENCY_KEY);
+
+      set({
+        isAutoBackupEnabled: autoEnabled === 'true',
+        backupFrequency: (freq as BackupFrequency) || 'TRANSACTION',
+      });
+
       if (token) {
         set({ isSignedIn: true, accessToken: token, lastBackup });
       } else {
@@ -58,13 +78,33 @@ export const useGoogleDriveStore = create<GoogleDriveState>((set, get) => ({
     }
   },
 
+  // ── Auto Backup Settings ─────────────────────────────────────────────────────
+  setAutoBackupEnabled: async (enabled: boolean) => {
+    await AsyncStorage.setItem(AUTO_BACKUP_ENABLED_KEY, enabled ? 'true' : 'false');
+    set({ isAutoBackupEnabled: enabled });
+  },
+
+  setBackupFrequency: async (freq: BackupFrequency) => {
+    await AsyncStorage.setItem(BACKUP_FREQUENCY_KEY, freq);
+    set({ backupFrequency: freq });
+  },
+
   // ── Sign In ──────────────────────────────────────────────────────────────────
   signIn: async () => {
     set({ isLoading: true, error: null });
     try {
       const token = await signInWithGoogle();
       const lastBackup = await AsyncStorage.getItem(LAST_BACKUP_KEY);
-      set({ isSignedIn: true, accessToken: token, lastBackup, isLoading: false });
+      // Auto enable backup on fresh sign in to mimic WhatsApp behaviour
+      await AsyncStorage.setItem(AUTO_BACKUP_ENABLED_KEY, 'true');
+      
+      set({ 
+        isSignedIn: true, 
+        accessToken: token, 
+        lastBackup, 
+        isAutoBackupEnabled: true,
+        isLoading: false 
+      });
     } catch (e: any) {
       const msg =
         e?.code === '12501'
@@ -92,33 +132,38 @@ export const useGoogleDriveStore = create<GoogleDriveState>((set, get) => ({
   },
 
   // ── Backup: export DB as JSON, upload to Drive ───────────────────────────────
-  backup: async () => {
-    const { accessToken } = get();
-    if (!accessToken) throw new Error('Not signed in to Google.');
-    set({ isLoading: true, error: null });
+  backup: async (silent = false) => {
+    const token = await getGoogleAccessToken();
+    if (!token) throw new Error('Not signed in to Google.');
+    
+    // Update local token
+    set({ accessToken: token });
+
+    if (!silent) set({ isLoading: true, error: null });
     try {
       const jsonContent = await exportDatabaseAsJSON();
-      await uploadBackupToDrive(accessToken, jsonContent);
+      await uploadBackupToDrive(token, jsonContent);
       const dateStr = new Date().toLocaleString('en-IN', {
         day: '2-digit', month: 'short', year: 'numeric',
         hour: '2-digit', minute: '2-digit',
       });
       await AsyncStorage.setItem(LAST_BACKUP_KEY, dateStr);
-      set({ lastBackup: dateStr, isLoading: false });
+      set({ lastBackup: dateStr });
+      if (!silent) set({ isLoading: false });
     } catch (e: any) {
       const msg = e?.message ?? 'Backup failed. Please try again.';
-      set({ isLoading: false, error: msg });
+      if (!silent) set({ isLoading: false, error: msg });
       throw new Error(msg);
     }
   },
 
   // ── List Backups from Drive ──────────────────────────────────────────────────
   listBackups: async () => {
-    const { accessToken } = get();
-    if (!accessToken) return;
-    set({ isLoading: true, error: null });
+    const token = await getGoogleAccessToken();
+    if (!token) return;
+    set({ accessToken: token, isLoading: true, error: null });
     try {
-      const files = await listBackupsFromDrive(accessToken);
+      const files = await listBackupsFromDrive(token);
       set({ backupFiles: files, isLoading: false });
     } catch (e: any) {
       set({ isLoading: false, error: e?.message ?? 'Could not list backups.' });
@@ -127,11 +172,11 @@ export const useGoogleDriveStore = create<GoogleDriveState>((set, get) => ({
 
   // ── Restore: download JSON from Drive, import into DB ───────────────────────
   restore: async (fileId: string) => {
-    const { accessToken } = get();
-    if (!accessToken) throw new Error('Not signed in to Google.');
-    set({ isLoading: true, error: null });
+    const token = await getGoogleAccessToken();
+    if (!token) throw new Error('Not signed in to Google.');
+    set({ accessToken: token, isLoading: true, error: null });
     try {
-      const jsonContent = await downloadBackupFromDrive(accessToken, fileId);
+      const jsonContent = await downloadBackupFromDrive(token, fileId);
       await importDatabaseFromJSON(jsonContent);
       set({ isLoading: false });
     } catch (e: any) {

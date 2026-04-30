@@ -44,8 +44,8 @@ export const CustomerRepository = {
     return await db.getAllAsync<Customer>(
       `SELECT c.*,
          (c.opening_balance +
-          COALESCE(SUM(CASE WHEN t.type = 'DEBIT' THEN t.amount
-                            WHEN t.type = 'CREDIT' THEN -t.amount ELSE 0 END), 0)
+          COALESCE(SUM(CASE WHEN t.type = 'CREDIT' THEN t.amount
+                            WHEN t.type = 'DEBIT' THEN -t.amount ELSE 0 END), 0)
          ) AS balance,
          MAX(t.date) AS last_tx_date,
          MAX(CASE WHEN t.due_date IS NOT NULL AND t.due_date < date('now') THEN 1 ELSE 0 END) AS is_overdue
@@ -63,8 +63,8 @@ export const CustomerRepository = {
     const row = await db.getFirstAsync<Customer>(
       `SELECT c.*,
          (c.opening_balance +
-          COALESCE(SUM(CASE WHEN t.type = 'DEBIT' THEN t.amount
-                            WHEN t.type = 'CREDIT' THEN -t.amount ELSE 0 END), 0)
+          COALESCE(SUM(CASE WHEN t.type = 'CREDIT' THEN t.amount
+                            WHEN t.type = 'DEBIT' THEN -t.amount ELSE 0 END), 0)
          ) AS balance
        FROM customers c
        LEFT JOIN transactions t ON t.customer_id = c.id
@@ -105,8 +105,8 @@ export const CustomerRepository = {
       return await db.getAllAsync<Customer>(
         `SELECT c.*,
            (c.opening_balance +
-            COALESCE(SUM(CASE WHEN t.type = 'DEBIT' THEN t.amount
-                              WHEN t.type = 'CREDIT' THEN -t.amount ELSE 0 END), 0)
+            COALESCE(SUM(CASE WHEN t.type = 'CREDIT' THEN t.amount
+                              WHEN t.type = 'DEBIT' THEN -t.amount ELSE 0 END), 0)
            ) AS balance,
            MAX(t.date) AS last_tx_date,
            MAX(CASE WHEN t.due_date IS NOT NULL AND t.due_date < date('now') THEN 1 ELSE 0 END) AS is_overdue
@@ -121,8 +121,8 @@ export const CustomerRepository = {
     return await db.getAllAsync<Customer>(
       `SELECT c.*,
          (c.opening_balance +
-          COALESCE(SUM(CASE WHEN t.type = 'DEBIT' THEN t.amount
-                            WHEN t.type = 'CREDIT' THEN -t.amount ELSE 0 END), 0)
+          COALESCE(SUM(CASE WHEN t.type = 'CREDIT' THEN t.amount
+                            WHEN t.type = 'DEBIT' THEN -t.amount ELSE 0 END), 0)
          ) AS balance,
          MAX(t.date) AS last_tx_date,
          MAX(CASE WHEN t.due_date IS NOT NULL AND t.due_date < date('now') THEN 1 ELSE 0 END) AS is_overdue

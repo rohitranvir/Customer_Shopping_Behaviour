@@ -49,7 +49,7 @@ export async function scheduleDailyReminder(hour: number, minute: number): Promi
       hour,
       minute,
       repeats: true,
-    },
+    } as any,
   });
 }
 
