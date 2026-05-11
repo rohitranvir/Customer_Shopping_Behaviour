@@ -15,20 +15,28 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Index() {
   const router = useRouter();
   const { user, isLoading, isAuthenticated } = useAuthStore();
+  const localUsers = useAuthStore(state => state.localUsers);
 
   useEffect(() => {
     if (isLoading) return;
 
     const checkAuthMethodAndRoute = async () => {
-      if (!user) {
+      if (localUsers.length === 0) {
+        // Absolutely no users created on this device yet
         router.replace('/(auth)/setup');
+        return;
+      }
+
+      if (!user) {
+        // We have local users but no active user selected
+        router.replace('/(auth)/unlock');
         return;
       }
 
       if (!isAuthenticated) {
         const authMethod = await AsyncStorage.getItem('auth_method');
         if (authMethod === 'google') {
-          // Bypass unlock and trust the persistent Google session
+          // Bypass unlock and trust the persistent Google session for the active user
           useAuthStore.getState().unlock();
           router.replace('/(tabs)');
         } else {
@@ -40,7 +48,7 @@ export default function Index() {
     };
 
     checkAuthMethodAndRoute();
-  }, [isLoading, user, isAuthenticated]);
+  }, [isLoading, user, localUsers, isAuthenticated]);
 
   return (
     <View style={styles.container}>

@@ -25,6 +25,11 @@ export const UserRepository = {
     return (await db.getFirstAsync<User>('SELECT * FROM users LIMIT 1')) ?? null;
   },
 
+  async getAll(): Promise<User[]> {
+    const db = await getDatabase();
+    return await db.getAllAsync<User>('SELECT * FROM users ORDER BY created_at ASC');
+  },
+
   async updatePin(userId: number, rawPin: string): Promise<void> {
     const db = await getDatabase();
     const pinHash = await hashPin(rawPin);

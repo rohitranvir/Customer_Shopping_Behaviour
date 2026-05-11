@@ -42,9 +42,48 @@ export interface DriveFile {
   createdTime: string;
 }
 
-export async function listBackupsFromDrive(accessToken: string): Promise<DriveFile[]> {
-  const q = encodeURIComponent("name contains 'khata_backup_' and trashed=false");
+const BACKUP_FOLDER_NAME = 'KhataBookBackups';
+
+async function getOrCreateBackupFolder(accessToken: string): Promise<string> {
+  // 1. Search for existing folder
+  const q = encodeURIComponent(`name = '${BACKUP_FOLDER_NAME}' and mimeType = 'application/vnd.google-apps.folder' and trashed = false`);
+  const searchRes = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)`, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  if (searchRes.ok) {
+    const data = await searchRes.json();
+    if (data.files && data.files.length > 0) {
+      return data.files[0].id;
+    }
+  }
+
+  // 2. If not found, create it
+  const metadata = {
+    name: BACKUP_FOLDER_NAME,
+    mimeType: 'application/vnd.google-apps.folder',
+  };
+  const createRes = await fetch('https://www.googleapis.com/drive/v3/files', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(metadata),
+  });
+  if (!createRes.ok) {
+    throw new Error('Could not create backup folder');
+  }
+  const createdData = await createRes.json();
+  return createdData.id;
+}
+
+export async function listBackupsFromDrive(accessToken: string, identity: string): Promise<DriveFile[]> {
   try {
+    const folderId = await getOrCreateBackupFolder(accessToken);
+    const fileName = `khata_backup_${identity.replace(/[^a-zA-Z0-9@.-]/g, '_')}.json`;
+    const q = encodeURIComponent(`name = '${fileName}' and '${folderId}' in parents and trashed=false`);
+    
     const response = await fetch(
       `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,createdTime)&orderBy=createdTime desc`,
       {
@@ -67,15 +106,19 @@ export async function listBackupsFromDrive(accessToken: string): Promise<DriveFi
 
 export async function uploadBackupToDrive(
   accessToken: string,
-  jsonContent: string
+  jsonContent: string,
+  identity: string
 ): Promise<void> {
-  const dateStr = new Date().toISOString().split('T')[0];
-  const fileName = `khata_backup_${dateStr}.json`;
+  const fileName = `khata_backup_${identity.replace(/[^a-zA-Z0-9@.-]/g, '_')}.json`;
 
   try {
-    const existingFiles = await listBackupsFromDrive(accessToken);
+    const folderId = await getOrCreateBackupFolder(accessToken);
+    
+    // Check if file exists inside this folder
+    const existingFiles = await listBackupsFromDrive(accessToken, identity);
     for (const file of existingFiles) {
       if (file.name === fileName) {
+        // Delete previous backup file to keep only one
         await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}`, {
           method: 'DELETE',
           headers: { Authorization: `Bearer ${accessToken}` },
@@ -83,7 +126,11 @@ export async function uploadBackupToDrive(
       }
     }
 
-    const metadata = { name: fileName, mimeType: 'application/json' };
+    const metadata = { 
+      name: fileName, 
+      mimeType: 'application/json',
+      parents: [folderId] 
+    };
     const boundary = 'foo_bar_baz';
 
     let body = '';

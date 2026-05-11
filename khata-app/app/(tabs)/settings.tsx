@@ -24,7 +24,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { useBusinessStore } from '../../store/useBusinessStore';
 import { useThemeStore } from '../../store/useThemeStore';
 import { useGoogleDriveStore } from '../../store/useGoogleDriveStore';
-import { exportDatabaseAsJSON, importDatabaseFromJSON } from '../../db/backup';
+// backup utilities used in local file restore path only (no JSON export needed here)
 import { seedTestData } from '../../db/seed';
 import { exportToCSV } from '../../utils/csv';
 import { scheduleDailyReminder, cancelAllReminders, requestNotificationPermission } from '../../utils/notifications';
@@ -184,20 +184,27 @@ export default function SettingsScreen() {
   };
 
   const handleDriveRestore = async () => {
-    await driveListBackups();
+    const identity = user?.phone;
+    if (!identity) {
+      Alert.alert('Error', 'Could not determine user identity for restore.');
+      return;
+    }
+    await driveListBackups(identity);
     const { backupFiles } = useGoogleDriveStore.getState();
     if (backupFiles.length === 0) {
-      Alert.alert('No Backups Found', 'No backup files found in your Google Drive KhataBook folder.');
+      Alert.alert('No Backups Found', `No backup found in Google Drive for account: ${identity}.`);
       return;
     }
     const latest = backupFiles[0];
-    const dateLabel = new Date(latest.createdTime).toLocaleString('en-IN', {
-      day: '2-digit', month: 'short', year: 'numeric',
-      hour: '2-digit', minute: '2-digit',
-    });
+    const dateLabel = latest.createdTime
+      ? new Date(latest.createdTime).toLocaleString('en-IN', {
+          day: '2-digit', month: 'short', year: 'numeric',
+          hour: '2-digit', minute: '2-digit',
+        })
+      : 'Unknown date';
     Alert.alert(
       'Restore from Drive',
-      `Restore latest backup?\n\n📁 ${latest.name}\n🕐 ${dateLabel}\n\nThis will overwrite your current data.`,
+      `Restore your backup?\n\n📁 ${latest.name}\n🕐 ${dateLabel}\n\nThis will overwrite YOUR current data only.`,
       [
         { text: 'Cancel', style: 'cancel' },
         {
@@ -791,8 +798,8 @@ export default function SettingsScreen() {
               <MaterialCommunityIcons name="code-braces" size={20} color={COLORS.primary} />
             </View>
             <View style={{ flex: 1, marginLeft: 12 }}>
-              <Text style={[styles.devName, isDark && { color: '#f1f5f9' }]}>Rohit Ranvir</Text>
-              <Text style={[styles.devTitle, isDark && { color: '#64748b' }]}>App Developer</Text>
+              <Text style={[styles.devTitle, isDark && { color: '#64748b' }]}>Developed by</Text>
+              <Text style={[styles.devName, isDark && { color: '#f1f5f9' }]}>Rohit Ranvira</Text>
             </View>
             <MaterialCommunityIcons name="heart" size={16} color="#f43f5e" />
           </View>

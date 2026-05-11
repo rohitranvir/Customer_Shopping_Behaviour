@@ -21,6 +21,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import PinPad from '../../components/PinPad';
 import { COLORS, PIN_LENGTH } from '../../utils/constants';
 
+import { Toast } from '../../components/Toast';
+
 type Step = 'profile' | 'business' | 'pin';
 
 export default function SetupScreen() {
@@ -30,11 +32,12 @@ export default function SetupScreen() {
 
   const [step, setStep] = useState<Step>('profile');
   const [loading, setLoading] = useState(false);
-  const { signIn, listBackups, backupFiles, restore } = useGoogleDriveStore();
+  const { signIn, listBackups, backupFiles, restore, checkForBackupOnLogin, setAutoBackupEnabled } = useGoogleDriveStore();
 
   // Step 1 – Profile
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [pendingRestoreFileId, setPendingRestoreFileId] = useState<string | null>(null);
 
   // Step 2 – Business
   const [bizName, setBizName] = useState('');
@@ -54,7 +57,65 @@ export default function SetupScreen() {
         Alert.alert('Invalid Phone', 'Please enter a valid 10-digit phone number.');
         return;
       }
-      setStep('business');
+      
+      // WhatsApp-style: ask to connect Google Drive for backup/restore
+      Alert.alert(
+        'Connect Google Drive',
+        'Would you like to connect your Google Drive to enable automatic backups or restore previous data?',
+        [
+          { text: 'Skip', style: 'cancel', onPress: () => setStep('business') },
+          {
+            text: 'Connect',
+            onPress: async () => {
+              setLoading(true);
+              try {
+                await signIn();
+                // Check if a backup exists for this phone number
+                const backup = await checkForBackupOnLogin(phone.trim());
+                if (backup) {
+                  const backupDate = backup.createdTime
+                    ? new Date(backup.createdTime).toLocaleDateString('en-IN', {
+                        day: '2-digit', month: 'short', year: 'numeric'
+                      })
+                    : 'a previous date';
+                  
+                  Alert.alert(
+                    '\u2705 Backup Found',
+                    `A backup from ${backupDate} was found for ${phone.trim()}.\n\nDo you want to restore your data?`,
+                    [
+                      { 
+                        text: 'Start Fresh', 
+                        style: 'destructive',
+                        onPress: () => {
+                          setAutoBackupEnabled(true);
+                          setStep('business');
+                        }
+                      },
+                      {
+                        text: 'Restore Data',
+                        onPress: async () => {
+                          setAutoBackupEnabled(true);
+                          setPendingRestoreFileId(backup.id);
+                          setStep('pin'); // Skip business step, go straight to PIN to finish restore
+                        }
+                      }
+                    ]
+                  );
+                } else {
+                  Toast.success('Google Drive connected for auto-backups.');
+                  setAutoBackupEnabled(true);
+                  setStep('business');
+                }
+              } catch (e: any) {
+                Alert.alert('Connection Failed', e.message ?? 'Skipping backup connection.');
+                setStep('business');
+              } finally {
+                setLoading(false);
+              }
+            }
+          }
+        ]
+      );
     } else if (step === 'business') {
       if (!bizName.trim()) {
         Alert.alert('Required', 'Please enter your business name.');
@@ -83,7 +144,17 @@ export default function SetupScreen() {
     setLoading(true);
     try {
       const userId = await setupUser(name.trim(), phone.trim(), finalPin);
-      await setupBusiness(userId, bizName.trim(), bizAddress.trim() || undefined);
+      
+      if (pendingRestoreFileId) {
+        // Restore flow
+        await setupBusiness(userId, bizName.trim() || `${name}'s Business`, bizAddress.trim() || undefined);
+        await restore(pendingRestoreFileId, userId);
+        Toast.success('Data restored successfully!');
+      } else {
+        // Normal flow
+        await setupBusiness(userId, bizName.trim(), bizAddress.trim() || undefined);
+      }
+      
       router.replace('/(tabs)');
     } catch (e: any) {
       Alert.alert('Setup Failed', e?.message ?? 'Could not complete setup. Please try again.');
@@ -103,18 +174,24 @@ export default function SetupScreen() {
       const gName = currentUser.user.name ?? 'My Shop';
       const gEmail = currentUser.user.email;
 
-      // Check if backup exists
-      await listBackups();
+      // Check if backup exists using the Google email as the unique identity key
+      await listBackups(gEmail);
       const backups = useGoogleDriveStore.getState().backupFiles;
       
       if (backups.length > 0) {
         const latest = backups[0];
+        const backupDate = latest.createdTime
+          ? new Date(latest.createdTime).toLocaleDateString('en-IN', {
+              day: '2-digit', month: 'short', year: 'numeric'
+            })
+          : 'a previous date';
         Alert.alert(
-          'Backup Found',
-          `We found your previous backup from Google Drive. Restore it?`,
+          '\u2705 Backup Found',
+          `A backup from ${backupDate} was found in your Google Drive.\n\nDo you want to restore your data?`,
           [
             { 
-              text: 'Skip & Start Fresh', 
+              text: 'Start Fresh', 
+              style: 'destructive',
               onPress: () => finishGoogleSetup(gName, gEmail)
             },
             {
@@ -122,20 +199,23 @@ export default function SetupScreen() {
               onPress: async () => {
                 try {
                   setLoading(true);
-                  await restore(latest.id);
-                  await AsyncStorage.setItem('auth_method', 'google');
+                  // First create the user so we have an active userId to restore INTO
+                  const userId = await setupUser(gName, gEmail, '0000');
+                  await setupBusiness(userId, `${gName}'s Business`);
                   
-                  // Refresh global app state
+                  // Restore maps backup data into this new user's business
+                  await restore(latest.id, userId);
+                  
+                  await AsyncStorage.setItem('auth_method', 'google');
                   await useAuthStore.getState().loadUser();
                   const refreshedUser = useAuthStore.getState().user;
                   if (refreshedUser) {
                     await useBusinessStore.getState().loadBusiness(refreshedUser.id);
                   }
-                  
                   router.replace('/(tabs)');
                 } catch (e) {
-                  Alert.alert('Restore Failed', 'Could not restore backup.');
-                  setLoading(false);
+                  Alert.alert('Restore Failed', 'Could not restore backup. Starting fresh.');
+                  await finishGoogleSetup(gName, gEmail);
                 }
               }
             }
@@ -153,6 +233,7 @@ export default function SetupScreen() {
   const finishGoogleSetup = async (gName: string, gEmail: string) => {
     try {
       setLoading(true);
+      // Store email in the phone field so identity-based backup key matches this user
       const userId = await setupUser(gName, gEmail, '0000');
       await setupBusiness(userId, `${gName}'s Business`);
       await AsyncStorage.setItem('auth_method', 'google');
@@ -163,6 +244,7 @@ export default function SetupScreen() {
       setLoading(false);
     }
   };
+
 
   return (
     <KeyboardAvoidingView

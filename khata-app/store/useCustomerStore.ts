@@ -145,11 +145,13 @@ export const useCustomerStore = create<CustomerState>((set, get) => ({
     }));
     require('./useBusinessStore').useBusinessStore.getState().refreshSummary();
     
-    // Trigger silent background backup
-    const driveStore = useGoogleDriveStore.getState();
-    if (driveStore.isSignedIn && driveStore.isAutoBackupEnabled && driveStore.backupFrequency === 'TRANSACTION') {
-      driveStore.backup(true).catch(console.error);
-    }
+    // Trigger silent background backup non-blocking
+    setTimeout(() => {
+      const driveStore = useGoogleDriveStore.getState();
+      if (driveStore.isSignedIn && driveStore.isAutoBackupEnabled) {
+        driveStore.backup(true).catch(() => {});
+      }
+    }, 1000);
   },
 
   editTransaction: async (businessId, txId, customerId, amount, note, date, dueDate) => {
@@ -169,11 +171,13 @@ export const useCustomerStore = create<CustomerState>((set, get) => ({
     }));
     require('./useBusinessStore').useBusinessStore.getState().refreshSummary();
 
-    // Trigger silent background backup
-    const driveStore = useGoogleDriveStore.getState();
-    if (driveStore.isSignedIn && driveStore.isAutoBackupEnabled && driveStore.backupFrequency === 'TRANSACTION') {
-      driveStore.backup(true).catch(console.error);
-    }
+    // Trigger silent background backup non-blocking
+    setTimeout(() => {
+      const driveStore = useGoogleDriveStore.getState();
+      if (driveStore.isSignedIn && driveStore.isAutoBackupEnabled) {
+        driveStore.backup(true).catch(() => {});
+      }
+    }, 1000);
   },
 
   removeTransaction: async (businessId, id, customerId) => {
@@ -193,11 +197,13 @@ export const useCustomerStore = create<CustomerState>((set, get) => ({
     }));
     require('./useBusinessStore').useBusinessStore.getState().refreshSummary();
 
-    // Trigger silent background backup
-    const driveStore = useGoogleDriveStore.getState();
-    if (driveStore.isSignedIn && driveStore.isAutoBackupEnabled && driveStore.backupFrequency === 'TRANSACTION') {
-      driveStore.backup(true).catch(console.error);
-    }
+    // Trigger silent background backup non-blocking
+    setTimeout(() => {
+      const driveStore = useGoogleDriveStore.getState();
+      if (driveStore.isSignedIn && driveStore.isAutoBackupEnabled) {
+        driveStore.backup(true).catch(() => {});
+      }
+    }, 1000);
   },
 
   setSearchQuery: (q) => set({ searchQuery: q }),

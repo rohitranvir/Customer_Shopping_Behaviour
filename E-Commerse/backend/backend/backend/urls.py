@@ -19,7 +19,7 @@ from django.urls import path,include
 from django.conf import settings
 # from tensorflow.python.types.doc_typealias import document
 from django.conf.urls.static import static
-
+import store
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('store.urls')),

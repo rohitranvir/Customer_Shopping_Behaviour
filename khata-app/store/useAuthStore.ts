@@ -1,14 +1,17 @@
 import { create } from 'zustand';
 import { User, UserRepository } from '../db/repositories/userRepository';
 import { verifyPin } from '../security/pin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface AuthState {
-  user: User | null;
+  user: User | null; // active user
+  localUsers: User[];
   isAuthenticated: boolean;
   isLoading: boolean;
 
   // Actions
   loadUser: () => Promise<void>;
+  switchUser: (userId: number) => Promise<void>;
   setupUser: (name: string, phone: string, pin: string) => Promise<number>;
   verifyPin: (pin: string) => Promise<boolean>;
   unlock: () => void;
@@ -19,27 +22,52 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
+  localUsers: [],
   isAuthenticated: false,
   isLoading: true,
 
   loadUser: async () => {
     set({ isLoading: true });
     try {
-      let user = await UserRepository.getFirst();
-      if (user) {
-        // Run migration if the user is on old plaintext PIN
-        user = await UserRepository.migratePin(user);
+      let users = await UserRepository.getAll();
+      
+      // Migration for old PINs
+      for (let i = 0; i < users.length; i++) {
+        if (users[i].pin.length < 64) {
+          users[i] = await UserRepository.migratePin(users[i]);
+        }
       }
-      set({ user, isLoading: false });
+      
+      set({ localUsers: users });
+
+      const activeIdStr = await AsyncStorage.getItem('active_user_id');
+      let activeUser = null;
+      if (activeIdStr) {
+        activeUser = users.find(u => u.id === parseInt(activeIdStr)) || null;
+      }
+      
+      set({ user: activeUser, isLoading: false });
     } catch (e) {
-      set({ user: null, isLoading: false });
+      set({ user: null, localUsers: [], isLoading: false });
+    }
+  },
+
+  switchUser: async (userId: number) => {
+    const { localUsers } = get();
+    const activeUser = localUsers.find(u => u.id === userId) || null;
+    if (activeUser) {
+      await AsyncStorage.setItem('active_user_id', userId.toString());
+      set({ user: activeUser, isAuthenticated: false }); // Requires PIN unlock
     }
   },
 
   setupUser: async (name, phone, pin) => {
     const userId = await UserRepository.create(name, phone, pin);
-    const user = await UserRepository.getFirst();
-    set({ user, isAuthenticated: false });
+    await AsyncStorage.setItem('active_user_id', userId.toString());
+    
+    // Reload local users and set active user
+    await get().loadUser();
+    set({ isAuthenticated: false });
     return userId;
   },
 
@@ -55,12 +83,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   changePin: async (userId, newPin) => {
     await UserRepository.updatePin(userId, newPin);
-    const user = await UserRepository.getFirst();
-    set({ user });
+    await get().loadUser();
   },
 
   needsSetup: () => {
-    const { user } = get();
-    return user === null;
+    const { localUsers } = get();
+    return localUsers.length === 0;
   },
 }));

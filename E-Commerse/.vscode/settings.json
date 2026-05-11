@@ -1,0 +1,17 @@
+{
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false
+  },
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.suggest.enabled": true,
+  "editor.suggest.showWords": true,
+  "editor.suggest.localityBonus": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false
+  },
+  "github.copilot.editor.enableAutoCompletions": true
+}
