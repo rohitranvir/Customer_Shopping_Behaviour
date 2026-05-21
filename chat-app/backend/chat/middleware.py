@@ -14,7 +14,7 @@ def get_user_from_token(token_key):
     try:
         token = AccessToken(token_key)
         user_id = token.payload.get('user_id')
-        return User.objects.get(id=user_id)
+        return User.objects.get(id=user_id) 
     except Exception:
         return AnonymousUser()
 

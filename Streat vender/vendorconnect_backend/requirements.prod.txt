@@ -1,0 +1,10 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# VendorConnect India — Production Dependencies (Railway / Heroku / etc.)
+# Extends requirements.txt with the PostgreSQL driver.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Inherit base dependencies
+-r requirements.txt
+
+# PostgreSQL driver — pre-built wheel provided by Railway's Python 3.11 runtime
+psycopg2-binary==2.9.9
